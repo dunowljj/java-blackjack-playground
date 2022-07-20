@@ -1,3 +1,4 @@
+/*
 package nextstep.optional;
 
 import nextstep.optional.Computer.Soundcard;
@@ -57,3 +58,4 @@ public class ComputerStoreTest {
         assertThat(ComputerStore.getVersionOptional(computer)).isEqualTo(ComputerStore.UNKNOWN_VERSION);
     }
 }
+*/
