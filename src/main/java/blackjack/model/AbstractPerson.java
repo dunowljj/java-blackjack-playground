@@ -7,13 +7,23 @@ public class AbstractPerson implements Person {
 
     private final List<Card> deck;
     private Name name;
-    private int sumOfNumber = 0;
-    private int revenue = 0;
+    private BetMoney betMoney;
 
     public AbstractPerson(Name name) {
         this.deck = new ArrayList<>();
         this.name = name;
     }
+
+    @Override
+    public void bet(int money) {
+        this.betMoney = new BetMoney(money);
+    }
+
+    @Override
+    public int getBetMoney() {
+        return this.betMoney.getMoney();
+    }
+
 
     @Override
     public Name getName() {

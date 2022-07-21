@@ -8,4 +8,8 @@ public class InputUtils {
     public static String getString() {
         return scanner.nextLine();
     }
+
+    public static int getInt() {
+        return scanner.nextInt();
+    }
 }

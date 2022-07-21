@@ -1,5 +1,6 @@
 package blackjack.model;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -30,5 +31,18 @@ public class PlayerTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이름은 6자를 초과할 수 없습니다.");
 
+    }
+
+    @Test
+    void 배팅금액_확인() {
+        //given
+        Player person = new Player("pobi");
+        int actual = 10000;
+
+        //when
+        person.bet(actual);
+
+        //then
+        Assertions.assertThat(actual).isEqualTo(person.getBetMoney());
     }
 }
