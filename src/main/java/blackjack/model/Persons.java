@@ -11,6 +11,7 @@ public class Persons {
     }
 
     public Persons(String input) {
+        input = input.replace(" ", "");
         String[] inputs = input.split(",");
 
         for (String name : inputs) {
