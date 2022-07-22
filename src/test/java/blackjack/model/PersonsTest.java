@@ -1,5 +1,8 @@
 package blackjack.model;
 
+import blackjack.model.person.Name;
+import blackjack.model.person.Person;
+import blackjack.model.person.Persons;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

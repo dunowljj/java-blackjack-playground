@@ -1,6 +1,6 @@
 package blackjack.model;
 
-import org.assertj.core.api.Assertions;
+import blackjack.model.person.BetMoney;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

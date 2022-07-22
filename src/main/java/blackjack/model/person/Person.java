@@ -1,4 +1,6 @@
-package blackjack.model;
+package blackjack.model.person;
+
+import blackjack.model.card.Cards;
 
 public interface Person {
     
@@ -7,4 +9,6 @@ public interface Person {
     int getBetMoney();
 
     void bet(int money);
+
+    Cards getMyCards();
 }

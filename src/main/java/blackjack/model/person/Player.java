@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.person;
 
 
 public class Player extends AbstractPerson {

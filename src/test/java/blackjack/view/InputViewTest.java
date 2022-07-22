@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.model.Name;
-import blackjack.model.Person;
-import blackjack.model.Persons;
+import blackjack.model.person.Name;
+import blackjack.model.person.Person;
+import blackjack.model.person.Persons;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -17,7 +17,7 @@ public class InputViewTest {
         int betMoney = 10_000;
 
         //when
-        InputView.inputBetMoney(persons, betMoney);
+        InputView.inputBetMoneyTest(persons, betMoney);
 
         //then
         assertThat(persons.getPersons()).filteredOn((p)->!p.getName().equals(new Name("Dealer")))

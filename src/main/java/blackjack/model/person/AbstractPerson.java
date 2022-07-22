@@ -1,17 +1,20 @@
-package blackjack.model;
+package blackjack.model.person;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import blackjack.model.card.Cards;
 
 public class AbstractPerson implements Person {
-
-    private final List<Card> deck;
+    private final Cards myCards;
     private Name name;
     private BetMoney betMoney;
 
     public AbstractPerson(Name name) {
-        this.deck = new ArrayList<>();
+        this.myCards = new Cards();
         this.name = name;
+    }
+
+    public Cards getMyCards() {
+        return myCards;
     }
 
     @Override

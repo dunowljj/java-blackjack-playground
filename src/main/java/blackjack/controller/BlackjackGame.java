@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 
-import blackjack.model.Persons;
+import blackjack.model.person.Persons;
 import blackjack.view.InputView;
 
 public class BlackjackGame {

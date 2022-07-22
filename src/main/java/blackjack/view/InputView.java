@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.model.Name;
-import blackjack.model.Person;
-import blackjack.model.Persons;
+import blackjack.model.person.Name;
+import blackjack.model.person.Person;
+import blackjack.model.person.Persons;
 import blackjack.utils.InputUtils;
 
 public class InputView {
@@ -20,7 +20,7 @@ public class InputView {
                 .filter((p) -> !p.getName().equals(new Name("Dealer")))
                 .forEach((person) -> person.bet(askBetMoney(person)));
     }
-    protected static void inputBetMoney(Persons persons, int input) {
+    protected static void inputBetMoneyTest(Persons persons, int input) {
         persons.getPersons().stream()
                 .filter((p) -> !p.getName().equals(new Name("Dealer")))
                 .forEach((person) -> person.bet(input));
