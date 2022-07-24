@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Cards;
@@ -16,9 +16,9 @@ public class CardsTest {
 
         //when
         for (int i = 1; i <= 9; i++) {
-            Card card1 = new Card("Clover", i+"");
-            Card card2 = new Card("Heart", i+"");
-            Card card3 = new Card("Spade", i+"");
+            Card card1 = new Card("클로버", i+"");
+            Card card2 = new Card("하트", i+"");
+            Card card3 = new Card("스페이드", i+"");
 
 
             //then
@@ -34,11 +34,12 @@ public class CardsTest {
         cards.setUpWholeCard();
 
         //when
-        Card card1 = new Card("Clover", "J");
-        Card card2 = new Card("Heart", "K");
-        Card card3 = new Card("Spade", "A");
+        Card card1 = new Card("클로버", "J");
+        Card card2 = new Card("하트", "K");
+        Card card3 = new Card("스페이드", "A");
+        Card card4 = new Card("스페이드", "Q");
 
         //then
-        Assertions.assertThat(cards.getCards()).contains(card1, card2, card3);
+        Assertions.assertThat(cards.getCards()).contains(card1, card2, card3, card4);
     }
 }

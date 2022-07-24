@@ -1,27 +1,27 @@
 package blackjack.model.card;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Cards {
     private final List<Card> cards;
-    private static final int START_CARD_NUM = 1;
-    private static final int END_CARD_NUM = 9;
+    private final int START_CARD_NUM = 1;
+    private final int END_CARD_NUM = 9;
 
 
     public Cards() {
-        cards = new ArrayList<>();
+        cards = new LinkedList<>();
     }
 
     public void setUpWholeCard() {
-        setUpDefaultCards();
+        addDefaultCards();
         Collections.shuffle(cards);
     }
-    public void setUpDefaultCards() {
-        addCardShapeOf("Clover");
-        addCardShapeOf("Spade");
-        addCardShapeOf("Heart");
+    private void addDefaultCards() {
+        addCardShapeOf("클로버");
+        addCardShapeOf("스페이드");
+        addCardShapeOf("하트");
     }
     private void addCardShapeOf(String shape) {
         addNumberCards(shape);
@@ -39,7 +39,12 @@ public class Cards {
         cards.add(new Card(shape, "A"));
     }
 
+
     public List<Card> getCards() {
         return cards;
+    }
+
+    public void add(Card card) {
+        cards.add(card);
     }
 }

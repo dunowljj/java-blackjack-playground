@@ -11,6 +11,10 @@ public class Card {
         this.num = num;
     }
 
+    public String name() {
+        return num + shape;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

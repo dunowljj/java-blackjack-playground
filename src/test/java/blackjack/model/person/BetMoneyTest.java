@@ -1,6 +1,5 @@
-package blackjack.model;
+package blackjack.model.person;
 
-import blackjack.model.person.BetMoney;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -15,7 +14,7 @@ public class BetMoneyTest {
         //when
         BetMoney betMoney = new BetMoney(money);
 
-        //then
+        //then{}
         assertThat(money).isEqualTo(betMoney.getMoney());
     }
 

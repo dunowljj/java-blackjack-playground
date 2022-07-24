@@ -11,4 +11,8 @@ public interface Person {
     void bet(int money);
 
     Cards getMyCards();
+
+    void recieveCard(Cards cards);
+
+    StringBuilder getCurrentOwnCards(int num);
 }

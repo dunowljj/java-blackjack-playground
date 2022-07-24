@@ -1,16 +1,23 @@
 package blackjack.controller;
 
 
+import blackjack.model.card.Cards;
 import blackjack.model.person.Persons;
 import blackjack.view.InputView;
 
 public class BlackjackGame {
     public void run() {
-        Persons persons = new Persons(InputView.inputName());
+        Cards deck = new Cards();
+        deck.setUpWholeCard();
 
+        Persons persons = new Persons(InputView.inputName());
         InputView.inputBetMoney(persons);
 
-        System.out.println(persons.getPersons().get(1).getBetMoney());
-        System.out.println(persons.getPersons().get(2).getBetMoney());
+        persons.receiveCard(deck);
+        InputView.noticeFirstDitribution(persons);
+
+
+        InputView.openInitialCards(persons);
+
     }
 }

@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.person;
 
 import blackjack.model.person.Name;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,6 @@ public class NameTest {
         assertThatThrownBy(() -> new Name(actual))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이름은 6자를 초과할 수 없습니다.");
-
     }
 }
 
