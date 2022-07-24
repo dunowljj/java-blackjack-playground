@@ -10,6 +10,6 @@ public class InputUtils {
     }
 
     public static int getInt() {
-        return scanner.nextInt();
+        return Integer.parseInt(scanner.nextLine());
     }
 }
