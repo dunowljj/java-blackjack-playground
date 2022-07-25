@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.model.person.Name;
 import blackjack.model.person.Person;
 import blackjack.model.person.Persons;
+import blackjack.model.person.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -20,9 +21,19 @@ public class InputViewTest {
         InputView.inputBetMoneyTest(persons, betMoney);
 
         //then
-        assertThat(persons.getPersons()).filteredOn((p)->!p.getName().equals(new Name("Dealer")))
+        assertThat(persons.getPersons()).filteredOn((p)->!p.getName().equals(new Name("딜러 ")))
                 .map(Person::getBetMoney)
                 .containsExactly(10_000, 10_000);
 
+    }
+
+    @Test
+    void y_입력_시_추가입력() {
+        //given
+        String input = "y";
+        Person player = new Player("pobi");
+
+        //when, then
+        assertThat(player.wantReceive(input)).isTrue();
     }
 }

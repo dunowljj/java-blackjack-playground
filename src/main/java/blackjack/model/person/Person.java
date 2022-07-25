@@ -12,7 +12,14 @@ public interface Person {
 
     Cards getMyCards();
 
-    void recieveCard(Cards cards);
+    void receiveCard(Cards providedCards, int amout);
+    
+    StringBuilder getNameAndCards();
 
-    StringBuilder getCurrentOwnCards(int num);
+    StringBuilder getNameAndCards(int num);
+    void askUntilNo(Cards providedCards);
+
+    boolean wantReceive(String askReceiveMore);
+
+    boolean needMoreCard();
 }

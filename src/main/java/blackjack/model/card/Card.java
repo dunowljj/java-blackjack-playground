@@ -6,6 +6,17 @@ public class Card {
     private String shape;
     private String num;
 
+    public int getNum() {
+        char first = num.charAt(0);
+        if ('0' <= first && first <= '9') {
+            return Integer.parseInt(num);
+        }
+        if (first == 'J' || first == 'K' || first == 'Q') {
+            return 10;
+        }
+        return 11;
+    }
+
     public Card(String shape, String num) {
         this.shape = shape;
         this.num = num;

@@ -13,13 +13,18 @@ import static org.assertj.core.api.Assertions.*;
 public class PersonsTest {
     Persons persons;
     List<Person> personList;
+    Cards cards;
 
     @BeforeEach
     void setUp() {
         String input = "pobi,jason";
 
+        // 딜러가 스태틱 블록에서 초기화되는데, 스태틱 블록은 최초 클래스 로드에만 호출된다.
         persons = new Persons(input);
         personList = persons.getPersons();
+
+        cards = new Cards();
+        cards.setUpWholeCard();
     }
 
     @Test
@@ -52,21 +57,38 @@ public class PersonsTest {
     @Test
     void 카드_첫_2장_배급() {
         //given
-        int amount = 2;
-
-        Cards cards = new Cards();
-        cards.setUpWholeCard();
+        final int NUM_OF_FIRST_DISTRIBUTION = 2;
 
         //when
-        personList.stream().forEach((p) -> p.recieveCard(cards));
+        personList.stream().forEach((p) -> p.receiveCard(cards, NUM_OF_FIRST_DISTRIBUTION));
+
         //then
         assertThat(personList).map(Person::getMyCards).map(Cards::getCards)
                 .map(List::size)
                 .containsExactly(2, 2, 2);
     }
 
+    @Test
+    void 카드_1장_배급() {
+        //given
+        Cards cards = new Cards();
+        cards.setUpWholeCard();
+
+        //when
+        personList.stream().forEach((p) -> p.receiveCard(cards, 1));
+
+        //then
+        assertThat(personList).map(Person::getMyCards).map(Cards::getCards)
+                .map(List::size)
+                .containsExactly(1, 1, 1);
+    }
+
+
+
     @AfterEach
     void clean() {
         personList.clear();
+        personList.add(new Dealer());
+        cards.getCards().clear();
     }
 }

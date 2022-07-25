@@ -5,9 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Cards {
-    private final List<Card> cards;
+    public static final int BLACKJACK_NUM = 21;
+    public static final int DEALER_NEED_RECEIVE_NUM = 16;
     private final int START_CARD_NUM = 1;
     private final int END_CARD_NUM = 9;
+    private final List<Card> cards;
 
 
     public Cards() {
@@ -40,11 +42,31 @@ public class Cards {
     }
 
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     public void add(Card card) {
         cards.add(card);
+    }
+
+    public boolean isBlackjack() {
+       return cards.stream().map(Card::getNum)
+                .reduce(0, (x, y) -> x + y) == BLACKJACK_NUM;
+    }
+
+    public boolean isOver() {
+        return cards.stream().map(Card::getNum)
+                .reduce(0, (x, y) -> x + y) > BLACKJACK_NUM;
+    }
+
+    public boolean needMore() {
+        return cards.stream().map(Card::getNum)
+                .reduce(0, (x, y) -> x + y) <= DEALER_NEED_RECEIVE_NUM;
+    }
+
+    public int size() {
+        return cards.size();
+
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 }

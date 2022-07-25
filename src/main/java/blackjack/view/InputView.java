@@ -1,31 +1,36 @@
 package blackjack.view;
 
+import blackjack.model.card.Cards;
 import blackjack.model.person.Name;
 import blackjack.model.person.Person;
 import blackjack.model.person.Persons;
 import blackjack.utils.InputUtils;
 
 
-
+//Todo : 테스트로직 점검, 커버리지 사용해보기
 public class InputView {
 
     public static final String MESSAGE_INPUT_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     public static final String MESSAGE_REQUIRE_BET = "의 배팅 금액은?";
-    private static final String NUM_OF_FIRST_DISTRIBUTION = "2";
+    public static final String MESSAGE_ASK_MORECARD = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    //Todo:enum
+    public static final String NAME_OF_DEALER = "딜러 ";
+
 
     public static String inputName() {
         System.out.println(MESSAGE_INPUT_NAME);
         return InputUtils.getString();
     }
 
+    //Todo : 비즈니스 로직 이동
     protected static void inputBetMoneyTest(Persons persons, int input) {
         persons.getPersons().stream()
-                .filter((p) -> !p.getName().equals(new Name("Dealer")))
+                .filter((p) -> !p.getName().equals(new Name(NAME_OF_DEALER)))
                 .forEach((person) -> person.bet(input));
     }
     public static void inputBetMoney(Persons persons) {
         persons.getPersons().stream()
-                .filter((p) -> !p.getName().equals(new Name("Dealer")))
+                .filter((p) -> !p.getName().equals(new Name(NAME_OF_DEALER)))
                 .forEach((person) -> person.bet(askBetMoney(person)));
     }
     private static int askBetMoney(Person person) {
@@ -33,24 +38,20 @@ public class InputView {
         return InputUtils.getInt();
     }
 
-    public static void noticeFirstDitribution(Persons persons) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("딜러와 ");
+    public static void openCards(String message) {
+        System.out.print(message);
+    }
 
-        sb = sb.append(persons.namesExceptDealer());
+    public static void askMoreInput(Persons persons, Cards providedCard) {
+        persons.getPersons().stream()
+                .filter((p) -> !p.getName().equals(new Name(NAME_OF_DEALER)))
+                .forEach((person) -> person.askUntilNo(providedCard));
+    }
 
-        sb.append("에게 ").append(NUM_OF_FIRST_DISTRIBUTION).append("장을 나누었습니다.").append("\n");
+    public static String askReceiveMore(Person person) {
+        System.out.println(person.getName()+ MESSAGE_ASK_MORECARD);
+        return InputUtils.getString();
+    }
 
-        System.out.print(sb);
-    }
-    public static void openInitialCards(Persons person) {
-        openDealerCards(person);
-        openPlayerCards(person);
-    }
-    public static void openDealerCards(Persons persons) {
-        System.out.print(persons.initialDealerCards());
-    }
-    public static void openPlayerCards(Persons persons) {
-        System.out.print(persons.initialPlayerCards());
-    }
+
 }

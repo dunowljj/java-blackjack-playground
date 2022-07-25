@@ -18,7 +18,6 @@ public class PlayerTest {
         //then
         assertThat(player.getName()).isEqualTo(new Name(input));
 
-
     }
 
     @Test

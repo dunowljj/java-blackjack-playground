@@ -2,11 +2,9 @@ package blackjack.model.person;
 
 
 import blackjack.model.card.Cards;
-
-import java.util.concurrent.Delayed;
+import blackjack.view.InputView;
 
 public class AbstractPerson implements Person {
-    public static final int NUM_OF_FIRST_DISTRIBUTION = 2;
     private final Cards myCards;
     private Name name;
     private BetMoney betMoney;
@@ -21,23 +19,28 @@ public class AbstractPerson implements Person {
     }
 
     @Override
-    public void recieveCard(Cards cards) {
-        for (int i = 0; i < NUM_OF_FIRST_DISTRIBUTION; i++) {
-            myCards.add(cards.getCards().remove(0));
-        }
-    }
-
-    @Override
     public void bet(int money) {
         this.betMoney = new BetMoney(money);
     }
 
     @Override
-    public StringBuilder getCurrentOwnCards(int num) {
+    public StringBuilder getNameAndCards() {
         StringBuilder message = new StringBuilder();
         message.append(name).append("카드: ");
 
-        myCards.getCards().stream().limit(num)
+        myCards.getCards().stream()
+                .forEach((card) -> message.append(card.name()).append(", "));
+
+        message.deleteCharAt(message.lastIndexOf(", ")).append("\n");
+
+        return message;
+    }
+    @Override
+    public StringBuilder getNameAndCards(int openLimitNum) {
+        StringBuilder message = new StringBuilder();
+        message.append(name).append("카드: ");
+
+        myCards.getCards().stream().limit(openLimitNum)
                 .forEach((card) -> message.append(card.name()).append(", "));
 
         message.deleteCharAt(message.lastIndexOf(", ")).append("\n");
@@ -46,10 +49,36 @@ public class AbstractPerson implements Person {
     }
 
     @Override
+    public boolean needMoreCard() {
+        return myCards.needMore();
+    }
+
+    @Override
+    public void askUntilNo(Cards providedCards) {
+        if (wantReceive(InputView.askReceiveMore(this))) {
+            receiveCard(providedCards, 1);
+            InputView.openCards(getNameAndCards().toString());
+            askUntilNo(providedCards);
+        }
+        return;
+    }
+
+    @Override
+    public boolean wantReceive(String askReceiveMore) {
+        return askReceiveMore.equals("y");
+    }
+
+    @Override
+    public void receiveCard(Cards providedCards, int amount) {
+        for (int i = 0; i < amount; i++) {
+            myCards.add(providedCards.getCards().remove(0));
+        }
+    }
+
+    @Override
     public int getBetMoney() {
         return this.betMoney.getMoney();
     }
-
 
     @Override
     public Name getName() {
