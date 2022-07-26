@@ -2,8 +2,9 @@ package blackjack.view;
 
 import blackjack.model.card.Cards;
 import blackjack.model.person.Name;
-import blackjack.model.person.Person;
 import blackjack.model.person.Persons;
+
+
 
 public class OutputView {
     private static final String NUM_OF_FIRST_DISTRIBUTION = "2";
@@ -27,21 +28,22 @@ public class OutputView {
     private static void openInitialDealerCards(Persons persons) {
         System.out.print(persons.openInitialDealerCards());
     }
-    //Todo : 플레이어 카드 가져오는 로직에 매개변수 num 필히 수정
+
     private static void openPlayerCards(Persons persons) {
         System.out.print(persons.openPlayerCards());
     }
 
-    //Todo : 비즈니스 로직 이동
     public static void checkDealerCards(Persons persons, Cards cards) {
-        Person dealer = persons.getPersons().stream()
-                .filter((p) -> p.getName().equals(new Name(NAME_OF_DEALER)))
-                .findFirst().get();
+        boolean dealerGetMoreCard = persons.getPersons().stream()
+                .filter((person) -> person.getName().equals(new Name(NAME_OF_DEALER)))
+                .findFirst().get().receiveCardIfNeed(cards);
 
-        if (dealer.needMoreCard()) {
-            dealer.receiveCard(cards,1);
-            System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        if (dealerGetMoreCard) {
+            noticeDealerGetMoreCard();
         }
+    }
+    private static void noticeDealerGetMoreCard() {
+        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void openAllCards(Persons persons) {

@@ -7,7 +7,6 @@ import blackjack.model.person.Persons;
 import blackjack.utils.InputUtils;
 
 
-//Todo : 테스트로직 점검, 커버리지 사용해보기
 public class InputView {
 
     public static final String MESSAGE_INPUT_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -21,7 +20,6 @@ public class InputView {
         return InputUtils.getString();
     }
 
-    //Todo : 비즈니스 로직 이동
     protected static void inputBetMoneyTest(Persons persons, int input) {
         persons.getPersons().stream()
                 .filter((p) -> !p.getName().equals(new Name(NAME_OF_DEALER)))
@@ -44,7 +42,7 @@ public class InputView {
     public static void askMoreInput(Persons persons, Cards providedCard) {
         persons.getPersons().stream()
                 .filter((person) -> !person.getName().equals(new Name(NAME_OF_DEALER)))
-                .filter((person) -> !person.getMyCards().isOverLimit())
+                .filter((person) -> !person.isOverLimit())
                 .forEach((person) -> person.askUntilNo(providedCard));
     }
 

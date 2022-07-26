@@ -11,6 +11,7 @@ public class Persons {
     public static final int NUM_OF_DEALER = 1;
     public static final String NAME_DELIMETER = ",";
     public static final String NAME_OF_DEALER = "딜러 ";
+    public static final String NAME_OUTPUT_DELIMITER = ", ";
 
     static {
         persons = new ArrayList<>();
@@ -53,8 +54,8 @@ public class Persons {
         StringBuilder sb = new StringBuilder();
         persons.stream()
                 .map(Person::getName).filter((name) -> !name.toString().equals(NAME_OF_DEALER))
-                .forEach((name) -> sb.append(name).append(", "));
-        sb.deleteCharAt(sb.lastIndexOf(", "));
+                .forEach((name) -> sb.append(name).append(NAME_OUTPUT_DELIMITER));
+        sb.deleteCharAt(sb.lastIndexOf(NAME_OUTPUT_DELIMITER));
         return sb;
     }
 }

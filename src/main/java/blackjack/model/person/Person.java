@@ -12,15 +12,21 @@ public interface Person {
 
     Cards getMyCards();
 
-    void receiveCard(Cards providedCards, int amout);
-    
-    StringBuilder getNameAndCards();
-
-    StringBuilder getNameAndCards(int num);
-
     void askUntilNo(Cards providedCards);
 
     boolean wantReceive(String askReceiveMore);
 
+    void receiveCard(Cards providedCards, int amout);
+
+    boolean receiveCardIfNeed(Cards cards);
+
+    StringBuilder getNameAndCards();
+
+    StringBuilder getNameAndCards(int num);
+
+
+
     boolean needMoreCard();
+    boolean isOverLimit();
+
 }

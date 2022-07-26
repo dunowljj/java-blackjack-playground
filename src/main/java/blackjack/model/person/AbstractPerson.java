@@ -14,10 +14,6 @@ public class AbstractPerson implements Person {
         this.name = name;
     }
 
-    public Cards getMyCards() {
-        return myCards;
-    }
-
     @Override
     public void bet(int money) {
         this.betMoney = new BetMoney(money);
@@ -35,6 +31,7 @@ public class AbstractPerson implements Person {
 
         return message;
     }
+
     @Override
     public StringBuilder getNameAndCards(int openLimitNum) {
         StringBuilder message = new StringBuilder();
@@ -47,12 +44,6 @@ public class AbstractPerson implements Person {
 
         return message;
     }
-
-    @Override
-    public boolean needMoreCard() {
-        return myCards.needMore();
-    }
-
     @Override
     public void askUntilNo(Cards providedCards) {
         if (myCards.isOverLimit()) {
@@ -63,7 +54,6 @@ public class AbstractPerson implements Person {
             InputView.openCards(getNameAndCards().toString());
             askUntilNo(providedCards);
         }
-
     }
 
     @Override
@@ -76,6 +66,28 @@ public class AbstractPerson implements Person {
         for (int i = 0; i < amount; i++) {
             myCards.add(providedCards.getCards().remove(0));
         }
+    }
+    @Override
+    public boolean receiveCardIfNeed(Cards cards) {
+        if (needMoreCard()) {
+            receiveCard(cards, 1);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean needMoreCard() {
+        return myCards.needMore();
+    }
+
+    @Override
+    public boolean isOverLimit() {
+        return myCards.isOverLimit();
+    }
+
+    public Cards getMyCards() {
+        return myCards;
     }
 
     @Override

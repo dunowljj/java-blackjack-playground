@@ -5,6 +5,8 @@ import blackjack.model.card.Cards;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class AbstractPersonTest {
 
     @Test
@@ -34,5 +36,16 @@ public class AbstractPersonTest {
 
         //then
         Assertions.assertThat(dealer.needMoreCard()).isTrue();
+    }
+    @Test
+    void 딜러_16이하인지_확인() {
+        //given
+        Person person = new Player("pobi");
+        Cards myCards = person.getMyCards();
+        //when
+        myCards.add(new Card("하트","22"));
+
+        //then
+        assertThat(person.isOverLimit()).isTrue();
     }
 }
