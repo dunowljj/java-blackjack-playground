@@ -60,7 +60,7 @@ public class PersonsTest {
         final int NUM_OF_FIRST_DISTRIBUTION = 2;
 
         //when
-        personList.stream().forEach((p) -> p.receiveCard(cards, NUM_OF_FIRST_DISTRIBUTION));
+        persons.receiveCard(cards, NUM_OF_FIRST_DISTRIBUTION);
 
         //then
         assertThat(personList).map(Person::getMyCards).map(Cards::getCards)
@@ -75,7 +75,7 @@ public class PersonsTest {
         cards.setUpWholeCard();
 
         //when
-        personList.stream().forEach((p) -> p.receiveCard(cards, 1));
+        persons.receiveCard(cards, 1);
 
         //then
         assertThat(personList).map(Person::getMyCards).map(Cards::getCards)

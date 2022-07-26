@@ -1,5 +1,7 @@
 package blackjack.model.card;
 
+import blackjack.utils.InputUtils;
+
 import java.util.Objects;
 
 public class Card {
@@ -7,14 +9,7 @@ public class Card {
     private String num;
 
     public int getNum() {
-        char first = num.charAt(0);
-        if ('0' <= first && first <= '9') {
-            return Integer.parseInt(num);
-        }
-        if (first == 'J' || first == 'K' || first == 'Q') {
-            return 10;
-        }
-        return 11;
+        return InputUtils.getValue(num);
     }
 
     public Card(String shape, String num) {

@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardsTest {
 
+
     @Test
     void 카드덱_생성_숫자확인() {
         //given
@@ -19,7 +20,6 @@ public class CardsTest {
             Card card1 = new Card("클로버", i+"");
             Card card2 = new Card("하트", i+"");
             Card card3 = new Card("스페이드", i+"");
-
 
             //then
             Assertions.assertThat(cards.getCards()).contains(card1, card2, card3);
@@ -63,17 +63,32 @@ public class CardsTest {
         cards.add(new Card("하트","J"));
 
         //when
-        assertThat(cards.isOver()).isTrue();
+        assertThat(cards.isOverLimit()).isTrue();
     }
 
     @Test
     void 딜러_16이하인지_확인() {
         //given
         Cards cards = new Cards();
+
+        //when
         cards.add(new Card("클로버","K"));
         cards.add(new Card("하트","6"));
 
-        //when
+        //then
         assertThat(cards.needMore()).isTrue();
+    }
+
+    @Test
+    void Cards_size() {
+        //given
+        Cards cards = new Cards();
+
+        //when
+        cards.add(new Card("클로버","K"));
+        cards.add(new Card("하트","6"));
+
+        //then
+        assertThat(cards.size()).isEqualTo(cards.getCards().size());
     }
 }
