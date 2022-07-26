@@ -83,8 +83,6 @@ public class PersonsTest {
                 .containsExactly(1, 1, 1);
     }
 
-
-
     @AfterEach
     void clean() {
         personList.clear();

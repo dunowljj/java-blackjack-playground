@@ -51,7 +51,7 @@ public class Cards {
                 .reduce(0, (x, y) -> x + y) == BLACKJACK_NUM;
     }
 
-    public boolean isOver() {
+    public boolean isOverLimit() {
         return cards.stream().map(Card::getNum)
                 .reduce(0, (x, y) -> x + y) > BLACKJACK_NUM;
     }
@@ -63,7 +63,6 @@ public class Cards {
 
     public int size() {
         return cards.size();
-
     }
 
     public List<Card> getCards() {

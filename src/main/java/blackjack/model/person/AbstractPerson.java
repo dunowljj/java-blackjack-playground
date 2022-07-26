@@ -55,12 +55,15 @@ public class AbstractPerson implements Person {
 
     @Override
     public void askUntilNo(Cards providedCards) {
+        if (myCards.isOverLimit()) {
+            return;
+        }
         if (wantReceive(InputView.askReceiveMore(this))) {
             receiveCard(providedCards, 1);
             InputView.openCards(getNameAndCards().toString());
             askUntilNo(providedCards);
         }
-        return;
+
     }
 
     @Override

@@ -16,7 +16,6 @@ public class InputView {
     //Todo:enum
     public static final String NAME_OF_DEALER = "딜러 ";
 
-
     public static String inputName() {
         System.out.println(MESSAGE_INPUT_NAME);
         return InputUtils.getString();
@@ -44,7 +43,8 @@ public class InputView {
 
     public static void askMoreInput(Persons persons, Cards providedCard) {
         persons.getPersons().stream()
-                .filter((p) -> !p.getName().equals(new Name(NAME_OF_DEALER)))
+                .filter((person) -> !person.getName().equals(new Name(NAME_OF_DEALER)))
+                .filter((person) -> !person.getMyCards().isOverLimit())
                 .forEach((person) -> person.askUntilNo(providedCard));
     }
 

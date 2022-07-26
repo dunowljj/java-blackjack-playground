@@ -52,7 +52,7 @@ public class Persons {
     public StringBuilder namesExceptDealer() {
         StringBuilder sb = new StringBuilder();
         persons.stream()
-                .map(Person::getName).filter((name) -> name.toString().equals(NAME_OF_DEALER))
+                .map(Person::getName).filter((name) -> !name.toString().equals(NAME_OF_DEALER))
                 .forEach((name) -> sb.append(name).append(", "));
         sb.deleteCharAt(sb.lastIndexOf(", "));
         return sb;

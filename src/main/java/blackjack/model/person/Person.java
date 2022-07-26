@@ -17,6 +17,7 @@ public interface Person {
     StringBuilder getNameAndCards();
 
     StringBuilder getNameAndCards(int num);
+
     void askUntilNo(Cards providedCards);
 
     boolean wantReceive(String askReceiveMore);
