@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.card.Cards;
+import blackjack.model.card.CardPack;
 import blackjack.model.person.Name;
 import blackjack.model.person.Person;
 import blackjack.model.person.Persons;
@@ -38,7 +38,7 @@ public class InputView {
         System.out.print(message);
     }
 
-    public static void inputWantGetMore(Persons persons, Cards providedCard) {
+    public static void inputWantGetMore(Persons persons, CardPack providedCard) {
         persons.getPersons().stream()
                 .filter((person) -> !person.getName().equals(new Name(NAME_OF_DEALER)))
                 .filter((person) -> !person.isOverLimit())

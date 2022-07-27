@@ -1,6 +1,8 @@
 package blackjack.model.person;
 
+import blackjack.model.card.CardPack;
 import blackjack.model.card.Cards;
+import blackjack.model.card.MyCards;
 
 public interface Person {
     
@@ -10,9 +12,9 @@ public interface Person {
 
     void bet(int money);
 
-    Cards getMyCards();
+    MyCards getMyCards();
 
-    void askUntilNo(Cards providedCards);
+    void askUntilNo(CardPack providedCards);
 
     boolean wantReceive(String askReceiveMore);
 

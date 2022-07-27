@@ -1,6 +1,8 @@
 package blackjack.model.person;
 
+import blackjack.model.card.CardPack;
 import blackjack.model.card.Cards;
+import blackjack.model.card.MyCards;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,9 +24,7 @@ public class PersonsTest {
         // 딜러가 스태틱 블록에서 초기화되는데, 스태틱 블록은 최초 클래스 로드에만 호출된다.
         persons = new Persons(input);
         personList = persons.getPersons();
-
-        cards = new Cards();
-        cards.setUpWholeCard();
+        cards = new CardPack();
     }
 
     @Test
@@ -59,11 +59,12 @@ public class PersonsTest {
         //given
         final int NUM_OF_FIRST_DISTRIBUTION = 2;
 
+
         //when
         persons.receiveCard(cards, NUM_OF_FIRST_DISTRIBUTION);
 
         //then
-        assertThat(personList).map(Person::getMyCards).map(Cards::getCards)
+        assertThat(personList).map(Person::getMyCards).map(MyCards::getCards)
                 .map(List::size)
                 .containsExactly(2, 2, 2);
     }
@@ -71,14 +72,13 @@ public class PersonsTest {
     @Test
     void 카드_1장_배급() {
         //given
-        Cards cards = new Cards();
-        cards.setUpWholeCard();
+        MyCards myCards = new MyCards();
 
         //when
         persons.receiveCard(cards, 1);
 
         //then
-        assertThat(personList).map(Person::getMyCards).map(Cards::getCards)
+        assertThat(personList).map(Person::getMyCards).map(MyCards::getCards)
                 .map(List::size)
                 .containsExactly(1, 1, 1);
     }
@@ -87,6 +87,6 @@ public class PersonsTest {
     void clean() {
         personList.clear();
         personList.add(new Dealer());
-        cards.getCards().clear();
+        cards = new CardPack();
     }
 }

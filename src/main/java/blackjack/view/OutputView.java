@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.card.Cards;
+import blackjack.model.card.CardPack;
 import blackjack.model.person.Name;
 import blackjack.model.person.Persons;
 
@@ -33,7 +33,7 @@ public class OutputView {
         System.out.print(persons.openPlayerCards());
     }
 
-    public static void checkDealerCards(Persons persons, Cards cards) {
+    public static void checkDealerCards(Persons persons, CardPack cards) {
         boolean dealerGetMoreCard = persons.getPersons().stream()
                 .filter((person) -> person.getName().equals(new Name(NAME_OF_DEALER)))
                 .findFirst().get().receiveCardIfNeed(cards);

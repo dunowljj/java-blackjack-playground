@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 
-import blackjack.model.card.Cards;
+import blackjack.model.card.CardPack;
 import blackjack.model.person.Persons;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -9,8 +9,7 @@ import blackjack.view.OutputView;
 public class BlackjackGame {
 
     public void run() {
-        Cards deck = new Cards();
-        deck.setUpWholeCard();
+        CardPack deck = new CardPack();
 
         Persons persons = new Persons(InputView.inputName());
         InputView.inputBetMoney(persons);

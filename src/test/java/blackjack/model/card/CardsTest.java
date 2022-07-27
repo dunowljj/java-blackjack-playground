@@ -1,20 +1,22 @@
 package blackjack.model.card;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CardsTest {
+    Cards cards;
 
+    @BeforeEach
+    void setUp() {
+        cards = new CardPack();
+    }
 
     @Test
     void 카드덱_생성_숫자확인() {
-        //given
-        String input = "pobi,jason";
-        Cards cards = new Cards();
-        cards.setUpWholeCard();
-
         //when
         for (int i = 1; i <= 9; i++) {
             Card card1 = new Card("클로버", i+"");
@@ -28,11 +30,6 @@ public class CardsTest {
 
     @Test
     void 카드덱_생성_알파벳확인() {
-        //given
-        String input = "pobi,jason";
-        Cards cards = new Cards();
-        cards.setUpWholeCard();
-
         //when
         Card card1 = new Card("클로버", "J");
         Card card2 = new Card("하트", "K");
@@ -46,49 +43,49 @@ public class CardsTest {
     @Test
     void 블랙잭인지_확인() {
         //given
-        Cards cards = new Cards();
-        cards.add(new Card("클로버","K"));
-        cards.add(new Card("하트","A"));
+        MyCards myCards = new MyCards();
+        myCards.add(new Card("클로버","K"));
+        myCards.add(new Card("하트","A"));
 
         //when
-        assertThat(cards.isBlackjack()).isTrue();
+        assertThat(myCards.isBlackjack()).isTrue();
     }
 
     @Test
     void 최대합_넘었는지_확인() {
         //given
-        Cards cards = new Cards();
-        cards.add(new Card("클로버","K"));
-        cards.add(new Card("하트","Q"));
-        cards.add(new Card("하트","J"));
+        MyCards myCards = new MyCards();
+        myCards.add(new Card("클로버","K"));
+        myCards.add(new Card("하트","Q"));
+        myCards.add(new Card("하트","J"));
 
         //when
-        assertThat(cards.isOverLimit()).isTrue();
+        assertThat(myCards.isOverLimit()).isTrue();
     }
 
     @Test
     void 딜러_16이하인지_확인() {
         //given
-        Cards cards = new Cards();
+        MyCards myCards = new MyCards();
 
         //when
-        cards.add(new Card("클로버","K"));
-        cards.add(new Card("하트","6"));
+        myCards.add(new Card("클로버","K"));
+        myCards.add(new Card("하트","6"));
 
         //then
-        assertThat(cards.needMore()).isTrue();
+        assertThat(myCards.needMore()).isTrue();
     }
 
     @Test
     void Cards_size() {
         //given
-        Cards cards = new Cards();
+        MyCards myCards = new MyCards();
 
         //when
-        cards.add(new Card("클로버","K"));
-        cards.add(new Card("하트","6"));
+        myCards.add(new Card("클로버","K"));
+        myCards.add(new Card("하트","6"));
 
         //then
-        assertThat(cards.size()).isEqualTo(cards.getCards().size());
+        assertThat(myCards.size()).isEqualTo(myCards.getCards().size());
     }
 }

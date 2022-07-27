@@ -1,16 +1,18 @@
 package blackjack.model.person;
 
 
+import blackjack.model.card.CardPack;
 import blackjack.model.card.Cards;
+import blackjack.model.card.MyCards;
 import blackjack.view.InputView;
 
 public class AbstractPerson implements Person {
-    private final Cards myCards;
+    private final MyCards myCards;
     private Name name;
     private BetMoney betMoney;
 
     public AbstractPerson(Name name) {
-        this.myCards = new Cards();
+        this.myCards = new MyCards();
         this.name = name;
     }
 
@@ -45,7 +47,7 @@ public class AbstractPerson implements Person {
         return message;
     }
     @Override
-    public void askUntilNo(Cards providedCards) {
+    public void askUntilNo(CardPack providedCards) {
         if (myCards.isOverLimit()) {
             return;
         }
@@ -86,7 +88,7 @@ public class AbstractPerson implements Person {
         return myCards.isOverLimit();
     }
 
-    public Cards getMyCards() {
+    public MyCards getMyCards() {
         return myCards;
     }
 

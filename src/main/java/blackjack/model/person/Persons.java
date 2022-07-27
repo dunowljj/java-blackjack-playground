@@ -1,5 +1,6 @@
 package blackjack.model.person;
 
+import blackjack.model.card.CardPack;
 import blackjack.model.card.Cards;
 
 import java.util.ArrayList;
