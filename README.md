@@ -56,8 +56,6 @@
 - 기능단위 커밋 주의하기
 - 클래스가 서로 참조 AbstractPerson <-> InputView
 ## 구현계획
-- Cards 기본 덱 set 기능 옮기기 고려
-- todo 모두 확인,상수 enum 처리
-- 인터페이스와 BlackJackGame, InputView 로직 정리 고려
+- Cards 기본 덱 set 기능 옮기기 고려 -> 애매하다.
 - 미해결 기능 구현
 - 문제점 다시 읽기

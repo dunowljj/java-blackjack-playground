@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Persons {
     private static final List<Person> persons;
+    public static final int NUM_OF_FIRST_DISTRIBUTION = 2;
     public static final int DEALER_INITIAL_OPENED_NUMS = 1;
     public static final int NUM_OF_DEALER = 1;
     public static final String NAME_DELIMETER = ",";
@@ -29,6 +30,9 @@ public class Persons {
 
     public void receiveCard(Cards cards, int amount) {
         persons.stream().forEach((p) -> p.receiveCard(cards, amount));
+    }
+    public void receiveInitialCards(Cards cards) {
+        persons.stream().forEach((p) -> p.receiveCard(cards, NUM_OF_FIRST_DISTRIBUTION));
     }
 
     public List<Person> getPersons() {

@@ -12,7 +12,6 @@ public class InputView {
     public static final String MESSAGE_INPUT_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     public static final String MESSAGE_REQUIRE_BET = "의 배팅 금액은?";
     public static final String MESSAGE_ASK_MORECARD = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
-    //Todo:enum
     public static final String NAME_OF_DEALER = "딜러 ";
 
     public static String inputName() {
@@ -39,7 +38,7 @@ public class InputView {
         System.out.print(message);
     }
 
-    public static void askMoreInput(Persons persons, Cards providedCard) {
+    public static void inputWantGetMore(Persons persons, Cards providedCard) {
         persons.getPersons().stream()
                 .filter((person) -> !person.getName().equals(new Name(NAME_OF_DEALER)))
                 .filter((person) -> !person.isOverLimit())

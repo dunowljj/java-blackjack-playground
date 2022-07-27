@@ -11,14 +11,14 @@ public class OutputView {
     public static final String NAME_OF_DEALER = "딜러 ";
 
     public static void noticeFirstDistribution(Persons persons) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("딜러와 ");
+        StringBuilder message = new StringBuilder();
 
-        sb = sb.append(persons.namesExceptDealer());
+        message.append("딜러와 ")
+                .append(persons.namesExceptDealer().append("에게 ")
+                .append(NUM_OF_FIRST_DISTRIBUTION).append("장을 나누었습니다.")
+                .append("\n"));
 
-        sb.append("에게 ").append(NUM_OF_FIRST_DISTRIBUTION).append("장을 나누었습니다.").append("\n");
-
-        System.out.print(sb);
+        System.out.print(message);
     }
 
     public static void openInitialCards(Persons person) {
