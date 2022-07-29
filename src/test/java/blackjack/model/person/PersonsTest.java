@@ -1,8 +1,6 @@
 package blackjack.model.person;
 
-import blackjack.model.card.CardPack;
-import blackjack.model.card.Cards;
-import blackjack.model.card.MyCards;
+import blackjack.model.card.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,9 +57,8 @@ public class PersonsTest {
         //given
         final int NUM_OF_FIRST_DISTRIBUTION = 2;
 
-
         //when
-        persons.receiveCard(cards, NUM_OF_FIRST_DISTRIBUTION);
+        persons.receiveInitialCards(cards);
 
         //then
         assertThat(personList).map(Person::getMyCards).map(MyCards::getCards)
@@ -81,6 +78,86 @@ public class PersonsTest {
         assertThat(personList).map(Person::getMyCards).map(MyCards::getCards)
                 .map(List::size)
                 .containsExactly(1, 1, 1);
+    }
+
+    @Test
+    void 가장_큰_숫자_합_가진사람_여러명_찾기() {
+        //given
+        MyCards myCards1 = new MyCards();
+        MyCards myCards2 = new MyCards();
+        myCards1.add(new Card("클로버","8"));
+        myCards1.add(new Card("하트","7"));
+        myCards2.add(new Card("하트","7"));
+        myCards2.add(new Card("클로버","8"));
+
+        personList.get(0).receiveCard(myCards1, 2);
+        personList.get(1).receiveCard(myCards2,2);
+
+        //when
+        persons.markWinner();
+
+        //then
+        assertThat(personList.get(1).getStatus()).isEqualTo(DeckStatus.WIN);
+        assertThat(personList.get(0).getStatus()).isEqualTo(DeckStatus.WIN);
+    }
+
+    @Test
+    void 가장_큰_숫자_합_가진사람_한명_찾기() {
+        //given
+        MyCards myCards1 = new MyCards();
+        MyCards myCards2 = new MyCards();
+        myCards1.add(new Card("클로버","2"));
+        myCards1.add(new Card("하트","1"));
+        myCards2.add(new Card("하트","7"));
+        myCards2.add(new Card("클로버","8"));
+
+        personList.get(0).receiveCard(myCards1, 2);
+        personList.get(1).receiveCard(myCards2,2);
+
+        //when
+        persons.markWinner();
+
+        //then
+        assertThat(personList.get(1).getStatus()).isEqualTo(DeckStatus.WIN);
+    }
+
+    @Test
+    void 블랙잭_존재하는지_확인() {
+        //given
+        MyCards myCards1 = new MyCards();
+        MyCards myCards2 = new MyCards();
+        myCards1.add(new Card("클로버","1"));
+        myCards1.add(new Card("하트","A"));
+        myCards2.add(new Card("하트","A"));
+        myCards2.add(new Card("클로버","Q"));
+
+        personList.get(0).receiveCard(myCards1, 2);
+        personList.get(1).receiveCard(myCards2,2);
+
+        //when
+        persons.markBlackjack();
+
+        //then
+        assertThat(persons.blackjackExist()).isTrue();
+    }
+    @Test
+    void 블랙잭_없는지_확인() {
+        //given
+        MyCards myCards1 = new MyCards();
+        MyCards myCards2 = new MyCards();
+        myCards1.add(new Card("클로버","K"));
+        myCards1.add(new Card("하트","5"));
+        myCards2.add(new Card("하트","A"));
+        myCards2.add(new Card("클로버","1"));
+
+        personList.get(0).receiveCard(myCards1, 2);
+        personList.get(1).receiveCard(myCards2,2);
+
+        //when
+        persons.markBlackjack();
+
+        //then
+        assertThat(persons.blackjackExist()).isFalse();
     }
 
     @AfterEach

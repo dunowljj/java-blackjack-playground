@@ -18,10 +18,24 @@ public class BlackjackGame {
         OutputView.noticeFirstDistribution(persons);
         OutputView.openInitialCards(persons);
 
+        persons.markBlackjack();
+
+        if (persons.blackjackExist()) {
+            persons.totalGame();
+            OutputView.printRevenue(persons.revenueResult());
+            System.exit(0);
+        }
+
         InputView.inputWantGetMore(persons, deck);
 
         OutputView.checkDealerCards(persons, deck);
 
         OutputView.openAllCards(persons);
+
+        persons.markWinner();
+
+        persons.totalGame();
+        OutputView.printRevenue(persons.revenueResult());
+
     }
 }

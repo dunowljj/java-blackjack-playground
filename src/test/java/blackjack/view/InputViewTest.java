@@ -10,6 +10,9 @@ import static org.assertj.core.api.Assertions.*;
 
 
 public class InputViewTest {
+
+    public static final String NAME_OF_DEALER = "딜러";
+
     @Test
     void 배팅금액입력_여러개() {
         //given
@@ -21,7 +24,7 @@ public class InputViewTest {
         InputView.inputBetMoneyTest(persons, betMoney);
 
         //then
-        assertThat(persons.getPersons()).filteredOn((p)->!p.getName().equals(new Name("딜러 ")))
+        assertThat(persons.getPersons()).filteredOn((p)->!p.getName().equals(new Name(NAME_OF_DEALER)))
                 .map(Person::getBetMoney)
                 .containsExactly(10_000, 10_000);
 
