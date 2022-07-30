@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.model.card.CardPack;
-import blackjack.model.person.Name;
 import blackjack.model.person.Person;
 import blackjack.model.person.Persons;
 import blackjack.utils.InputUtils;
@@ -37,7 +36,7 @@ public class InputView {
         System.out.print(message);
     }
 
-    public static void inputWantGetMore(Persons persons, CardPack providedCard) {
+    public static void askPlayerGetMore(Persons persons, CardPack providedCard) {
         persons.getPersons().stream()
                 .filter((person) -> !person.isDealer())
                 .filter((person) -> !person.isOverLimitAceConsidered())

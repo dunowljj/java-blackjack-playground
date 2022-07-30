@@ -76,7 +76,7 @@ public class Persons {
     }
     private int getMaxSumOfCards() {
         return persons.stream()
-                .map(person -> person.getDeckScore()).filter((num) -> num <= 21)
+                .map(person -> person.calculateDeckScore()).filter((num) -> num <= 21)
                 .max(Comparator.naturalOrder()).get();
     }
 

@@ -2,7 +2,6 @@ package blackjack.model.person;
 
 import blackjack.model.card.CardPack;
 import blackjack.model.card.Cards;
-import blackjack.model.card.DeckStatus;
 import blackjack.model.card.MyCards;
 
 public interface Person {
@@ -12,30 +11,25 @@ public interface Person {
     void bet(int money);
 
     void askUntilNo(CardPack providedCards);
-
     boolean wantReceive(String askReceiveMore);
-
     void receiveCard(Cards providedCards, int amout);
 
-    boolean isOverLimit();
-
-    boolean isOverLimitAceConsidered();
-
-    int getDeckScore();
-
     void markIfMax(int maxSumOfCards);
-    boolean isWinner();
+    void setWinner();
 
     void markIfBlackjack();
     boolean isBlackjack();
 
-    void calculateRevenue();
+    int calculateDeckScore();
 
     boolean isDealer();
-    int getRevenue();
 
-    void setWinner();
+    boolean isOverLimit();
 
+    boolean isOverLimitAceConsidered();
+    void calculateRevenue();
+
+    boolean isWinner();
 
     void setDrawer();
 
@@ -49,5 +43,6 @@ public interface Person {
 
     MyCards getMyCards();
 
-    DeckStatus getStatus();
+    int getRevenue();
+
 }

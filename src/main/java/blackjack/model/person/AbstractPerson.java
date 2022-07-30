@@ -62,7 +62,6 @@ public class AbstractPerson implements Person {
             askUntilNo(providedCards);
         }
     }
-
     @Override
     public boolean wantReceive(String askReceiveMore) {
         return askReceiveMore.equals("y");
@@ -81,11 +80,26 @@ public class AbstractPerson implements Person {
         }
     }
     private boolean isMax(int max) {
-        return getDeckScore() == max;
+        return calculateDeckScore() == max;
+    }
+    @Override
+    public void setWinner() {
+        deckStatus = DeckStatus.WIN;
     }
 
     @Override
-    public int getDeckScore() {
+    public void markIfBlackjack() {
+        if (getMyCards().isBlackjack()) {
+            deckStatus = DeckStatus.BLACKJACK;
+        }
+    }
+    @Override
+    public boolean isBlackjack() {
+        return deckStatus.equals(DeckStatus.BLACKJACK);
+    }
+
+    @Override
+    public int calculateDeckScore() {
         int sum = calculateSumOfCards();
 
         if (myCards.includeAce()) {
@@ -95,23 +109,18 @@ public class AbstractPerson implements Person {
 
         return sum;
     }
+
     private Integer calculateSumOfCards() {
         return getMyCards().getCards().stream()
                 .map(card -> card.getNum())
                 .reduce(0, (x, y) -> x + y);
     }
+
     private int chooseSmallAceUntilInLimit(int sum, int aceSize) {
         while (aceSize-- > 0 && isOverLimit()) {
             sum -= 10;
         }
         return sum;
-    }
-
-    @Override
-    public void markIfBlackjack() {
-        if (getMyCards().isBlackjack()) {
-            deckStatus = DeckStatus.BLACKJACK;
-        }
     }
 
     @Override
@@ -135,31 +144,7 @@ public class AbstractPerson implements Person {
 
     @Override
     public void calculateRevenue() {
-        if (isBlackjack()) {
-            revenue = (int) (1.5 * getBetMoney());
-        }
-        if (isWinner()) {
-            revenue = (int) (1.0 * getBetMoney());
-        }
-        if (isLoser()) {
-            revenue = (int) (-1.0 * getBetMoney());
-        }
-        if (isDrawer()) {
-            revenue = 0;
-        }
-    }
-
-    private boolean isDrawer() {
-        return deckStatus.equals(DeckStatus.DRAW);
-    }
-
-    @Override
-    public boolean isBlackjack() {
-        return deckStatus.equals(DeckStatus.BLACKJACK);
-    }
-
-    private boolean isLoser() {
-        return deckStatus.equals(DeckStatus.LOSE);
+        revenue = deckStatus.calculate(getBetMoney());
     }
 
     @Override
@@ -180,16 +165,6 @@ public class AbstractPerson implements Person {
     @Override
     public Name getName() {
         return name;
-    }
-
-    @Override
-    public DeckStatus getStatus() {
-        return deckStatus;
-    }
-
-    @Override
-    public void setWinner() {
-        deckStatus = DeckStatus.WIN;
     }
 
     @Override

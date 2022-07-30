@@ -2,7 +2,6 @@ package blackjack.view;
 
 import blackjack.model.card.CardPack;
 import blackjack.model.person.Dealer;
-import blackjack.model.person.Name;
 import blackjack.model.person.Persons;
 
 public class OutputView {

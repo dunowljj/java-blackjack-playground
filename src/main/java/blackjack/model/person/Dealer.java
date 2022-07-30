@@ -12,6 +12,7 @@ public class Dealer extends AbstractPerson {
         setRevenue((int) v);
     }
 
+
     public boolean needMoreCard() {
         return getMyCards().needMore();
     }

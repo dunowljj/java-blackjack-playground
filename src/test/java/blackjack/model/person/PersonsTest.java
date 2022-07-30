@@ -97,8 +97,8 @@ public class PersonsTest {
         persons.markWinner();
 
         //then
-        assertThat(personList.get(1).getStatus()).isEqualTo(DeckStatus.WIN);
-        assertThat(personList.get(0).getStatus()).isEqualTo(DeckStatus.WIN);
+        assertThat(personList.get(1).isWinner());
+        assertThat(personList.get(0).isWinner());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class PersonsTest {
         persons.markWinner();
 
         //then
-        assertThat(personList.get(1).getStatus()).isEqualTo(DeckStatus.WIN);
+        assertThat(personList.get(1).isWinner());
     }
 
     @Test

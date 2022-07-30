@@ -26,7 +26,7 @@ public class BlackjackGame {
             System.exit(0);
         }
 
-        InputView.inputWantGetMore(persons, deck);
+        InputView.askPlayerGetMore(persons, deck);
 
         OutputView.checkDealerCards(persons, deck);
 

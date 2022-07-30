@@ -126,7 +126,7 @@ public class AbstractPersonTest {
             }
 
             //then
-            assertThat(pobi.getDeckScore()).isEqualTo(score);
+            assertThat(pobi.calculateDeckScore()).isEqualTo(score);
         }
     }
 
@@ -147,7 +147,7 @@ public class AbstractPersonTest {
 
 
             //then
-            assertThat(pobi.getStatus()).isEqualTo(DeckStatus.BLACKJACK);
+            assertThat(pobi.isBlackjack()).isTrue();
         }
 
         @Test
@@ -163,7 +163,7 @@ public class AbstractPersonTest {
 
 
             //then
-            assertThat(pobi.getStatus()).isEqualTo(DeckStatus.WIN);
+            assertThat(pobi.isWinner()).isTrue();
         }
     }
 
