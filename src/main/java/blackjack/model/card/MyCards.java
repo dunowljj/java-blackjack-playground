@@ -20,16 +20,17 @@ public class MyCards extends AbstractCards {
     }
 
     public boolean isOverLimit() {
-        int limit = BLACKJACK_NUM;
-
-        /*if (isIncludeAce()) {
-            limit = BLACKJACK_NUM + ACE_DIFFERENCE;
-        }*/
         return getCards().stream()
-                .map(Card::getNum).reduce(0, (x, y) -> x + y) > limit;
+                .map(Card::getNum).reduce(0, (x, y) -> x + y) > BLACKJACK_NUM;
+    }
+    public boolean isOverLimitAceConsidered() {
+        int limit = BLACKJACK_NUM + ACE_DIFFERENCE * getNumOfAce();
+
+       return getCards().stream()
+               .map(Card::getNum).reduce(0, (x, y) -> x + y) > limit;
     }
 
-    public boolean isIncludeAce() {
+    public boolean includeAce() {
         return getCards().stream()
                 .filter(card -> card.isAce())
                 .findAny().isPresent();
@@ -43,4 +44,11 @@ public class MyCards extends AbstractCards {
     public int size() {
         return getCards().size();
     }
+
+    public int getNumOfAce() {
+        return (int) (getCards().stream()
+                .filter(card -> card.isAce())
+                .count());
+    }
+
 }

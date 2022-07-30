@@ -53,7 +53,7 @@ public class AbstractPerson implements Person {
 
     @Override
     public void askUntilNo(CardPack providedCards) {
-        if (myCards.isOverLimit()) {
+        if (myCards.isOverLimitAceConsidered()) {
             return;
         }
         if (wantReceive(InputView.askReceiveMore(this))) {
@@ -80,15 +80,31 @@ public class AbstractPerson implements Person {
             setWinner();
         }
     }
-
     private boolean isMax(int max) {
-        return getSumOfCardNum() == max;
+        return getDeckScore() == max;
     }
+
     @Override
-    public int getSumOfCardNum() {
+    public int getDeckScore() {
+        int sum = calculateSumOfCards();
+
+        if (myCards.includeAce()) {
+            int aceSize = myCards.getNumOfAce();
+            return chooseSmallAceUntilInLimit(sum, aceSize);
+        }
+
+        return sum;
+    }
+    private Integer calculateSumOfCards() {
         return getMyCards().getCards().stream()
                 .map(card -> card.getNum())
-                .reduce(0, (x,y) -> x + y);
+                .reduce(0, (x, y) -> x + y);
+    }
+    private int chooseSmallAceUntilInLimit(int sum, int aceSize) {
+        while (aceSize-- > 0 && isOverLimit()) {
+            sum -= 10;
+        }
+        return sum;
     }
 
     @Override
@@ -105,10 +121,12 @@ public class AbstractPerson implements Person {
 
     @Override
     public boolean isOverLimit() {
-        if (myCards.isIncludeAce() && myCards.isOverLimit()) {
-
-        }
         return myCards.isOverLimit();
+    }
+
+    @Override
+    public boolean isOverLimitAceConsidered() {
+        return myCards.isOverLimitAceConsidered();
     }
 
     public MyCards getMyCards() {

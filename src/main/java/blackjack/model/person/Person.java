@@ -19,36 +19,35 @@ public interface Person {
 
     boolean isOverLimit();
 
-    int getSumOfCardNum();
+    boolean isOverLimitAceConsidered();
+
+    int getDeckScore();
 
     void markIfMax(int maxSumOfCards);
+    boolean isWinner();
 
     void markIfBlackjack();
+    boolean isBlackjack();
 
+    void calculateRevenue();
+
+    boolean isDealer();
+    int getRevenue();
+
+    void setWinner();
+
+
+    void setDrawer();
+
+    String info();
 
     StringBuilder getNameAndCards();
 
     StringBuilder getNameAndCards(int num);
 
     Name getName();
+
     MyCards getMyCards();
 
     DeckStatus getStatus();
-
-    int getRevenue();
-
-    boolean isBlackjack();
-
-    void calculateRevenue();
-
-    void setWinner();
-
-    boolean isWinner();
-
-    void setDrawer();
-
-
-    String info();
-
-    boolean isDealer();
 }

@@ -62,7 +62,7 @@ public class AbstractPersonTest {
     class 카드합_확인 {
 
         @Test
-        void 딜러_카드합_16이하인지_확인() {
+        void 딜러_카드합_16이하_확인() {
             //given
             MyCards givenCards = new MyCards();
             givenCards.add(new Card("하트", "8"));
@@ -76,12 +76,57 @@ public class AbstractPersonTest {
         }
 
         @Test
-        void 카드합_21넘는지_확인() {
+        void 카드합_21초과_확인() {
             //when
             pobiCards.add(new Card("하트", "22"));
 
             //then
             assertThat(pobi.isOverLimit()).isTrue();
+        }
+
+        @Test
+        void 카드합_21초과_확인_A포함까지_검사() {
+            //when
+            pobiCards.add(new Card("하트", "A"));
+            pobiCards.add(new Card("클로버", "21"));
+
+            //then
+            assertThat(pobi.isOverLimitAceConsidered()).isTrue();
+        }
+
+        @Test
+        void 카드합_21이하_확인_A포함까지_검사() {
+            //when
+            pobiCards.add(new Card("하트", "A"));
+            pobiCards.add(new Card("클로버", "A"));
+
+            //then
+            assertThat(pobi.isOverLimitAceConsidered()).isFalse();
+        }
+
+        @Test
+        void 카드합_21이하_확인_A_10개_포함한_경우_검사() {
+            //when
+            for (int i = 0; i < 10; i++) {
+                pobiCards.add(new Card("하트", "A"));
+            }
+
+            //then
+            assertThat(pobi.isOverLimitAceConsidered()).isFalse();
+        }
+
+        @Test
+        void 카드합_값_확인_A포함() {
+            //given
+            int score = 10;
+
+            //when
+            for (int i = 0; i < 10; i++) {
+                pobiCards.add(new Card("하트", "A"));
+            }
+
+            //then
+            assertThat(pobi.getDeckScore()).isEqualTo(score);
         }
     }
 

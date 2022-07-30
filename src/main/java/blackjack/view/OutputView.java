@@ -7,7 +7,6 @@ import blackjack.model.person.Persons;
 
 public class OutputView {
     private static final String NUM_OF_FIRST_DISTRIBUTION = "2";
-    public static final String NAME_OF_DEALER = "딜러";
     public static final String MESSAGE_DEALER_GET_MORE_CARD = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
 
     public static void noticeFirstDistribution(Persons persons) {

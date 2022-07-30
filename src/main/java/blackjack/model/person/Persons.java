@@ -12,7 +12,6 @@ public class Persons {
     public static final int DEALER_INITIAL_OPENED_NUMS = 1;
     public static final int NUM_OF_DEALER = 1;
     public static final String NAME_DELIMETER = ",";
-    public static final String NAME_OF_DEALER = "딜러";
     public static final String NAME_OUTPUT_DELIMITER = ", ";
 
     static {
@@ -45,21 +44,22 @@ public class Persons {
     public String openInitialDealerCards() {
         StringBuilder sb = new StringBuilder();
         persons.stream().limit(NUM_OF_DEALER)
-                .forEach((p) -> sb.append(p.getNameAndCards(DEALER_INITIAL_OPENED_NUMS)));
+                .forEach((person) -> sb.append(person.getNameAndCards(DEALER_INITIAL_OPENED_NUMS)));
         return sb.toString();
     }
     public String openPlayerCards() {
         StringBuilder sb = new StringBuilder();
         persons.stream()
-                .filter((p) -> !p.getName().toString().equals(NAME_OF_DEALER))
-                .forEach((p) -> sb.append(p.getNameAndCards()));
+                .filter((person) -> !person.isDealer())
+                .forEach((person) -> sb.append(person.getNameAndCards()));
         return sb.toString();
     }
 
     public StringBuilder namesExceptDealer() {
         StringBuilder sb = new StringBuilder();
         persons.stream()
-                .map(Person::getName).filter((name) -> !name.toString().equals(NAME_OF_DEALER))
+                .filter((person) -> !person.isDealer())
+                .map(Person::getName)
                 .forEach((name) -> sb.append(name).append(NAME_OUTPUT_DELIMITER));
         sb.deleteCharAt(sb.lastIndexOf(NAME_OUTPUT_DELIMITER));
         return sb;
@@ -76,7 +76,7 @@ public class Persons {
     }
     private int getMaxSumOfCards() {
         return persons.stream()
-                .map(person -> person.getSumOfCardNum()).filter((num) -> num <= 21)
+                .map(person -> person.getDeckScore()).filter((num) -> num <= 21)
                 .max(Comparator.naturalOrder()).get();
     }
 
@@ -89,7 +89,7 @@ public class Persons {
     public void totalGame() {
         Dealer dealer = (Dealer) persons.get(0);
 
-        if (dealer.isOverLimit()) {
+        if (dealer.isOverLimitAceConsidered()) {
             setAllPlayerWinner();
         }
 
