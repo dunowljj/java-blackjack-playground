@@ -8,7 +8,17 @@ import blackjack.view.OutputView;
 
 public class BlackjackGame {
 
+
     public void run() {
+        try {
+            tryToRun();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            run();
+        }
+    }
+
+    public void tryToRun() {
         CardPack deck = new CardPack();
 
         Persons persons = new Persons(InputView.inputName());

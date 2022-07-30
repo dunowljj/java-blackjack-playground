@@ -10,7 +10,7 @@ public class InputView {
 
     public static final String MESSAGE_INPUT_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     public static final String MESSAGE_REQUIRE_BET = "의 배팅 금액은?";
-    public static final String MESSAGE_ASK_MORECARD = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    public static final String MESSAGE_ASK_MORE_CARD = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
 
     public static String inputName() {
         System.out.println(MESSAGE_INPUT_NAME);
@@ -44,7 +44,7 @@ public class InputView {
     }
 
     public static String askReceiveMore(Person person) {
-        System.out.println(person.getName()+ MESSAGE_ASK_MORECARD);
+        System.out.println(person.getName()+ MESSAGE_ASK_MORE_CARD);
         return InputUtils.getString();
     }
 }

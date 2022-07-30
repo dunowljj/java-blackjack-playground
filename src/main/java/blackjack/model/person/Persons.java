@@ -7,19 +7,17 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Persons {
-    private static final List<Person> persons;
+    private final List<Person> persons;
     public static final int NUM_OF_FIRST_DISTRIBUTION = 2;
     public static final int DEALER_INITIAL_OPENED_NUMS = 1;
     public static final int NUM_OF_DEALER = 1;
     public static final String NAME_DELIMETER = ",";
     public static final String NAME_OUTPUT_DELIMITER = ", ";
 
-    static {
+    public Persons(String input) {
         persons = new ArrayList<>();
         persons.add(new Dealer());
-    }
 
-    public Persons(String input) {
         input = input.replace(" ", "");
         String[] inputs = input.split(NAME_DELIMETER);
 
