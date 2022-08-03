@@ -163,7 +163,6 @@ public class PersonsTest {
     @AfterEach
     void clean() {
         personList.clear();
-        personList.add(new Dealer());
         cards = new CardPack();
     }
 }

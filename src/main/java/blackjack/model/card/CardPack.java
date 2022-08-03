@@ -19,6 +19,7 @@ public class CardPack extends AbstractCards {
         addCardShapeOf("클로버");
         addCardShapeOf("스페이드");
         addCardShapeOf("하트");
+        addCardShapeOf("다이아몬드");
     }
     private void addCardShapeOf(String shape) {
         addNumberCards(shape);
