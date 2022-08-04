@@ -1,2 +1,5 @@
-package blackjack.model;public enum Suit {
+package blackjack.model;
+
+public enum Suit {
+    DIAMOND, SPADE, CLOVER, HEART
 }
