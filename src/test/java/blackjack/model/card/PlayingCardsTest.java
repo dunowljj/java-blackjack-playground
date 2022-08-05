@@ -14,9 +14,12 @@ public class PlayingCardsTest {
 
     @Test
     void 카드_구성결과_확인() {
+        // given -> enum values
         for (Denomination denomination : Denomination.values()) {
             for (Suit suit : Suit.values()) {
+                //when, then
                 PlayingCard playingCard = new PlayingCard(suit, denomination);
+
                 Assertions.assertThat(playingCards.getPlayingCards()).contains(playingCard);
             }
         }

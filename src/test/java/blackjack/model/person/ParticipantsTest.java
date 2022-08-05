@@ -19,4 +19,5 @@ public class ParticipantsTest {
         assertThat(participants.getParticipants())
                 .map(Participant::getName).contains(new Name(names[0]), new Name(names[1]), new Name(names[2]));
     }
+
 }

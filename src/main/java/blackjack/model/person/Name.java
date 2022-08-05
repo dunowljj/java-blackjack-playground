@@ -35,4 +35,9 @@ public class Name {
         Name name1 = (Name) o;
         return Objects.equals(name, name1.name);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

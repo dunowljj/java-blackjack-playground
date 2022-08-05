@@ -1,7 +1,8 @@
 package blackjack.model.person;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class AbstractParticipantTest {
 
@@ -11,9 +12,24 @@ public class AbstractParticipantTest {
         String input = "pobi";
 
         //when
-        AbstractParticipant participant = new AbstractParticipant(input);
+        AbstractParticipant participant = new Player(input);
 
         //then
-        Assertions.assertThat(participant.getName()).isEqualTo(new Name(input));
+        assertThat(participant.getName()).isEqualTo(new Name(input));
+    }
+
+    @Test
+    void 배팅금액_입력() {
+        //given
+        String inputName = "pobi";
+        int inputMoney = 10000;
+        AbstractParticipant participant = new Player(inputName);
+
+        //when
+        participant.bet(inputMoney);
+        BetMoney betMoney = participant.getBetMoney();
+
+        //then
+        assertThat(betMoney.value()).isEqualTo(10000);
     }
 }

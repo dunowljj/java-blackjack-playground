@@ -15,11 +15,21 @@ public class BlackjackGame {
     }
 
     private static void tryToRun() {
+        Participants participants = askInputs();
+
+        /*// 이름, 금액 출력 확인
+        for (Participant participant : participants.getParticipants()) {
+            System.out.println(participant.getName());
+            System.out.println(participant.getBetMoney());*/
+        }
+
+    private static Participants askInputs() {
         Participants participants = new Participants(InputView.inputPlayerNames());
 
-        /*// 이름 출력 확인
-        for (Participant participant : participants.getParticipants()) {
-            System.out.println(participant.getName().value());
-        }*/
+        participants.getParticipants().stream()
+                .forEach(p -> p.bet(InputView.inputBetMoney(p.getName())));
+
+        return participants;
     }
+
 }
