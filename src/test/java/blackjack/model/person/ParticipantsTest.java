@@ -1,5 +1,6 @@
 package blackjack.model.person;
 
+import blackjack.model.card.PlayingCards;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -13,7 +14,7 @@ public class ParticipantsTest {
         String[] names = input.split(",");
 
         //when
-        Participants participants = new Participants(input);
+        Participants participants = new Participants(input, new PlayingCards());
 
         //then
         assertThat(participants.getParticipants())

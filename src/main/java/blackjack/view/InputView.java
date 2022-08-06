@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.model.person.BetMoney;
 import blackjack.model.person.Name;
 import blackjack.utils.InputUtils;
 
@@ -13,9 +14,9 @@ public class InputView {
         return InputUtils.inputString();
     }
 
-    public static int inputBetMoney(Name name) {
+    public static BetMoney inputBetMoney(Name name) {
         System.out.println(name + MESSAGE_INPUT_BETMONEY);
-        return InputUtils.inputInt();
+        return new BetMoney(InputUtils.inputInt());
     }
 
 }

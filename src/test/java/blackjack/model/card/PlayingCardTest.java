@@ -1,7 +1,8 @@
 package blackjack.model.card;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class PlayingCardTest {
 
@@ -15,7 +16,19 @@ public class PlayingCardTest {
         PlayingCard playingCard = new PlayingCard(suit, denomination);
 
         //then
-        Assertions.assertThat(playingCard.getDenomination()).isEqualTo(denomination);
-        Assertions.assertThat(playingCard.getSuit()).isEqualTo(suit);
+        assertThat(playingCard.getDenomination()).isEqualTo(denomination);
+        assertThat(playingCard.getSuit()).isEqualTo(suit);
+    }
+
+    @Test
+    void 카드정보_확인() {
+        //given
+        String given = "10하트";
+
+        //when
+        PlayingCard playingCard = new PlayingCard(Suit.HEART, Denomination.TEN);
+
+        //then
+        assertThat(playingCard.info()).isEqualTo(given);
     }
 }

@@ -7,9 +7,8 @@ import java.util.List;
 public class PlayingCards {
     private final List<PlayingCard> playingCards = new ArrayList<>();
 
-    public List<PlayingCard> getPlayingCards() {
+    public PlayingCards() {
         setUpPlayingCards();
-        return playingCards;
     }
     private void setUpPlayingCards() {
         addInitialCards();
@@ -19,15 +18,18 @@ public class PlayingCards {
         for (Suit suit : Suit.values()) {
             addCardWith(suit);
         }
-        /*Arrays.stream(Suit.values())
-                .forEach((suit -> addCardWith(suit)));*/
     }
     private void addCardWith(Suit suit) {
         for (Denomination denomination : Denomination.values()) {
             playingCards.add(new PlayingCard(suit, denomination));
         }
-       /* Arrays.stream(Denomination.values())
-                .forEach((denomination -> playingCards.add(new PlayingCard(suit,denomination))));*/
+    }
 
+    public PlayingCard drawNext() {
+        return playingCards.remove(playingCards.size() - 1);
+    }
+
+    public List<PlayingCard> getPlayingCards() {
+        return playingCards;
     }
 }

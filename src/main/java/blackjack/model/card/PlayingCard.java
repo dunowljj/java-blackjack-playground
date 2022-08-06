@@ -31,4 +31,8 @@ public class PlayingCard{
     public int hashCode() {
         return Objects.hash(suit, denomination);
     }
+
+    public String info() {
+        return denomination.getScore() + "" + suit.getName();
+    }
 }
