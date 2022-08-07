@@ -9,6 +9,11 @@ public class Running extends Started {
         super(playingCards);
     }
 
+    public Running(Cards cards) {
+        super(cards);
+    }
+
+    //Todo: 허수아비같은 메서드를 어찌해야하는가?
     @Override
     public State drawCard(PlayingCard playingCard) {
         return null;

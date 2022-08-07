@@ -1,5 +1,6 @@
 package blackjack.model.person;
 
+import blackjack.model.card.PlayingCards;
 import blackjack.model.state.State;
 
 public interface Participant {
@@ -16,4 +17,8 @@ public interface Participant {
     StringBuilder nameAndCards();
 
     boolean isPlayer();
+
+    boolean isFinished();
+
+    void askHitUntilNo(PlayingCards playingCards);
 }

@@ -1,8 +1,11 @@
 package blackjack.model.person;
 
-import blackjack.model.card.PlayingCards;
-import blackjack.model.state.Running;
+import blackjack.model.card.*;
+import blackjack.model.state.Bust;
+import blackjack.model.state.Hit;
 import blackjack.model.state.State;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -45,6 +48,7 @@ public class AbstractParticipantTest {
         State state = participant.getState();
 
         //then
-        assertThat(state.getClass()).isEqualTo(new Running(new PlayingCards()).getClass());
+        assertThat(state.getClass()).isEqualTo(Hit.class);
     }
+
 }

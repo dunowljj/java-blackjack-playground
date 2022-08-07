@@ -4,13 +4,14 @@ import blackjack.model.card.Cards;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class RunningTest {
+public class FinishedTest {
+
     @Test
     void 종료여부_확인() {
         //given, when
-        Running running = new Running(new Cards());
+        Finished finished = new Finished(new Cards());
 
         //then
-        Assertions.assertThat(running.isFinished()).isFalse();
+        Assertions.assertThat(finished.isFinished()).isTrue();
     }
 }

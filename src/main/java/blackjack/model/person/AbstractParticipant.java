@@ -1,8 +1,10 @@
 package blackjack.model.person;
 
 import blackjack.model.card.PlayingCards;
-import blackjack.model.state.Running;
+import blackjack.model.state.Hit;
 import blackjack.model.state.State;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public abstract class AbstractParticipant implements Participant{
     public static final String MESSAGE_NAME_BETWEEN_CARDS = "카드: ";
@@ -15,7 +17,7 @@ public abstract class AbstractParticipant implements Participant{
     }
 
     public AbstractParticipant(Name name, PlayingCards playingCards) {
-        this.state = new Running(playingCards);
+        this.state = new Hit(playingCards);
         this.name = name;
     }
     @Override
@@ -33,6 +35,31 @@ public abstract class AbstractParticipant implements Participant{
 
         return nameAndCard;
     }
+
+    @Override
+    public void askHitUntilNo(PlayingCards playingCards) {
+        while (!isFinished()) {
+            askHit(playingCards);
+        }
+    }
+    private void askHit(PlayingCards playingCards) {
+        boolean yes = InputView.askWantHitMore(name);
+
+        if (yes) {
+            state = state.drawCard(playingCards.nextCard());
+            OutputView.printNameAndCards(nameAndCards().toString());
+        }
+
+        if (!yes) {
+            state = state.stay();
+        }
+    }
+
+    @Override
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
 
     @Override
     public State getState() {

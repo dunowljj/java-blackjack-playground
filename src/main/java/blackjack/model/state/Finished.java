@@ -2,12 +2,11 @@ package blackjack.model.state;
 
 import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCard;
-import blackjack.model.card.PlayingCards;
 
 public class Finished extends Started{
 
-    public Finished(PlayingCards playingCards) {
-        super(playingCards);
+    public Finished(Cards cards) {
+        super(cards);
     }
 
     @Override

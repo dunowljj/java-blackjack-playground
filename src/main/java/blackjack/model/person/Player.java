@@ -27,4 +27,6 @@ public class Player extends AbstractParticipant {
     public boolean isPlayer() {
         return true;
     }
+
+
 }

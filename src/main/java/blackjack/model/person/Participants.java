@@ -24,10 +24,10 @@ public class Participants {
         return participants;
     }
 
-    public String names() {
+    public String playerNames() {
         StringBuilder names = new StringBuilder();
         
-        participants.stream()
+        participants.stream().filter(participant -> participant.isPlayer())
                 .map(Participant::getName).map(Name::value)
                 .forEach((name) -> names.append(name).append(OUTPUT_NAME_DELIMITER));
 

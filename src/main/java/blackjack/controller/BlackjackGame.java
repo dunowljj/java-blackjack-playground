@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.model.card.PlayingCards;
-import blackjack.model.person.Participant;
 import blackjack.model.person.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -18,10 +17,15 @@ public class BlackjackGame {
 
     private static void tryToRun() {
         PlayingCards playingCards = new PlayingCards();
-        Participants participants = askInputs(playingCards);
 
-        OutputView.noticeStartDistribution(participants.names());
+        Participants participants = new Participants(InputView.inputPlayerNames(), playingCards);
+        participants.inputBetMoney();
+
+        OutputView.noticeStartDistribution(participants.playerNames());
         OutputView.printNameAndCards(participants.nameAndCards());
+
+        InputView.askHitMore(participants, playingCards);
+
 
         /*// 이름, 금액 출력 확인
         for (Participant participant : participants.getParticipants()) {
@@ -30,12 +34,5 @@ public class BlackjackGame {
         }*/
     }
 
-        private static Participants askInputs (PlayingCards playingCards){
-            Participants participants = new Participants(InputView.inputPlayerNames(), playingCards);
-
-            participants.inputBetMoney();
-
-            return participants;
-        }
 
     }

@@ -25,7 +25,7 @@ public class PlayingCards {
         }
     }
 
-    public PlayingCard drawNext() {
+    public PlayingCard nextCard() {
         return playingCards.remove(playingCards.size() - 1);
     }
 

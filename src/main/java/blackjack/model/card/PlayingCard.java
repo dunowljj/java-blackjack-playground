@@ -12,6 +12,7 @@ public class PlayingCard{
         this.denomination = denomination;
     }
 
+
     public Suit getSuit() {
         return suit;
     }

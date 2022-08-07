@@ -1,9 +1,9 @@
 package blackjack.model.state;
 
-import blackjack.model.card.PlayingCards;
+import blackjack.model.card.Cards;
 
 public class Blackjack extends Finished{
-    public Blackjack(PlayingCards playingCards) {
-        super(playingCards);
+    public Blackjack(Cards cards) {
+        super(cards);
     }
 }

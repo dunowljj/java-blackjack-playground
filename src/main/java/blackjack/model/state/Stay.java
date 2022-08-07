@@ -1,10 +1,10 @@
 package blackjack.model.state;
 
-import blackjack.model.card.PlayingCards;
+import blackjack.model.card.Cards;
 
 public class Stay extends Finished {
 
-    public Stay(PlayingCards playingCards) {
-        super(playingCards);
+    public Stay(Cards cards) {
+        super(cards);
     }
 }

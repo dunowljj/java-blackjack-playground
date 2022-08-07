@@ -17,4 +17,32 @@ public class CardsTest {
         //then
         assertThat(cards.getCards().size()).isEqualTo(2);
     }
+
+    @Test
+    void Bust_인지_확인() {
+        //given
+        Cards cards = new Cards();
+
+        //when
+        for (int i = 0; i < 3; i++) {
+            cards.add(new PlayingCard(Suit.HEART, Denomination.TEN));
+        }
+
+        //then
+        assertThat(cards.isBust()).isTrue();
+    }
+    @Test
+    void Bust_아닌지_확인() {
+        //given
+        Cards cards = new Cards();
+
+        //when
+        cards.add(new PlayingCard(Suit.HEART, Denomination.TEN));
+        cards.add(new PlayingCard(Suit.CLOVER, Denomination.FIVE));
+        cards.add(new PlayingCard(Suit.DIAMOND, Denomination.SIX));
+
+
+        //then
+        assertThat(cards.isBust()).isFalse();
+    }
 }
