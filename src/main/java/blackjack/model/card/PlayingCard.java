@@ -20,6 +20,10 @@ public class PlayingCard{
         return denomination;
     }
 
+    public String info() {
+        return denomination.getScore() + "" + suit.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,9 +35,5 @@ public class PlayingCard{
     @Override
     public int hashCode() {
         return Objects.hash(suit, denomination);
-    }
-
-    public String info() {
-        return denomination.getScore() + "" + suit.getName();
     }
 }

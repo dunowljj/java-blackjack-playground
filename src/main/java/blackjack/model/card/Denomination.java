@@ -15,13 +15,27 @@ public enum Denomination {
     QUEEN(10),
     KING(10);
 
+    private static final int ACE_BIG_SCORE = 11;
+
     Denomination(int score) {
         this.score = score;
 
     }
-    private final int score;
+    private int score;
 
     public int getScore() {
         return score;
+    }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
+
+    public void chooseBigAce() {
+        this.score = ACE_BIG_SCORE;
+    }
+
+    public boolean isAlphabet() {
+        return (this == JACK) || (this == QUEEN) || (this == KING) || (this == ACE);
     }
 }

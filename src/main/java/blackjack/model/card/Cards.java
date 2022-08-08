@@ -6,6 +6,9 @@ import java.util.List;
 public class Cards {
     public static final int CARDS_FIRST_INDEX = 0;
     public static final int SCORE_UPPER_LIMIT = 21;
+    public static final int GAP_BETWEEN_ACE_SCORES = 10;
+    public static final int JQK_SCORE = 10;
+    public static final int SMALL_ACE_SCORE = 1;
     private final List<PlayingCard> cards;
 
     public Cards() {
@@ -41,8 +44,19 @@ public class Cards {
     }
 
     public boolean isBust() {
+        return sumOfScore() > SCORE_UPPER_LIMIT;
+    }
+
+    public Integer sumOfScore() {
         return cards.stream().map(PlayingCard::getDenomination)
                 .map(Denomination::getScore)
-                .reduce(0, (x,y) -> x + y) > SCORE_UPPER_LIMIT;
+                .reduce(0, (x, y) -> x + y);
+    }
+
+    public boolean isBlackjack() {
+        return cards.stream().map(PlayingCard::getDenomination)
+                .filter(denomination -> denomination.isAlphabet())
+                .filter(denomination -> !denomination.isAce())
+                .map(Denomination::getScore).anyMatch((score) -> score == JQK_SCORE);
     }
 }

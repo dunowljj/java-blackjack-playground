@@ -21,7 +21,7 @@ public class HitTest {
     }
 
     @Test
-    void 시작_카드2장() {
+    void 시작_카드2장_받기() {
         //given, when
         State state = new Hit(new PlayingCards());
         Cards cards = state.cards();
@@ -57,4 +57,48 @@ public class HitTest {
         assertThat(state.getClass()).isEqualTo(Bust.class);
     }
 
+    @Test
+    void 블랙잭인_경우() {
+        //given
+        Cards cards = new Cards();
+
+        //when
+        cards.add(new PlayingCard(Suit.HEART, Denomination.ACE));
+        cards.add(new PlayingCard(Suit.HEART, Denomination.JACK));
+
+        //then
+        assertThat(cards.isBlackjack()).isTrue();
+
+    }
+
+    @Test
+    void 블랙잭_아닌_경우() {
+        //given
+        Cards cards = new Cards();
+
+        //when
+        cards.add(new PlayingCard(Suit.HEART, Denomination.ACE));
+        cards.add(new PlayingCard(Suit.HEART, Denomination.TEN));
+
+        //then
+        assertThat(cards.isBlackjack()).isFalse();
+
+    }
+
+    @Test
+    void 큰_Ace점수_고르기() {
+        //given
+        Cards cards = new Cards();
+        cards.add(new PlayingCard(Suit.HEART, Denomination.ACE));
+        cards.add(new PlayingCard(Suit.HEART, Denomination.JACK));
+
+        {
+            //when
+            State hit = new Hit(cards);
+
+            //then
+//        assertThat(hit.cards().).isEqualTo(Hit.class);
+        }
+
+    }
 }

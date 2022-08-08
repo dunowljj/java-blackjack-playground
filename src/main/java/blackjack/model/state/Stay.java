@@ -6,5 +6,8 @@ public class Stay extends Finished {
 
     public Stay(Cards cards) {
         super(cards);
+        cards.checkChangeAce();
     }
+
+
 }

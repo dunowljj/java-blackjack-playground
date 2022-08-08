@@ -13,6 +13,7 @@ public class Player extends AbstractParticipant {
     public Player(Name name, PlayingCards playingCards) {
         super(name, playingCards);
     }
+
     @Override
     public StringBuilder nameAndCards() {
         StringBuilder nameAndCard = new StringBuilder();

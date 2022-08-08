@@ -17,7 +17,7 @@ public class Hit extends Running {
     public State drawCard(PlayingCard playingCard) {
         cards.add(playingCard);
         if (isBust()) {
-            return new Bust(cards());
+            return new Bust(cards);
         }
         return new Hit(cards);
     }
