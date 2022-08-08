@@ -59,4 +59,30 @@ public class Cards {
                 .filter(denomination -> !denomination.isAce())
                 .map(Denomination::getScore).anyMatch((score) -> score == JQK_SCORE);
     }
+    public void checkChangeAce() {
+        int aceCount = numberOfAce();
+
+        while (canChooseBigAce(aceCount)){
+            cards.stream().map(PlayingCard::getDenomination)
+                    .filter(denomination -> denomination.getScore() == SMALL_ACE_SCORE)
+                    .findFirst().get()
+                    .chooseBigAce();
+            aceCount--;
+        }
+    }
+    private int numberOfAce() {
+        return (int) cards.stream().map(PlayingCard::getDenomination)
+                .filter(denomination -> denomination.isAce()).count();
+    }
+
+    private boolean canChooseBigAce(int aceCount) {
+        return sizeUpAvailable() && aceExist(aceCount);
+    }
+    private boolean sizeUpAvailable() {
+        return sumOfScore() + GAP_BETWEEN_ACE_SCORES <= SCORE_UPPER_LIMIT;
+    }
+
+    private boolean aceExist(int aceCount) {
+        return aceCount != 0;
+    }
 }
