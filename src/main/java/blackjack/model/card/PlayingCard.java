@@ -36,4 +36,12 @@ public class PlayingCard{
     public int hashCode() {
         return Objects.hash(suit, denomination);
     }
+
+    public boolean isAce() {
+        return denomination.isAce();
+    }
+
+    public void changeToBigAce() {
+        denomination = Denomination.ACE_BIG_SCORE;
+    }
 }

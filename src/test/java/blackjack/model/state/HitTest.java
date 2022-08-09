@@ -30,6 +30,8 @@ public class HitTest {
         assertThat(cards.getCards().size()).isEqualTo(2);
     }
 
+
+
     @Test
     void 카드추가_안함_Stay() {
         //given
@@ -57,33 +59,7 @@ public class HitTest {
         assertThat(state.getClass()).isEqualTo(Bust.class);
     }
 
-    @Test
-    void 블랙잭인_경우() {
-        //given
-        Cards cards = new Cards();
 
-        //when
-        cards.add(new PlayingCard(Suit.HEART, Denomination.ACE));
-        cards.add(new PlayingCard(Suit.HEART, Denomination.JACK));
-
-        //then
-        assertThat(cards.isBlackjack()).isTrue();
-
-    }
-
-    @Test
-    void 블랙잭_아닌_경우() {
-        //given
-        Cards cards = new Cards();
-
-        //when
-        cards.add(new PlayingCard(Suit.HEART, Denomination.ACE));
-        cards.add(new PlayingCard(Suit.HEART, Denomination.TEN));
-
-        //then
-        assertThat(cards.isBlackjack()).isFalse();
-
-    }
 
     @Test
     void 큰_Ace점수_고르기() {
@@ -99,6 +75,7 @@ public class HitTest {
             //then
 //        assertThat(hit.cards().).isEqualTo(Hit.class);
         }
-
     }
+
+
 }

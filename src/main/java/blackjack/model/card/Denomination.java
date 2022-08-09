@@ -13,9 +13,8 @@ public enum Denomination {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10);
-
-    private static final int ACE_BIG_SCORE = 11;
+    KING(10),
+    ACE_BIG_SCORE(11);
 
     Denomination(int score) {
         this.score = score;
@@ -31,9 +30,6 @@ public enum Denomination {
         return this == ACE;
     }
 
-    public void chooseBigAce() {
-        this.score = ACE_BIG_SCORE;
-    }
 
     public boolean isAlphabet() {
         return (this == JACK) || (this == QUEEN) || (this == KING) || (this == ACE);

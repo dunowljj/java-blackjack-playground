@@ -1,10 +1,20 @@
 package blackjack.model.card;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class CardsTest {
+
+    Cards cards;
+
+    @BeforeEach
+    void setUp() {
+        cards = new Cards();
+    }
+
 
     @Test
     void 개인_카드_초기생성_개수확인() {
@@ -21,7 +31,6 @@ public class CardsTest {
     @Test
     void Bust인지_확인() {
         //given
-        Cards cards = new Cards();
 
         //when
         for (int i = 0; i < 3; i++) {
@@ -34,7 +43,6 @@ public class CardsTest {
     @Test
     void Bust_아닌지_확인() {
         //given
-        Cards cards = new Cards();
 
         //when
         cards.add(new PlayingCard(Suit.HEART, Denomination.TEN));
@@ -49,7 +57,6 @@ public class CardsTest {
     @Test
     void Blackjack인지_확인() {
         //given
-        Cards cards = new Cards();
 
         //when
         cards.add(new PlayingCard(Suit.HEART, Denomination.ACE));
@@ -64,7 +71,6 @@ public class CardsTest {
         //given
         int bigAce = 11;
         int sum = 6 + 4 + bigAce;
-        Cards cards = new Cards();
         cards.add(new PlayingCard(Suit.SPADE, Denomination.SIX));
         cards.add(new PlayingCard(Suit.SPADE, Denomination.FOUR));
         cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
@@ -74,7 +80,6 @@ public class CardsTest {
 
         //then
         assertThat(cards.sumOfScore()).isEqualTo(sum);
-
     }
 
     @Test
@@ -82,15 +87,49 @@ public class CardsTest {
         //given
         int smallAce = 1;
         int sum = 6 + 5 + smallAce;
-        Cards cards = new Cards();
         cards.add(new PlayingCard(Suit.HEART, Denomination.SIX));
         cards.add(new PlayingCard(Suit.SPADE, Denomination.FIVE));
         cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
-
+        for (PlayingCard card : cards.getCards()) {
+            System.out.println(card);
+        }
         //when
         cards.checkChangeAce();
 
         //then
         assertThat(cards.sumOfScore()).isEqualTo(sum);
+    }
+
+    @Test
+    void 블랙잭인_경우() {
+        //given
+        Cards cards = new Cards();
+
+        //when
+        cards.add(new PlayingCard(Suit.HEART, Denomination.ACE));
+        cards.add(new PlayingCard(Suit.HEART, Denomination.JACK));
+
+        //then
+        assertThat(cards.isBlackjack()).isTrue();
+
+    }
+
+    @Test
+    void 블랙잭_아닌_경우() {
+        //given
+        Cards cards = new Cards();
+
+        //when
+        cards.add(new PlayingCard(Suit.HEART, Denomination.ACE));
+        cards.add(new PlayingCard(Suit.HEART, Denomination.TEN));
+
+        //then
+        assertThat(cards.isBlackjack()).isFalse();
+
+    }
+
+    @AfterEach
+    void clean() {
+        cards.getCards().clear();
     }
 }

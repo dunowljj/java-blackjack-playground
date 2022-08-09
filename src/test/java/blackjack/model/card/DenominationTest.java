@@ -30,10 +30,11 @@ public class DenominationTest {
     void Ace_Score값_11로_변경() {
         //given
         int scoreOfBigAce = 11;
-        Denomination denomination = Denomination.ACE;
+        PlayingCard playingCard = new PlayingCard(Suit.SPADE, Denomination.ACE);
 
         //when
-        denomination.chooseBigAce();
+        playingCard.changeToBigAce();
+        Denomination denomination = playingCard.getDenomination();
 
         //then
         assertThat(denomination.getScore()).isEqualTo(scoreOfBigAce);

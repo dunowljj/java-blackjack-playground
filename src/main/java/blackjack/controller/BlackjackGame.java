@@ -18,14 +18,19 @@ public class BlackjackGame {
     private static void tryToRun() {
         PlayingCards playingCards = new PlayingCards();
 
-        Participants participants = new Participants(InputView.inputPlayerNames(), playingCards);
-        participants.inputBetMoney();
+        //Todo : 게임시스템? 팩토리 사용해서 의도 나타내기?
+        Participants gamers = new Participants(InputView.inputPlayerNames(), playingCards);
+        gamers.inputBetMoney();
 
-        OutputView.noticeStartDistribution(participants.playerNames());
-        OutputView.printNameAndCards(participants.nameAndCards());
+        OutputView.noticeStartDistribution(gamers.playerNames());
+        OutputView.printNameAndCards(gamers.nameAndCards());
 
-        InputView.askHitMore(participants, playingCards);
+        InputView.askHitMore(gamers, playingCards);
 
+        if (gamers.dealerNeedDraw()) {
+            gamers.dealerDrawCard(playingCards);
+            OutputView.noticeDealerDrawCard();
+        }
 
         /*// 이름, 금액 출력 확인
         for (Participant participant : participants.getParticipants()) {

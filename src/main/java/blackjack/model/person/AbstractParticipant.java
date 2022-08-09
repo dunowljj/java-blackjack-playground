@@ -1,6 +1,9 @@
 package blackjack.model.person;
 
+import blackjack.model.card.Cards;
+import blackjack.model.card.PlayingCard;
 import blackjack.model.card.PlayingCards;
+import blackjack.model.state.Blackjack;
 import blackjack.model.state.Hit;
 import blackjack.model.state.State;
 import blackjack.view.InputView;
@@ -17,9 +20,26 @@ public abstract class AbstractParticipant implements Participant{
     }
 
     public AbstractParticipant(Name name, PlayingCards playingCards) {
-        this.state = new Hit(playingCards);
         this.name = name;
+        this.state = new Hit(playingCards);
+        if (state.cards().isBlackjack()) {
+            this.state = new Blackjack(state.cards());
+        }
     }
+
+    public AbstractParticipant(Name name, Cards cards) {
+        this.name = name;
+        this.state = new Hit(cards);
+        if (state.cards().isBlackjack()) {
+            this.state = new Blackjack(state.cards());
+        }
+    }
+
+    @Override
+    public void drawCard(PlayingCard playingCard) {
+        state = state.drawCard(playingCard);
+    }
+
     @Override
     public void bet(BetMoney betMoney) {
         this.betMoney = betMoney;

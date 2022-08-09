@@ -1,13 +1,19 @@
 package blackjack.model.person;
 
+import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCards;
 
 public class Dealer extends AbstractParticipant{
 
     public static final String NAME_OF_DEALER = "딜러";
+    public static final int DEALER_SCORE_UNDER_BOUND = 16;
 
     public Dealer(PlayingCards playingCards) {
         super(new Name(NAME_OF_DEALER), playingCards);
+    }
+
+    public Dealer(Cards cards) {
+        super(new Name(NAME_OF_DEALER), cards);
     }
 
     @Override
@@ -24,4 +30,9 @@ public class Dealer extends AbstractParticipant{
     public boolean isPlayer() {
         return false;
     }
+
+    public boolean needMoreCard() {
+       return getState().cards().sumOfScore() <= DEALER_SCORE_UNDER_BOUND;
+    }
+
 }

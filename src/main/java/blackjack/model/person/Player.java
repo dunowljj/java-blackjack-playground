@@ -1,5 +1,6 @@
 package blackjack.model.person;
 
+import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCards;
 
 public class Player extends AbstractParticipant {
@@ -12,6 +13,9 @@ public class Player extends AbstractParticipant {
 
     public Player(Name name, PlayingCards playingCards) {
         super(name, playingCards);
+    }
+    public Player(Name name, Cards cards) {
+        super(name, cards);
     }
 
     @Override
