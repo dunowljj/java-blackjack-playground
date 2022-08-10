@@ -23,7 +23,7 @@ public class BlackjackGame {
         gamers.inputBetMoney();
 
         OutputView.noticeStartDistribution(gamers.playerNames());
-        OutputView.printNameAndCards(gamers.nameAndCards());
+        OutputView.printInfo(gamers.namesAndCards());
 
         InputView.askHitMore(gamers, playingCards);
 
@@ -31,6 +31,13 @@ public class BlackjackGame {
             gamers.dealerDrawCard(playingCards);
             OutputView.noticeDealerDrawCard();
         }
+
+        OutputView.printDeckAndResult(gamers.allNamesAndCards());
+
+        // 결과 도출
+        OutputView.printRevenues();
+
+
 
         /*// 이름, 금액 출력 확인
         for (Participant participant : participants.getParticipants()) {

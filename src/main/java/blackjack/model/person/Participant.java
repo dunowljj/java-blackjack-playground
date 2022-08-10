@@ -10,7 +10,7 @@ public interface Participant {
 
     void bet(BetMoney money);
 
-    StringBuilder allNameAndCards();
+    StringBuilder allNamesAndCards();
 
     State getState();
 

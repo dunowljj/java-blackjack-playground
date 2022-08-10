@@ -52,7 +52,6 @@ public class Cards {
                 .reduce(0, (x, y) -> x + y);
     }
 
-    // todo: 잚못된 로직.
     public boolean isBlackjack() {
         if (aceExist()) {
             return cards.stream().map(PlayingCard::getDenomination)

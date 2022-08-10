@@ -10,7 +10,8 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public abstract class AbstractParticipant implements Participant{
-    public static final String MESSAGE_NAME_BETWEEN_CARDS = "카드: ";
+    public static final String MESSAGE_CARD_START = "카드: ";
+    public static final String MESSAGE_RESULT_START = "- 결과: ";
     private final Name name;
     private BetMoney betMoney;
     private State state;
@@ -47,11 +48,12 @@ public abstract class AbstractParticipant implements Participant{
     }
 
     @Override
-    public StringBuilder allNameAndCards() {
+    public StringBuilder allNamesAndCards() {
         StringBuilder nameAndCard = new StringBuilder();
 
-        nameAndCard.append(getName()).append(MESSAGE_NAME_BETWEEN_CARDS)
-                .append(getState().cards().allCards());
+        nameAndCard.append(getName()).append(MESSAGE_CARD_START)
+                .append(state.cards().allCards())
+                .append(MESSAGE_RESULT_START).append(state.cards().sumOfScore());
 
         return nameAndCard;
     }
@@ -67,7 +69,7 @@ public abstract class AbstractParticipant implements Participant{
 
         if (yes) {
             state = state.drawCard(playingCards.nextCard());
-            OutputView.printNameAndCards(nameAndCards().toString());
+            OutputView.printInfo(nameAndCards().toString());
         }
 
         if (!yes) {

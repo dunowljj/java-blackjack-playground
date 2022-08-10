@@ -43,11 +43,22 @@ public class Participants {
         return names.toString();
     }
 
-    public String nameAndCards() {
+    public String namesAndCards() {
         StringBuilder namesAndCards = new StringBuilder();
 
         participants.stream()
                 .forEach(participant -> namesAndCards.append(participant.nameAndCards()).append("\n"));
+
+        namesAndCards.deleteCharAt(namesAndCards.lastIndexOf("\n"));
+
+        return namesAndCards.toString();
+    }
+
+    public String allNamesAndCards() {
+        StringBuilder namesAndCards = new StringBuilder();
+
+        participants.stream()
+                .forEach(participant -> namesAndCards.append(participant.allNamesAndCards()).append("\n"));
 
         namesAndCards.deleteCharAt(namesAndCards.lastIndexOf("\n"));
 
@@ -68,4 +79,5 @@ public class Participants {
     private Dealer dealer() {
         return (Dealer) participants.get(FIRST_INDEX);
     }
+
 }
