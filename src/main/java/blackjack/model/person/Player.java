@@ -18,6 +18,7 @@ public class Player extends AbstractParticipant {
         super(name, cards);
     }
 
+
     @Override
     public StringBuilder nameAndCards() {
         StringBuilder nameAndCard = new StringBuilder();
@@ -29,8 +30,29 @@ public class Player extends AbstractParticipant {
     }
 
     @Override
+    public StringBuilder namesAndProfits() {
+        StringBuilder namesAndRevenues = new StringBuilder();
+
+        namesAndRevenues.append(getName())
+                .append(": ")
+                .append(profit())
+                .append("\n");
+
+        return namesAndRevenues;
+    }
+    @Override
     public boolean isPlayer() {
         return true;
+    }
+
+    @Override
+    public void total(double money) {
+        setProfit(money);
+    }
+
+    @Override
+    public int profit() {
+        return (int) (getState().profit(getBetMoney().value()));
     }
 
 

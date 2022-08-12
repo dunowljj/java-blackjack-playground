@@ -12,16 +12,30 @@ public interface Participant {
 
     StringBuilder allNamesAndCards();
 
-    State getState();
-
-    Name getName();
-    BetMoney getBetMoney();
-
     StringBuilder nameAndCards();
 
-    boolean isPlayer();
+    void askHitUntilNo(PlayingCards playingCards);
+
+    int profit();
+
+    boolean isBlackjack();
 
     boolean isFinished();
 
-    void askHitUntilNo(PlayingCards playingCards);
+    boolean isPlayer();
+
+    State getState();
+
+    Name getName();
+
+    BetMoney getBetMoney();
+
+    StringBuilder namesAndProfits();
+
+    Profit getProfit();
+
+    void total(double money);
+
+    void setProfit(double profit);
 }
+

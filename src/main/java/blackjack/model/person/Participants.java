@@ -1,5 +1,6 @@
 package blackjack.model.person;
 
+import blackjack.model.card.PlayingCard;
 import blackjack.model.card.PlayingCards;
 import blackjack.view.InputView;
 
@@ -73,11 +74,34 @@ public class Participants {
     public boolean dealerNeedDraw() {
         return dealer().needMoreCard();
     }
-    public void dealerDrawCard(PlayingCards playingCards) {
-        dealer().drawCard(playingCards.nextCard());
+    public void dealerDrawCard(PlayingCard playingCard) {
+        dealer().drawCard(playingCard);
     }
     private Dealer dealer() {
         return (Dealer) participants.get(FIRST_INDEX);
     }
 
+    public boolean blackjackExist() {
+        return participants.stream().filter(Participant::isBlackjack)
+                .findAny().isPresent();
+    }
+
+    public String namesAndProfits() {
+        StringBuilder namesAndRevenues = new StringBuilder();
+        participants.stream().
+                forEach(participant -> namesAndRevenues.append(participant.namesAndProfits()));
+        return namesAndRevenues.toString().trim();
+    }
+
+    public void total() {
+        double sum = participants.stream().filter(participant -> participant.isPlayer())
+                .map(Participant::profit)
+                .reduce(0, (x, y) -> x + y);
+
+        dealer().total(sum);
+    }
+
+    public boolean dealerBust() {
+        return false;
+    }
 }

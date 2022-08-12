@@ -47,4 +47,18 @@ public class DealerTest {
         //then
         assertThat(dealer.needMoreCard()).isFalse();
     }
+
+    @Test
+    void 딜러_total_정산기능() {
+        //given
+        double total = -0.0;
+        Dealer dealer = new Dealer(new Cards());
+
+        //when
+        dealer.total(0.0);
+
+        //then
+        assertThat(dealer.getProfit().value()).isEqualTo(total);
+    }
+
 }

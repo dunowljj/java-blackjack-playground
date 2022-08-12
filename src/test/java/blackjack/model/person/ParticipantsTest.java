@@ -59,4 +59,36 @@ public class ParticipantsTest {
         //then
         assertThat(noGamer.dealerNeedDraw()).isFalse();
     }
+
+    @Test
+    void 블랙잭_존재_확인() {
+        //given
+        Cards cards = new Cards();
+        cards.add(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
+        cards.add(new PlayingCard(Suit.DIAMOND, Denomination.JACK));
+
+        //when
+        Participants gamers = new Participants();
+        gamers.getParticipants().add(new Dealer(cards));
+
+
+        //then
+        assertThat(gamers.blackjackExist()).isTrue();
+    }
+
+   /* @Test
+    void 딜러와_플레이어_공동블랙잭_확인() {
+        ///given
+        Cards cards = new Cards();
+        cards.add(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
+        cards.add(new PlayingCard(Suit.DIAMOND, Denomination.JACK));
+
+        //when
+        Participants gamers = new Participants();
+        gamers.getParticipants().add(new Dealer(cards));
+        gamers.getParticipants().add(new Player(new Name("pobi"), cards));
+
+        //then
+        assertThat(gamers.dealerAndPlayerAreBlackjack()).isTrue();
+    }*/
 }

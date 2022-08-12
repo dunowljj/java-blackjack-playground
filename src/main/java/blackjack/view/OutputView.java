@@ -9,7 +9,7 @@ public class OutputView {
         System.out.println("\n딜러와 "+nameAndCards+"에게 2장의 나누었습니다.");
     }
 
-    public static void printInfo(String nameAndCards) {
+    public static void printInfo(final String nameAndCards) {
         System.out.println(nameAndCards);
     }
 
@@ -17,11 +17,13 @@ public class OutputView {
         System.out.println(MESSAGE_NOTICE_DEALER_DRAW);
     }
 
-    public static void printDeckAndResult(String nameAndCards) {
-        System.out.println(nameAndCards);
+    public static void printDeckAndResult(final String namesAndCards) {
+        System.out.println(namesAndCards);
     }
 
-    public static void printRevenues() {
-        System.out.println(MESSAGE_FINAL_REVENUE);
+    public static void printProfits(final String namesAndProfits) {
+        System.out.println("\n"+MESSAGE_FINAL_REVENUE);
+        System.out.println(namesAndProfits);
+
     }
 }

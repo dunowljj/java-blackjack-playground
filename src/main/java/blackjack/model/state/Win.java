@@ -2,11 +2,10 @@ package blackjack.model.state;
 
 import blackjack.model.card.Cards;
 
-public class Stay extends Finished {
+public class Win extends Finished {
 
-    public Stay(Cards cards) {
+    public Win(Cards cards) {
         super(cards);
-        cards.checkChangeAce();
     }
 
     @Override

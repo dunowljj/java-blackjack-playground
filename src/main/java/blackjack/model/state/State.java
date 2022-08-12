@@ -13,4 +13,8 @@ public interface State {
     State stay();
 
     Cards cards();
+
+    double earningRate();
+
+    double profit(double betMoney);
 }

@@ -3,10 +3,15 @@ package blackjack.model.state;
 import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCard;
 
-public class Finished extends Started{
+public abstract class Finished extends Started{
 
     public Finished(Cards cards) {
         super(cards);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
     @Override
@@ -19,13 +24,4 @@ public class Finished extends Started{
         return null;
     }
 
-    @Override
-    public Cards cards() {
-        return super.cards();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
-    }
 }

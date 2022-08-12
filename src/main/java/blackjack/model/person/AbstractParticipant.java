@@ -14,8 +14,10 @@ public abstract class AbstractParticipant implements Participant{
     public static final String MESSAGE_RESULT_START = "- 결과: ";
     private final Name name;
     private BetMoney betMoney;
-    private State state;
 
+    private Profit profit;
+
+    private State state;
     protected AbstractParticipant(Name name) {
         this.name = name;
     }
@@ -64,6 +66,7 @@ public abstract class AbstractParticipant implements Participant{
             askHit(playingCards);
         }
     }
+
     private void askHit(PlayingCards playingCards) {
         boolean yes = InputView.askWantHitMore(name);
 
@@ -76,24 +79,39 @@ public abstract class AbstractParticipant implements Participant{
             state = state.stay();
         }
     }
-
     @Override
     public boolean isFinished() {
         return state.isFinished();
     }
 
+    @Override
+    public boolean isBlackjack() {
+        return state.getClass().equals(Blackjack.class);
+    }
 
     @Override
     public State getState() {
         return state;
     }
+
     @Override
     public Name getName() {
         return name;
     }
-
     @Override
     public BetMoney getBetMoney() {
         return betMoney;
     }
+
+    @Override
+    public Profit getProfit() {
+        return profit;
+    }
+
+    @Override
+    public void setProfit(double profit) {
+        this.profit = new Profit(profit);
+    }
+
+    public abstract void total(double sum);
 }

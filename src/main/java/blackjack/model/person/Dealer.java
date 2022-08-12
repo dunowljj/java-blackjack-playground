@@ -25,10 +25,31 @@ public class Dealer extends AbstractParticipant{
 
         return nameAndCard;
     }
+    @Override
+    public StringBuilder namesAndProfits() {
+        StringBuilder namesAndRevenues = new StringBuilder();
+
+        namesAndRevenues.append(getName())
+                .append(": ")
+                .append(getProfit().value())
+                .append("\n");
+
+        return namesAndRevenues;
+    }
 
     @Override
     public boolean isPlayer() {
         return false;
+    }
+
+    @Override
+    public int profit() {
+        return (int) (getProfit().value());
+    }
+
+    @Override
+    public void total(double sum) {
+        setProfit((-1) * sum);
     }
 
     public boolean needMoreCard() {
