@@ -1,11 +1,24 @@
 package blackjack.model.card;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class PlayingCard{
-    private Suit suit;
+    private static Map<Denomination, Character> classifer;
 
+    private Suit suit;
     private Denomination denomination;
+
+    static {
+        classifer = new HashMap<>();
+        classifer.put(Denomination.ACE_BIG_SCORE, 'A');
+        classifer.put(Denomination.ACE, 'A');
+        classifer.put(Denomination.JACK, 'J');
+        classifer.put(Denomination.QUEEN, 'Q');
+        classifer.put(Denomination.KING, 'K');
+
+    }
 
     public PlayingCard(Suit suit, Denomination denomination) {
         this.suit = suit;
@@ -21,8 +34,14 @@ public class PlayingCard{
     }
 
     public String info() {
+        if (denomination.isAlphabet()) {
+            char header = classifer.get(denomination);
+            return header + "" + suit.getName();
+        }
         return denomination.getScore() + "" + suit.getName();
     }
+
+
 
     @Override
     public boolean equals(Object o) {

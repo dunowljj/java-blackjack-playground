@@ -3,9 +3,7 @@ package blackjack.model.person;
 import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCard;
 import blackjack.model.card.PlayingCards;
-import blackjack.model.state.Blackjack;
-import blackjack.model.state.Hit;
-import blackjack.model.state.State;
+import blackjack.model.state.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -27,6 +25,7 @@ public abstract class AbstractParticipant implements Participant{
         this.state = new Hit(playingCards);
         if (state.cards().isBlackjack()) {
             this.state = new Blackjack(state.cards());
+
         }
     }
 
@@ -79,6 +78,22 @@ public abstract class AbstractParticipant implements Participant{
             state = state.stay();
         }
     }
+
+    public void tie() {
+        state = new Tie(state.cards());
+    }
+
+    public void bust() {
+        state = new Bust(state.cards());
+    }
+
+    public void win() {
+        state = new Win(state.cards());
+    }
+
+    public void stay() {state = new Stay(state.cards());
+    }
+
     @Override
     public boolean isFinished() {
         return state.isFinished();
@@ -90,14 +105,35 @@ public abstract class AbstractParticipant implements Participant{
     }
 
     @Override
+    public boolean isBust() {
+        return getState().getClass().equals(Bust.class);
+    }
+
+    @Override
+    public boolean isStay() {
+        return getState().getClass().equals(Stay.class);
+    }
+
+    @Override
+    public boolean isWinner(int max) {
+        return getState().cards().sumOfScore() == max;
+    }
+
+    @Override
     public State getState() {
         return state;
+    }
+
+    @Override
+    public void setState(State state) {
+        this.state = state;
     }
 
     @Override
     public Name getName() {
         return name;
     }
+
     @Override
     public BetMoney getBetMoney() {
         return betMoney;
@@ -112,6 +148,4 @@ public abstract class AbstractParticipant implements Participant{
     public void setProfit(double profit) {
         this.profit = new Profit(profit);
     }
-
-    public abstract void total(double sum);
 }

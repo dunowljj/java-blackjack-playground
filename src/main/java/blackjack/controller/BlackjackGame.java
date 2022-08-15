@@ -23,36 +23,37 @@ public class BlackjackGame {
         gamers.inputBetMoney();
 
         OutputView.noticeStartDistribution(gamers.playerNames());
+
+        if (gamers.isDealerBust()) {
+            totalGameAndExit(gamers);
+        }
+
         OutputView.printInfo(gamers.namesAndCards());
+
 
         InputView.askHitMore(gamers, playingCards);
 
+
         if (gamers.blackjackExist()) {
-            gamers.total();
-            OutputView.printProfits(gamers.namesAndProfits());
-            System.exit(0);
+            totalGameAndExit(gamers);
         }
+
 
         if (gamers.dealerNeedDraw()) {
             gamers.dealerDrawCard(playingCards.nextCard());
             OutputView.noticeDealerDrawCard();
         }
 
-        OutputView.printDeckAndResult(gamers.allNamesAndCards());
 
-        // 결과 도출
+        totalGameAndExit(gamers);
+    }
+
+    private static void totalGameAndExit(Participants gamers) {
         gamers.total();
-
+        OutputView.printDeckAndResult(gamers.allNamesAndCards());
         OutputView.printProfits(gamers.namesAndProfits());
-
-
-
-        /*// 이름, 금액 출력 확인
-        for (Participant participant : participants.getParticipants()) {
-            System.out.println(participant.getName());
-            System.out.println(participant.getBetMoney());
-        }*/
+        System.exit(0);
     }
 
 
-    }
+}

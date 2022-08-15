@@ -11,11 +11,6 @@ public class Stay extends Finished {
 
     @Override
     public double earningRate() {
-        return 0;
-    }
-
-    @Override
-    public double profit(double betMoney) {
-        return 0;
+        return -1.0;
     }
 }

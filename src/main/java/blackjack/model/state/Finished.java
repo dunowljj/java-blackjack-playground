@@ -4,7 +4,6 @@ import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCard;
 
 public abstract class Finished extends Started{
-
     public Finished(Cards cards) {
         super(cards);
     }
@@ -22,6 +21,11 @@ public abstract class Finished extends Started{
     @Override
     public State stay() {
         return null;
+    }
+
+    @Override
+    public double profit(double betMoney) {
+        return earningRate() * betMoney;
     }
 
 }

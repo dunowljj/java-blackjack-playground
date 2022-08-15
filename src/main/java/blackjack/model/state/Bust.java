@@ -11,9 +11,4 @@ public class Bust extends Finished {
     public double earningRate() {
         return -1.0;
     }
-
-    @Override
-    public double profit(double betMoney) {
-        return betMoney * earningRate();
-    }
 }

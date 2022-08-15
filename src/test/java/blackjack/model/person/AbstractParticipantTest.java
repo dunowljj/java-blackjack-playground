@@ -1,8 +1,9 @@
 package blackjack.model.person;
 
 import blackjack.model.card.*;
-import blackjack.model.state.Hit;
-import blackjack.model.state.State;
+import blackjack.model.state.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -87,6 +88,85 @@ public class AbstractParticipantTest {
 
         //then
         assertThat(participant.isFinished()).isTrue();
+    }
+
+    @Test
+    void 이름과_모든_카드들과_결과_문자열_반환() {
+        //given
+        String message = "pobi카드: J하트, 9하트, 2하트 - 결과: 21";
+        Cards cards = new Cards();
+        cards.add(new PlayingCard(Suit.HEART, Denomination.JACK));
+        cards.add(new PlayingCard(Suit.HEART, Denomination.NINE));
+        cards.add(new PlayingCard(Suit.HEART, Denomination.TWO));
+        AbstractParticipant participant = new Player(new Name("pobi"), cards);
+
+        //when
+        String info = participant.allNamesAndCards().toString();
+
+        //then
+        assertThat(info).isEqualTo(message);
+    }
+
+
+    @Nested
+    class 상태 {
+        Cards cards;
+        AbstractParticipant participant;
+
+        @BeforeEach
+        void setUp() {
+            cards = new Cards();
+            participant = new Player(new Name("pobi"), cards);
+        }
+
+        @Test
+        void bust인지_확인() {
+            //when
+            participant.drawCard(new PlayingCard(Suit.CLOVER, Denomination.JACK));
+            participant.drawCard(new PlayingCard(Suit.CLOVER, Denomination.JACK));
+            participant.drawCard(new PlayingCard(Suit.CLOVER, Denomination.JACK));
+
+            //then
+            assertThat(participant.isBust()).isTrue();
+        }
+
+
+        @Test
+        void stay인지_확인() {
+            //when
+            participant.setState(participant.getState().stay());
+
+            //then
+            assertThat(participant.isStay()).isTrue();
+        }
+
+        @Test
+        void tie로_설정() {
+            //when
+            participant = new Player(new Name("pobi"), cards);
+            participant.tie();
+
+            //then
+            assertThat(participant.getState().getClass()).isEqualTo(Tie.class);
+        }
+
+        @Test
+        void bust로_설정() {
+            //when
+            participant.bust();
+
+            //then
+            assertThat(participant.getState().getClass()).isEqualTo(Bust.class);
+        }
+
+        @Test
+        void win으로_설정() {
+            //when
+            participant.win();
+
+            //then
+            assertThat(participant.getState().getClass()).isEqualTo(Win.class);
+        }
 
     }
 }

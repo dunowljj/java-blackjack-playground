@@ -20,11 +20,15 @@ public interface Participant {
 
     boolean isBlackjack();
 
+    boolean isBust();
+
     boolean isFinished();
 
     boolean isPlayer();
 
     State getState();
+
+    void setState(State state);
 
     Name getName();
 
@@ -34,8 +38,18 @@ public interface Participant {
 
     Profit getProfit();
 
-    void total(double money);
-
     void setProfit(double profit);
+
+    void tie();
+
+    void bust();
+
+    void win();
+
+    void stay();
+
+    boolean isWinner(int max);
+
+    boolean isStay();
 }
 

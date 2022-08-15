@@ -2,6 +2,7 @@ package blackjack.model.person;
 
 import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCards;
+import blackjack.model.state.State;
 
 public class Player extends AbstractParticipant {
 
@@ -18,6 +19,10 @@ public class Player extends AbstractParticipant {
         super(name, cards);
     }
 
+    public Player(Name name, State state) {
+        super(name);
+        setState(state);
+    }
 
     @Override
     public StringBuilder nameAndCards() {
@@ -46,14 +51,8 @@ public class Player extends AbstractParticipant {
     }
 
     @Override
-    public void total(double money) {
-        setProfit(money);
-    }
-
-    @Override
     public int profit() {
         return (int) (getState().profit(getBetMoney().value()));
     }
-
 
 }

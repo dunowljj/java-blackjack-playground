@@ -32,6 +32,6 @@ public enum Denomination {
 
 
     public boolean isAlphabet() {
-        return (this == JACK) || (this == QUEEN) || (this == KING) || (this == ACE);
+        return (this == JACK) || (this == QUEEN) || (this == KING) || (this == ACE) || (this == ACE_BIG_SCORE);
     }
 }

@@ -128,6 +128,36 @@ public class CardsTest {
 
     }
 
+    @Test
+    void 첫_카드_문자열_반환() {
+        //given
+        Cards cards = new Cards();
+        PlayingCard playingCard = new PlayingCard(Suit.HEART, Denomination.ACE);
+        //when
+        cards.add(playingCard);
+        cards.add(new PlayingCard(Suit.HEART, Denomination.TEN));
+
+        //then
+        assertThat(cards.firstCard()).isEqualTo(playingCard.info());
+
+    }
+
+    @Test
+    void 모든_카드_문자열_반환() {
+        //given
+        Cards cards = new Cards();
+        PlayingCard playingCard1 = new PlayingCard(Suit.HEART, Denomination.ACE);
+        PlayingCard playingCard2 = new PlayingCard(Suit.HEART, Denomination.TEN);
+        String message = "A하트, 10하트 ";
+
+        //when
+        cards.add(playingCard1);
+        cards.add(playingCard2);
+
+        //then
+        assertThat(cards.allCards()).isEqualTo(message);
+    }
+
     @AfterEach
     void clean() {
         cards.getCards().clear();

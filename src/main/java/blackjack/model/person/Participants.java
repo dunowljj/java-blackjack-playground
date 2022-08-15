@@ -1,7 +1,9 @@
 package blackjack.model.person;
 
+import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCard;
 import blackjack.model.card.PlayingCards;
+import blackjack.model.state.State;
 import blackjack.view.InputView;
 
 import java.util.ArrayList;
@@ -34,8 +36,9 @@ public class Participants {
 
     public String playerNames() {
         StringBuilder names = new StringBuilder();
-        
-        participants.stream().filter(participant -> participant.isPlayer())
+
+        participants.stream()
+                .filter(participant -> participant.isPlayer())
                 .map(Participant::getName).map(Name::value)
                 .forEach((name) -> names.append(name).append(OUTPUT_NAME_DELIMITER));
 
@@ -55,6 +58,13 @@ public class Participants {
         return namesAndCards.toString();
     }
 
+    public String namesAndProfits() {
+        StringBuilder namesAndRevenues = new StringBuilder();
+        participants.stream().
+                forEach(participant -> namesAndRevenues.append(participant.namesAndProfits()));
+        return namesAndRevenues.toString().trim();
+    }
+
     public String allNamesAndCards() {
         StringBuilder namesAndCards = new StringBuilder();
 
@@ -67,41 +77,108 @@ public class Participants {
     }
 
     public void inputBetMoney() {
-        participants.stream().filter(participant -> participant.isPlayer())
+        participants.stream()
+                .filter(participant -> participant.isPlayer())
                 .forEach(p -> p.bet(InputView.inputBetMoney(p.getName())));
+    }
+    public void total() {
+        if (dealer().isBust()) {
+            allWinExceptBust();
+            totalProfit();
+            return;
+        }
+
+        if (dealer().isBlackjack() && somePlayerHasBlackjack()) {
+            makeBlackjackTie();
+            totalProfit();
+            return;
+        }
+
+        if (dealer().isBlackjack() && !somePlayerHasBlackjack()) {
+            //don't do anything
+            totalProfit();
+            return;
+        }
+
+        if (!dealer().isBlackjack() && somePlayerHasBlackjack()) {
+            //don't do anything
+            totalProfit();
+            return;
+        }
+
+        // 조기 종료 아닌 경우
+        if (!dealer().isBlackjack() && !somePlayerHasBlackjack()) {
+            findWinner();
+            totalProfit();
+            return;
+        }
+
+    }
+
+    private void findWinner() {
+        int max = findMax();
+
+        participants.stream()
+                .filter(participant -> participant.isWinner(max))
+                .forEach(Participant::win);
+    }
+
+    private void makeBlackjackTie() {
+        participants.stream()
+                .filter(Participant::isPlayer)
+                .filter(Participant::isBlackjack)
+                .forEach(Participant::tie);
+    }
+
+    private void allWinExceptBust() {
+        participants.stream()
+                .filter(Participant::isPlayer)
+                .filter(participant -> !participant.isBust())
+                .forEach(Participant::win);
+    }
+
+    private int findMax() {
+        return participants.stream()
+                .filter(Participant::isStay)
+                .map(Participant::getState).map(State::cards)
+                .map(Cards::sumOfScore)
+                .mapToInt(x -> x).reduce(Math::max).getAsInt();
+    }
+
+    private void totalProfit() {
+        double sum = participants.stream()
+                .filter(participant -> participant.isPlayer())
+                .map(Participant::profit)
+                .reduce(0, (x, y) -> x + y);
+
+        dealer().earn(sum);
+    }
+    public boolean blackjackExist() {
+        return participants.stream()
+                .filter(Participant::isBlackjack)
+                .findAny().isPresent();
+    }
+
+    public boolean somePlayerHasBlackjack() {
+        return participants.stream()
+                .filter(Participant::isPlayer)
+                .filter(Participant::isBlackjack)
+                .findAny().isPresent();
+    }
+
+    private Dealer dealer() {
+        return (Dealer) participants.get(FIRST_INDEX);
     }
 
     public boolean dealerNeedDraw() {
         return dealer().needMoreCard();
     }
+
     public void dealerDrawCard(PlayingCard playingCard) {
         dealer().drawCard(playingCard);
     }
-    private Dealer dealer() {
-        return (Dealer) participants.get(FIRST_INDEX);
-    }
 
-    public boolean blackjackExist() {
-        return participants.stream().filter(Participant::isBlackjack)
-                .findAny().isPresent();
-    }
-
-    public String namesAndProfits() {
-        StringBuilder namesAndRevenues = new StringBuilder();
-        participants.stream().
-                forEach(participant -> namesAndRevenues.append(participant.namesAndProfits()));
-        return namesAndRevenues.toString().trim();
-    }
-
-    public void total() {
-        double sum = participants.stream().filter(participant -> participant.isPlayer())
-                .map(Participant::profit)
-                .reduce(0, (x, y) -> x + y);
-
-        dealer().total(sum);
-    }
-
-    public boolean dealerBust() {
-        return false;
+    public boolean isDealerBust() {
+        return dealer().isBust();
     }
 }
