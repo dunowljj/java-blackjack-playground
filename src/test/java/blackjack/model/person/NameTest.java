@@ -18,6 +18,8 @@ public class NameTest {
         assertThat(name.value()).isEqualTo(input);
     }
 
+
+
     @Test
     void 이름길이_제한() {
         //given

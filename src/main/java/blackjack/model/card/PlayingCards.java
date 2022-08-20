@@ -16,10 +16,10 @@ public class PlayingCards {
     }
     private void addInitialCards() {
         for (Suit suit : Suit.values()) {
-            addCardWith(suit);
+            addCardsWith(suit);
         }
     }
-    private void addCardWith(Suit suit) {
+    private void addCardsWith(Suit suit) {
         for (Denomination denomination : Denomination.values()) {
             playingCards.add(new PlayingCard(suit, denomination));
         }

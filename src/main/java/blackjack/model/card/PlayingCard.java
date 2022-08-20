@@ -5,18 +5,18 @@ import java.util.Map;
 import java.util.Objects;
 
 public class PlayingCard{
-    private static Map<Denomination, Character> classifer;
+    private static Map<Denomination, Character> convertor;
 
     private Suit suit;
     private Denomination denomination;
 
     static {
-        classifer = new HashMap<>();
-        classifer.put(Denomination.ACE_BIG_SCORE, 'A');
-        classifer.put(Denomination.ACE, 'A');
-        classifer.put(Denomination.JACK, 'J');
-        classifer.put(Denomination.QUEEN, 'Q');
-        classifer.put(Denomination.KING, 'K');
+        convertor = new HashMap<>();
+        convertor.put(Denomination.ACE_BIG_SCORE, 'A');
+        convertor.put(Denomination.ACE, 'A');
+        convertor.put(Denomination.JACK, 'J');
+        convertor.put(Denomination.QUEEN, 'Q');
+        convertor.put(Denomination.KING, 'K');
 
     }
 
@@ -25,23 +25,21 @@ public class PlayingCard{
         this.denomination = denomination;
     }
 
-
     public Suit getSuit() {
         return suit;
     }
+
     public Denomination getDenomination() {
         return denomination;
     }
 
     public String info() {
         if (denomination.isAlphabet()) {
-            char header = classifer.get(denomination);
+            char header = convertor.get(denomination);
             return header + "" + suit.getName();
         }
         return denomination.getScore() + "" + suit.getName();
     }
-
-
 
     @Override
     public boolean equals(Object o) {

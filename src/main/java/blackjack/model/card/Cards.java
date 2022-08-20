@@ -6,7 +6,7 @@ import java.util.List;
 public class Cards {
     public static final int CARDS_FIRST_INDEX = 0;
     public static final int SCORE_UPPER_LIMIT = 21;
-    public static final int GAP_BETWEEN_ACE_SCORES = 10;
+    public static final int GAP_BETWEEN_ACE_AND_BIG_ACE = 10;
     public static final String CARD_INFO_DELIMITER = ", ";
     private final List<PlayingCard> cards;
 
@@ -68,12 +68,10 @@ public class Cards {
                     .changeToBigAce();
         }
     }
-    //todo: Optinal 공식문서 다시 읽고 고치기.
     private boolean aceExist() {
         return cards.stream().filter(PlayingCard::isAce).findFirst().isPresent();
     }
-
     private boolean sizeUpAvailable() {
-        return sumOfScore() + GAP_BETWEEN_ACE_SCORES <= SCORE_UPPER_LIMIT;
+        return sumOfScore() + GAP_BETWEEN_ACE_AND_BIG_ACE <= SCORE_UPPER_LIMIT;
     }
 }

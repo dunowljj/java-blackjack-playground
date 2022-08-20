@@ -31,6 +31,6 @@ public class InputView {
 
     public static boolean askWantHitMore(Name name) {
         System.out.println(name + MESSAGE_INPUT_MORE_CARD);
-        return InputUtils.inputYesNo();
+        return InputUtils.inputYesOrNo();
     }
 }

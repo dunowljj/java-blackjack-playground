@@ -12,10 +12,9 @@ public abstract class AbstractParticipant implements Participant{
     public static final String MESSAGE_RESULT_START = "- 결과: ";
     private final Name name;
     private BetMoney betMoney;
-
     private Profit profit;
-
     private State state;
+
     protected AbstractParticipant(Name name) {
         this.name = name;
     }
@@ -25,7 +24,6 @@ public abstract class AbstractParticipant implements Participant{
         this.state = new Hit(playingCards);
         if (state.cards().isBlackjack()) {
             this.state = new Blackjack(state.cards());
-
         }
     }
 

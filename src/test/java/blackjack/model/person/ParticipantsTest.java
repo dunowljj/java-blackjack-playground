@@ -32,6 +32,13 @@ public class ParticipantsTest {
                 .map(Participant::getName).contains(new Name(names[0]), new Name(names[1]), new Name(names[2]));
     }
 
+    @Test
+    void 이름들_null입력시_예외() {
+        assertThatThrownBy(() -> new Participants(null, new PlayingCards()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("값이 입력되지 않았습니다.");
+    }
+
     @Nested
     class 딜러 {
 
@@ -118,10 +125,8 @@ public class ParticipantsTest {
     }
 
 
-
-
     /*
-    todo: 애초에 총 집게 메서드 total() 자체가 여러 케이스에 대해 나머지 값들의 상태를 바꾸어주고, 일괄 계산을 한다.
+    애초에 총 집게 메서드 total() 자체가 여러 케이스에 대해 나머지 값들의 상태를 바꾸어주고, 일괄 계산을 한다.
      그렇기때문에 애초에 뽑히는 카드에 따라 상태가 잘 변하는지는 확인할 수 없다. 따로 테스트를 만들어줘야 한다.
      */
     @Nested

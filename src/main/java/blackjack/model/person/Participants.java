@@ -9,8 +9,10 @@ import blackjack.view.InputView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Participants {
+    public static final String ERROR_NULL_INPUT_NAMES = "값이 입력되지 않았습니다.";
     public static final String INPUT_NAME_DELIMITER = ",";
     public static final String OUTPUT_NAME_DELIMITER = ", ";
     public static final int FIRST_INDEX = 0;
@@ -19,6 +21,8 @@ public class Participants {
     public Participants() {
     }
     public Participants(String names, PlayingCards playingCards) {
+        Optional.ofNullable(names).orElseThrow(() -> new IllegalArgumentException(ERROR_NULL_INPUT_NAMES));
+
         String[] bunchOfName = names.split(INPUT_NAME_DELIMITER);
 
         distributeInitialCards(playingCards, bunchOfName);
@@ -26,8 +30,10 @@ public class Participants {
 
     private void distributeInitialCards(PlayingCards playingCards, String[] bunchOfName) {
         participants.add(new Dealer(playingCards));
+
         Arrays.stream(bunchOfName)
                 .forEach((name) -> participants.add(new Player(new Name(name), playingCards)));
+
     }
 
     public List<Participant> getParticipants() {
@@ -81,15 +87,17 @@ public class Participants {
                 .filter(participant -> participant.isPlayer())
                 .forEach(p -> p.bet(InputView.inputBetMoney(p.getName())));
     }
+
+    // todo :집계 메서드 더 정리해보기
     public void total() {
         if (dealer().isBust()) {
-            allWinExceptBust();
+            setAllWinExceptBust();
             totalProfit();
             return;
         }
 
         if (dealer().isBlackjack() && somePlayerHasBlackjack()) {
-            makeBlackjackTie();
+            makeBlackjackPeopleTie();
             totalProfit();
             return;
         }
@@ -108,14 +116,14 @@ public class Participants {
 
         // 조기 종료 아닌 경우
         if (!dealer().isBlackjack() && !somePlayerHasBlackjack()) {
-            findWinner();
+            setWinner();
             totalProfit();
             return;
         }
 
     }
 
-    private void findWinner() {
+    private void setWinner() {
         int max = findMax();
 
         participants.stream()
@@ -123,14 +131,14 @@ public class Participants {
                 .forEach(Participant::win);
     }
 
-    private void makeBlackjackTie() {
+    private void makeBlackjackPeopleTie() {
         participants.stream()
                 .filter(Participant::isPlayer)
                 .filter(Participant::isBlackjack)
                 .forEach(Participant::tie);
     }
 
-    private void allWinExceptBust() {
+    private void setAllWinExceptBust() {
         participants.stream()
                 .filter(Participant::isPlayer)
                 .filter(participant -> !participant.isBust())
