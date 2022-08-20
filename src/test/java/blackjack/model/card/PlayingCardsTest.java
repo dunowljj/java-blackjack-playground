@@ -13,7 +13,7 @@ public class PlayingCardsTest {
     }
 
     @Test
-    void 카드_구성결과_확인() {
+    void 초기카드_모두_있는지_확인() {
         // given -> enum values
         for (Denomination denomination : Denomination.values()) {
             for (Suit suit : Suit.values()) {

@@ -27,11 +27,17 @@ public class StayTest {
     void 생성_및_Ace선택() {
         //given
         int bigAce = 11;
-        int sum = 6 + 4 + bigAce;
+        int sum = 0;
         Cards cards = new Cards();
+
         cards.add(new PlayingCard(Suit.SPADE, Denomination.SIX));
+        sum += 6;
+
         cards.add(new PlayingCard(Suit.SPADE, Denomination.FOUR));
+        sum += 4;
+
         cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
+        sum += bigAce;
 
         //when
         Stay stay = new Stay(cards);

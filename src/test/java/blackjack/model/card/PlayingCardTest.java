@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 public class PlayingCardTest {
 
     @Test
-    void 생성_확인() {
+    void 게임카드_생성() {
         //given
         Suit suit = Suit.HEART;
         Denomination denomination = Denomination.ACE;
@@ -21,7 +21,7 @@ public class PlayingCardTest {
     }
 
     @Test
-    void 카드정보_확인() {
+    void 게임카드_정보() {
         //given
         String given = "10하트";
 

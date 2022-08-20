@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.*;
 
 public class DenominationTest {
     @Test
-    void 숫자값_확인() {
+    void Score값_확인() {
         //given
         int scoreOfFive = 5;
 

@@ -17,7 +17,7 @@ public class CardsTest {
 
 
     @Test
-    void 개인_카드_초기생성_개수확인() {
+    void 카드_초기생성_시_2개씩_배분되었는지_확인() {
         //given
         PlayingCards playingCards = new PlayingCards();
 
@@ -41,7 +41,7 @@ public class CardsTest {
         assertThat(cards.isBust()).isTrue();
     }
     @Test
-    void Bust_아닌지_확인() {
+    void Bust_아닌_경우_확인() {
         //given
 
         //when
@@ -55,53 +55,7 @@ public class CardsTest {
     }
 
     @Test
-    void Blackjack인지_확인() {
-        //given
-
-        //when
-        cards.add(new PlayingCard(Suit.HEART, Denomination.ACE));
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.JACK));
-
-        //then
-        assertThat(cards.isBlackjack()).isTrue();
-    }
-
-    @Test
-    void 큰_Ace_Score_선택() {
-        //given
-        int bigAce = 11;
-        int sum = 6 + 4 + bigAce;
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.SIX));
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.FOUR));
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
-
-        //when
-        cards.checkChangeAce();
-
-        //then
-        assertThat(cards.sumOfScore()).isEqualTo(sum);
-    }
-
-    @Test
-    void 작은_Ace_Score_선택() {
-        //given
-        int smallAce = 1;
-        int sum = 6 + 5 + smallAce;
-        cards.add(new PlayingCard(Suit.HEART, Denomination.SIX));
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.FIVE));
-        cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
-        for (PlayingCard card : cards.getCards()) {
-            System.out.println(card);
-        }
-        //when
-        cards.checkChangeAce();
-
-        //then
-        assertThat(cards.sumOfScore()).isEqualTo(sum);
-    }
-
-    @Test
-    void 블랙잭인_경우() {
+    void 블랙잭인지_확인() {
         //given
         Cards cards = new Cards();
 
@@ -115,7 +69,7 @@ public class CardsTest {
     }
 
     @Test
-    void 블랙잭_아닌_경우() {
+    void 블랙잭_아닌_경우_확인() {
         //given
         Cards cards = new Cards();
 
@@ -129,7 +83,50 @@ public class CardsTest {
     }
 
     @Test
-    void 첫_카드_문자열_반환() {
+    void 카드추가_후_합이_21_이하이면_큰_Ace_Score_선택() {
+        //given
+        int bigAce = 11;
+        int sum = 0;
+
+        cards.add(new PlayingCard(Suit.SPADE, Denomination.SIX));
+        sum += 6;
+
+        cards.add(new PlayingCard(Suit.SPADE, Denomination.FOUR));
+        sum += 4;
+
+        cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
+        sum += bigAce;
+
+        //when
+        cards.checkChangeAce();
+
+        //then
+        assertThat(cards.sumOfScore()).isEqualTo(sum);
+    }
+
+    @Test
+    void 카드추가_후_합이_21_이상이면_작은_Ace_Score_선택() {
+        //given
+        int smallAce = 1;
+        int sum = 0;
+        cards.add(new PlayingCard(Suit.HEART, Denomination.SIX));
+        sum += 6;
+
+        cards.add(new PlayingCard(Suit.SPADE, Denomination.FIVE));
+        sum += 5;
+
+        cards.add(new PlayingCard(Suit.SPADE, Denomination.ACE));
+        sum += smallAce;
+
+        //when
+        cards.checkChangeAce();
+
+        //then
+        assertThat(cards.sumOfScore()).isEqualTo(sum);
+    }
+
+    @Test
+    void 첫_카드만_문자열로_반환() {
         //given
         Cards cards = new Cards();
         PlayingCard playingCard = new PlayingCard(Suit.HEART, Denomination.ACE);
@@ -143,7 +140,7 @@ public class CardsTest {
     }
 
     @Test
-    void 모든_카드_문자열_반환() {
+    void 모든_카드들_문자열로_반환() {
         //given
         Cards cards = new Cards();
         PlayingCard playingCard1 = new PlayingCard(Suit.HEART, Denomination.ACE);

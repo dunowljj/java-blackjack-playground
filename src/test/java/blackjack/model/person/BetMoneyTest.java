@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 public class BetMoneyTest {
 
     @Test
-    void 배팅금액_입력() {
+    void 배팅금액_생성() {
         //given
         int money = 1000;
 

@@ -19,31 +19,35 @@ public class ParticipantsTest {
         participants = new Participants(bunchOfName, new PlayingCards());
     }
 
-    @Test
-    void 이름들_입력() {
-        //given
-        String[] names = bunchOfName.split(",");
+    @Nested
+    class 이름들_입력받기 {
 
-        //when
-        Participants participants = new Participants(bunchOfName, new PlayingCards());
+        @Test
+        void 이름뭉치_입력받아_생성() {
+            //given
+            String[] names = bunchOfName.split(",");
 
-        //then
-        assertThat(participants.getParticipants())
-                .map(Participant::getName).contains(new Name(names[0]), new Name(names[1]), new Name(names[2]));
-    }
+            //when
+            Participants participants = new Participants(bunchOfName, new PlayingCards());
 
-    @Test
-    void 이름들_null입력시_예외() {
-        assertThatThrownBy(() -> new Participants(null, new PlayingCards()))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("값이 입력되지 않았습니다.");
+            //then
+            assertThat(participants.getParticipants())
+                    .map(Participant::getName).contains(new Name(names[0]), new Name(names[1]), new Name(names[2]));
+        }
+
+        @Test
+        void 이름뭉치_null입력시_예외() {
+            assertThatThrownBy(() -> new Participants(null, new PlayingCards()))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("값이 입력되지 않았습니다.");
+        }
     }
 
     @Nested
-    class 딜러 {
+    class 딜러상태 {
 
         @Test
-        void 딜러_16이하_확인() {
+        void 딜러_16이하인지_확인() {
             //given
             Participants noGamer = new Participants();
 
@@ -59,7 +63,7 @@ public class ParticipantsTest {
         }
 
         @Test
-        void 딜러_16초과_확인() {
+        void 딜러_16초과인지_확인() {
             //given
             Participants empty = new Participants();
 
@@ -75,7 +79,7 @@ public class ParticipantsTest {
         }
 
         @Test
-        void 딜러_Bust_확인() {
+        void 딜러_Bust인지_확인() {
             //given
             Participants empty = new Participants();
             Dealer dealer = new Dealer(new Bust(new Cards()));
@@ -89,9 +93,9 @@ public class ParticipantsTest {
     }
 
     @Nested
-    class 블랙잭_체크 {
+    class 참가자들_블랙잭의_존재 {
         @Test
-        void 전체_블랙잭_존재_확인() {
+        void 전체_블랙잭_존재하는지_확인() {
             //given
             Cards cards = new Cards();
             cards.add(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
@@ -107,7 +111,7 @@ public class ParticipantsTest {
         }
 
         @Test
-        void 플레이어_블랙잭_존재_확인() {
+        void 플레이어중에_블랙잭_존재하는지_확인() {
             ///given
             Cards cards = new Cards();
             cards.add(new PlayingCard(Suit.DIAMOND, Denomination.ACE));
@@ -124,11 +128,6 @@ public class ParticipantsTest {
         }
     }
 
-
-    /*
-    애초에 총 집게 메서드 total() 자체가 여러 케이스에 대해 나머지 값들의 상태를 바꾸어주고, 일괄 계산을 한다.
-     그렇기때문에 애초에 뽑히는 카드에 따라 상태가 잘 변하는지는 확인할 수 없다. 따로 테스트를 만들어줘야 한다.
-     */
     @Nested
     class total {
 
@@ -147,8 +146,19 @@ public class ParticipantsTest {
     int jasonMoney;
     int tobyMoney;
 
+    /*
+    total()메서드
+     호출 시점 : 블랙잭 게임이 진행되고, 추가로 카드를 뽑을지 모두 결정한 상태에서 사용된다.
+     -> 호출 시점을 고려해서 모든 참여자들의 상태를 total에 사용할 수 있도록 Stay로 초기화하고 시작한다. 각 테스트 메서드에서 필요에 따라
+     Bust, Blackjack을 설정한다.
+
+     기능 : 1) 사용 시점에 참여자들의 상태객체가 무엇인지에 따라 참여자들의 상태를 조정한다. 2) 그에 따라 수익을 계산한다.
+     -> 두 가지 기능을 가지고 있는데, 확실한 테스트를 위해 상태가 잘 변경되었는지, 수익이 잘 계산되는지 두 가지 테스트를 했다.
+
+
+     */
     @BeforeEach
-    void setUp() {
+    void setUp_전부_Stay로_설정해놓기() {
         participants = new Participants();
         list = participants.getParticipants();
         dealer = new Dealer(new Stay(new Cards()));
@@ -161,7 +171,7 @@ public class ParticipantsTest {
         tobyMoney = 12000;
     }
 
-    private void betAndAdd() {
+    private void 기본배팅_및_participants에_모두_넣기() {
         pobi.bet(new BetMoney(pobiMoney));
         jason.bet(new BetMoney(jasonMoney));
         toby.bet(new BetMoney(tobyMoney));
@@ -173,14 +183,14 @@ public class ParticipantsTest {
     }
 
     @Test
-    void 딜러와_플레이어_Bust_상태확인() {
+    void 딜러와_플레이어_둘다_Bust일때_집계된_상태확인() {
         //given
         dealer = new Dealer(new Bust(new Cards()));
         pobi = new Player(new Name("pobi"), new Bust(new Cards()));
 
 
         //when
-        betAndAdd();
+        기본배팅_및_participants에_모두_넣기();
         participants.total();
 
         //then
@@ -191,11 +201,11 @@ public class ParticipantsTest {
     }
 
     @Test
-    void 딜러와_플레이어_Bust_수익확인() {
+    void 딜러와_플레이어_둘다_Bust일때_수익확인() {
         //given
         dealer = new Dealer(new Bust(new Cards()));
         pobi = new Player(new Name("pobi"), new Bust(new Cards()));
-        betAndAdd();
+        기본배팅_및_participants에_모두_넣기();
 
         //when
         participants.total();
@@ -212,11 +222,11 @@ public class ParticipantsTest {
         assertThat(toby.profit()).isEqualTo(tobyMoney);
     }
     @Test
-    void 딜러_플레이어_같이_Blackjack_상태확인() {
+    void 딜러_플레이어_같이_블랙잭일때_상태확인() {
         //given
         dealer = new Dealer(new Blackjack(new Cards()));
         toby = new Player(tobyName, new Blackjack(new Cards()));
-        betAndAdd();
+        기본배팅_및_participants에_모두_넣기();
 
         //when
         participants.total();
@@ -229,11 +239,11 @@ public class ParticipantsTest {
     }
 
     @Test
-    void 딜러_플레이어_같이_Blackjack_수익확인() {
+    void 딜러_플레이어_같이_블랙잭일때_수익확인() {
         //given
         dealer = new Dealer(new Blackjack(new Cards()));
         toby = new Player(new Name("toby"), new Blackjack(new Cards()));
-        betAndAdd();
+        기본배팅_및_participants에_모두_넣기();
 
         //when
         participants.total();
@@ -251,10 +261,10 @@ public class ParticipantsTest {
     }
 
         @Test
-        void 딜러_단독_Blackjack_상태확인() {
+        void 딜러_단독_블랙잭일때_상태확인() {
             //given
             dealer = new Dealer(new Blackjack(new Cards()));
-            betAndAdd();
+            기본배팅_및_participants에_모두_넣기();
 
             //when
             participants.total();
@@ -267,10 +277,10 @@ public class ParticipantsTest {
         }
 
         @Test
-        void 딜러_단독_Blackjack_수익확인() {
+        void 딜러_단독_블랙잭일때_수익확인() {
             //given
             dealer = new Dealer(new Blackjack(new Cards()));
-            betAndAdd();
+            기본배팅_및_participants에_모두_넣기();
 
             //when
             participants.total();
@@ -288,11 +298,11 @@ public class ParticipantsTest {
         }
 
         @Test
-        void 플레이어중에만_블랙잭_상태확인() {
+        void 플레이어중에만_블랙잭_존재할_때_상태확인() {
             //given
             pobi = new Player(tobyName, new Blackjack(new Cards()));
             jason = new Player(jasonName, new Blackjack(new Cards()));
-            betAndAdd();
+            기본배팅_및_participants에_모두_넣기();
 
             //when
             participants.total();
@@ -305,11 +315,11 @@ public class ParticipantsTest {
         }
 
         @Test
-        void 플레이어중에만_블랙잭_수익확인() {
+        void 플레이어중에만_블랙잭_존재할_때_수익확인() {
             //given
             pobi = new Player(tobyName, new Blackjack(new Cards()));
             jason = new Player(jasonName, new Blackjack(new Cards()));
-            betAndAdd();
+            기본배팅_및_participants에_모두_넣기();
 
             //when
             participants.total();
@@ -327,7 +337,7 @@ public class ParticipantsTest {
         }
 
         @Test
-        void 승자계산_딜러공동우승_상태확인() {
+        void 승자계산해서_딜러와_플레이어_공동우승인_경우_상태확인() {
             //given
             dealer = new Dealer(new Hit(new Cards()));
             pobi = new Player(pobiName, new Hit(new Cards()));
@@ -344,7 +354,7 @@ public class ParticipantsTest {
             jason.stay();
             toby.stay();
 
-            betAndAdd();
+            기본배팅_및_participants에_모두_넣기();
 
             //when
             participants.total();
@@ -357,7 +367,7 @@ public class ParticipantsTest {
         }
 
         @Test
-        void 승자계산_딜러공동우승_수익확인() {
+        void 승자계산해서_딜러와_플레이어_공동우승인_경우_수익확인() {
             //given
             dealer = new Dealer(new Hit(new Cards()));
             pobi = new Player(pobiName, new Hit(new Cards()));
@@ -375,7 +385,7 @@ public class ParticipantsTest {
             toby.stay();
 
 
-            betAndAdd();
+            기본배팅_및_participants에_모두_넣기();
 
             //when
             participants.total();
@@ -441,7 +451,7 @@ public class ParticipantsTest {
         }
 
         @Test
-        void 모든_이름들과_카드들_초기_공개_문자열_반환() {
+        void 모든_이름들과_카드들_초기_공개내용_문자열_반환() {
             //given
             String message = "딜러: 3다이아몬드\n" +
                     "pobi카드: 2하트, 8스페이드 \n" +

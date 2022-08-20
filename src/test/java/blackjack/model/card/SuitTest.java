@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 public class SuitTest {
 
     @Test
-    void suit값_확인() {
+    void Suit값_주어진_문자와_일치하는지_확인() {
         //given
         String given = "클로버";
 

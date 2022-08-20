@@ -50,7 +50,7 @@ public class PlayerTest {
     }
 
     @Test
-    void 이름과_수익() {
+    void 이름과_수익_문자열_반환() {
         //given
         String message = "pobi: -1000\n";
         Cards cards = new Cards();

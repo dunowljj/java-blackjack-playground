@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.*;
 public class HitTest {
 
     @Test
-    void 생성_카드일치_확인() {
+    void 생성() {
         //given
         Cards cards = new Cards(new PlayingCards());
 
@@ -21,7 +21,7 @@ public class HitTest {
     }
 
     @Test
-    void 시작_카드2장_받기() {
+    void 초기_생성_시_지급카드_2장() {
         //given, when
         State state = new Hit(new PlayingCards());
         Cards cards = state.cards();
@@ -30,10 +30,8 @@ public class HitTest {
         assertThat(cards.getCards().size()).isEqualTo(2);
     }
 
-
-
     @Test
-    void 카드추가_안함_Stay() {
+    void 카드추가_거부_시_Stay() {
         //given
         Cards cards = new Cards();
 
@@ -45,7 +43,7 @@ public class HitTest {
     }
 
     @Test
-    void 카드추가_Bust() {
+    void 카드추가해서_초과_시_Bust() {
         //given
         Cards cards = new Cards();
         cards.add(new PlayingCard(Suit.HEART, Denomination.TEN));
@@ -58,24 +56,4 @@ public class HitTest {
         //then
         assertThat(state.getClass()).isEqualTo(Bust.class);
     }
-
-
-
-    @Test
-    void 큰_Ace점수_고르기() {
-        //given
-        Cards cards = new Cards();
-        cards.add(new PlayingCard(Suit.HEART, Denomination.ACE));
-        cards.add(new PlayingCard(Suit.HEART, Denomination.JACK));
-
-        {
-            //when
-            State hit = new Hit(cards);
-
-            //then
-//        assertThat(hit.cards().).isEqualTo(Hit.class);
-        }
-    }
-
-
 }

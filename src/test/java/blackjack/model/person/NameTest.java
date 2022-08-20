@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 public class NameTest {
 
     @Test
-    void 이름입력() {
+    void 이름_생성() {
         //given
         String input = "pobi";
 
@@ -18,10 +18,8 @@ public class NameTest {
         assertThat(name.value()).isEqualTo(input);
     }
 
-
-
     @Test
-    void 이름길이_제한() {
+    void 이름길이_초과시_예외() {
         //given
         String input = "pobiIsHappy";
 

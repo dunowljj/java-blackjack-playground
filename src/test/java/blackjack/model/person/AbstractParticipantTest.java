@@ -64,7 +64,7 @@ public class AbstractParticipantTest {
     }
 
     @Test
-    void isFinished_합0() {
+    void 카드추가_종료여부_합이_0일때() {
         //given
         Cards cards = new Cards();
         AbstractParticipant participant = new Player(new Name("pobi"), cards);
@@ -74,7 +74,7 @@ public class AbstractParticipantTest {
     }
 
     @Test
-    void isFinished_합22() {
+    void 카드추가_종료여부_합이_22일때() {
         //given
         Cards cards = new Cards();
         cards.add(new PlayingCard(Suit.HEART, Denomination.JACK));

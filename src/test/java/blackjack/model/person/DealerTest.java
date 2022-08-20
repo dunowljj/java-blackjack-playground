@@ -9,7 +9,7 @@ public class DealerTest {
 
 
     @Test
-    void 플레이어_아닌지_확인(){
+    void 딜러가_플레이어가_아님을_확인(){
         //given
         PlayingCards playingCard = new PlayingCards();
 
@@ -49,7 +49,7 @@ public class DealerTest {
     }
 
     @Test
-    void 수익저장() {
+    void 수익_저장() {
         //given
         double total = -1.0;
         Dealer dealer = new Dealer(new Cards());
@@ -62,7 +62,7 @@ public class DealerTest {
     }
 
     @Test
-    void 이름과_카드들_문자열_반환_최초_한장만_공개() {
+    void 이름과_카드들_문자열_반환_최초_한장만_공개하는_경우() {
         //given
         String message = "딜러: 10하트";
         Cards cards = new Cards();
@@ -77,7 +77,7 @@ public class DealerTest {
     }
 
     @Test
-    void 이름과_수익() {
+    void 이름과_수익_문자열_반환() {
         //given
         String message = "딜러: -1000\n";
         Cards cards = new Cards();
