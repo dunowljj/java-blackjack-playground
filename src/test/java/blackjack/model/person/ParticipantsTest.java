@@ -128,6 +128,20 @@ public class ParticipantsTest {
         }
     }
 
+
+    /*
+    total()메서드
+     *호출 시점
+     - 블랙잭 게임이 진행되고, 추가로 카드를 뽑을지 모두 결정한 상태에서 사용된다.
+     해당 시점에 모든 참여자들의 상태는 Finished의 하위클래스들(Bust, Blackjack, Stay) 중 하나이다.
+     --> 호출 시점을 고려해서 모든 참여자들의 상태를 total에 사용할 수 있도록 Stay로 초기화하고 시작한다. 각 테스트 메서드에서 필요에 따라
+     Bust, Blackjack을 설정한다.
+
+     *기능
+     1) 사용 시점에 참여자들의 상태객체가 무엇인지에 따라 참여자들의 상태를 조정한다
+     2) 그에 따라 수익을 계산한다.
+     --> 두 가지 기능을 가지고 있는데, 확실한 테스트를 위해 상태가 잘 변경되었는지, 수익이 잘 계산되는지 두 가지를 모두 테스트를 했다.
+     */
     @Nested
     class total {
 
@@ -142,21 +156,17 @@ public class ParticipantsTest {
     Name jasonName = new Name("jason");
     Name tobyName = new Name("toby");
 
-    int pobiMoney;
-    int jasonMoney;
-    int tobyMoney;
+    int pobiMoney = 10000;
+    int jasonMoney = 7000;
+    int tobyMoney = 12000;
 
-    /*
-    total()메서드
-     호출 시점 : 블랙잭 게임이 진행되고, 추가로 카드를 뽑을지 모두 결정한 상태에서 사용된다.
-     -> 호출 시점을 고려해서 모든 참여자들의 상태를 total에 사용할 수 있도록 Stay로 초기화하고 시작한다. 각 테스트 메서드에서 필요에 따라
-     Bust, Blackjack을 설정한다.
-
-     기능 : 1) 사용 시점에 참여자들의 상태객체가 무엇인지에 따라 참여자들의 상태를 조정한다. 2) 그에 따라 수익을 계산한다.
-     -> 두 가지 기능을 가지고 있는데, 확실한 테스트를 위해 상태가 잘 변경되었는지, 수익이 잘 계산되는지 두 가지 테스트를 했다.
+    double blackjackEarningRate = 1.5;
+    double drawEarningRate = 0;
+    double bustEarningRate = -1.0;
+    double stayEarningRate = -1.0;
+    double winEarningRate = -1.0;
 
 
-     */
     @BeforeEach
     void setUp_전부_Stay로_설정해놓기() {
         participants = new Participants();
@@ -166,9 +176,6 @@ public class ParticipantsTest {
         jason = new Player(jasonName, new Stay(new Cards()));
         toby = new Player(tobyName, new Stay(new Cards()));
 
-        pobiMoney = 10000;
-        jasonMoney = 7000;
-        tobyMoney = 12000;
     }
 
     private void 기본배팅_및_participants에_모두_넣기() {
@@ -182,15 +189,51 @@ public class ParticipantsTest {
         list.add(toby);
     }
 
+        @Test
+        void 딜러와_단독_Bust일때_집계된_상태확인() {
+            //given
+            dealer = new Dealer(new Bust(new Cards()));
+            기본배팅_및_participants에_모두_넣기();
+
+            //when
+            participants.total();
+
+            //then
+            assertThat(dealer.getState().getClass()).isEqualTo(Bust.class);
+            assertThat(pobi.getState().getClass()).isEqualTo(Win.class);
+            assertThat(jason.getState().getClass()).isEqualTo(Win.class);
+            assertThat(toby.getState().getClass()).isEqualTo(Win.class);
+        }
+
+        @Test
+        void 딜러와_단독_Bust일때_수익확인() {
+            //given
+            dealer = new Dealer(new Bust(new Cards()));
+            기본배팅_및_participants에_모두_넣기();
+
+            //when
+            participants.total();
+
+            pobiMoney *= 1.0;
+            jasonMoney *= 1.0;
+            tobyMoney *= 1.0;
+            int sum = (int) -1 * (pobiMoney + jasonMoney + tobyMoney);
+
+            //then
+            assertThat(dealer.profit()).isEqualTo(sum);
+            assertThat(pobi.profit()).isEqualTo(pobiMoney);
+            assertThat(jason.profit()).isEqualTo(jasonMoney);
+            assertThat(toby.profit()).isEqualTo(tobyMoney);
+        }
+
     @Test
     void 딜러와_플레이어_둘다_Bust일때_집계된_상태확인() {
         //given
         dealer = new Dealer(new Bust(new Cards()));
         pobi = new Player(new Name("pobi"), new Bust(new Cards()));
-
+        기본배팅_및_participants에_모두_넣기();
 
         //when
-        기본배팅_및_participants에_모두_넣기();
         participants.total();
 
         //then
@@ -221,6 +264,7 @@ public class ParticipantsTest {
         assertThat(jason.profit()).isEqualTo(jasonMoney);
         assertThat(toby.profit()).isEqualTo(tobyMoney);
     }
+
     @Test
     void 딜러_플레이어_같이_블랙잭일때_상태확인() {
         //given

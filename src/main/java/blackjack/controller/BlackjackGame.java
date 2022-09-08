@@ -18,6 +18,7 @@ public class BlackjackGame {
     private static void tryToRun() {
         PlayingCards playingCards = new PlayingCards();
 
+        // 초기 배분 2장을 한다는 내용이 드러나도록 메서드를 만드는게 나을까?
         Participants gamers = new Participants(InputView.inputPlayerNames(), playingCards);
         gamers.inputBetMoney();
 

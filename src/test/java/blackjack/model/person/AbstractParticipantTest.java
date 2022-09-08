@@ -50,7 +50,7 @@ public class AbstractParticipantTest {
     }
 
     @Test
-    void 시작_카드2장_블랙잭인_경우() {
+    void 시작_카드2장이_블랙잭인_경우() {
         //given, when
         Cards cards = new Cards();
         cards.add(new PlayingCard(Suit.CLOVER, Denomination.ACE));
