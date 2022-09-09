@@ -1,8 +1,11 @@
 package blackjack.model.person;
 
+import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCard;
 import blackjack.model.card.PlayingCards;
 import blackjack.model.state.State;
+
+import java.util.List;
 
 public interface Participant {
 
@@ -51,5 +54,8 @@ public interface Participant {
     boolean isWinner(int max);
 
     boolean isStay();
+    List<PlayingCard> getCards();
+
+    int sumOfScore();
 }
 

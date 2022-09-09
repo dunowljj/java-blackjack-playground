@@ -7,9 +7,6 @@ import java.util.Objects;
 public class PlayingCard{
     private static Map<Denomination, Character> convertor;
 
-    private Suit suit;
-    private Denomination denomination;
-
     static {
         convertor = new HashMap<>();
         convertor.put(Denomination.ACE_BIG_SCORE, 'A');
@@ -19,6 +16,9 @@ public class PlayingCard{
         convertor.put(Denomination.KING, 'K');
 
     }
+    private Suit suit;
+    private Denomination denomination;
+
 
     public PlayingCard(Suit suit, Denomination denomination) {
         this.suit = suit;
@@ -32,13 +32,12 @@ public class PlayingCard{
     public Denomination getDenomination() {
         return denomination;
     }
+    public boolean isAce() {
+        return denomination.isAce();
+    }
 
-    public String info() {
-        if (denomination.isAlphabet()) {
-            char header = convertor.get(denomination);
-            return header + "" + suit.getName();
-        }
-        return denomination.getScore() + "" + suit.getName();
+    public void changeToBigAce() {
+        denomination = Denomination.ACE_BIG_SCORE;
     }
 
     @Override
@@ -54,11 +53,13 @@ public class PlayingCard{
         return Objects.hash(suit, denomination);
     }
 
-    public boolean isAce() {
-        return denomination.isAce();
-    }
+    @Override
+    public String toString() {
+        if (denomination.isAlphabet()) {
+            char header = convertor.get(denomination);
+            return header + suit.getName();
+        }
 
-    public void changeToBigAce() {
-        denomination = Denomination.ACE_BIG_SCORE;
+        return denomination.getScore() + suit.getName();
     }
 }

@@ -17,13 +17,16 @@ public class OutputView {
         System.out.println(MESSAGE_NOTICE_DEALER_DRAW);
     }
 
-    public static void printDeckAndResult(final String namesAndCards) {
+   /* public static void printDeckAndResult(final String namesAndCards) {
         System.out.println(namesAndCards);
-    }
+    }*/
 
     public static void printProfits(final String namesAndProfits) {
         System.out.println("\n"+MESSAGE_FINAL_REVENUE);
         System.out.println(namesAndProfits);
+    }
 
+    public static void printMessage(String message) {
+        System.out.println(message);
     }
 }

@@ -45,6 +45,9 @@ public class Player extends AbstractParticipant {
 
         return namesAndRevenues;
     }
+
+
+
     @Override
     public boolean isPlayer() {
         return true;

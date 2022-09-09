@@ -29,6 +29,6 @@ public class PlayingCardTest {
         PlayingCard playingCard = new PlayingCard(Suit.HEART, Denomination.TEN);
 
         //then
-        assertThat(playingCard.info()).isEqualTo(given);
+        assertThat(playingCard.toString()).isEqualTo(given);
     }
 }

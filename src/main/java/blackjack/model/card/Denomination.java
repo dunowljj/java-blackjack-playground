@@ -18,7 +18,6 @@ public enum Denomination {
 
     Denomination(int score) {
         this.score = score;
-
     }
     private int score;
 

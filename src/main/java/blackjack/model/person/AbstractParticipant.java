@@ -7,14 +7,17 @@ import blackjack.model.state.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.List;
+
 public abstract class AbstractParticipant implements Participant{
     public static final String MESSAGE_CARD_START = "카드: ";
+
     public static final String MESSAGE_RESULT_START = "- 결과: ";
+
     private final Name name;
     private BetMoney betMoney;
     private Profit profit;
     private State state;
-
     protected AbstractParticipant(Name name) {
         this.name = name;
     }
@@ -75,6 +78,11 @@ public abstract class AbstractParticipant implements Participant{
         if (!yes) {
             state = state.stay();
         }
+    }
+
+    @Override
+    public int sumOfScore() {
+        return state.cards().sumOfScore();
     }
 
     public void tie() {
@@ -145,5 +153,10 @@ public abstract class AbstractParticipant implements Participant{
     @Override
     public void setProfit(double profit) {
         this.profit = new Profit(profit);
+    }
+
+    @Override
+    public List<PlayingCard> getCards() {
+        return state.cards().getCards();
     }
 }

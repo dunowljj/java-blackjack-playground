@@ -135,7 +135,7 @@ public class CardsTest {
         cards.add(new PlayingCard(Suit.HEART, Denomination.TEN));
 
         //then
-        assertThat(cards.firstCard()).isEqualTo(playingCard.info());
+        assertThat(cards.firstCard()).isEqualTo(playingCard.toString());
 
     }
 

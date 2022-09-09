@@ -23,7 +23,7 @@ public class Cards {
     public String allCards() {
         StringBuilder allCards = new StringBuilder();
 
-        cards.stream().forEach(playingCard -> allCards.append(playingCard.info()).append(CARD_INFO_DELIMITER));
+        cards.stream().forEach(playingCard -> allCards.append(playingCard).append(CARD_INFO_DELIMITER));
 
         allCards.deleteCharAt(allCards.lastIndexOf(CARD_INFO_DELIMITER));
 
@@ -31,7 +31,7 @@ public class Cards {
     }
 
     public String firstCard() {
-        return cards.get(CARDS_FIRST_INDEX).info();
+        return cards.get(CARDS_FIRST_INDEX).toString();
     }
 
     public void add(PlayingCard playingCard) {

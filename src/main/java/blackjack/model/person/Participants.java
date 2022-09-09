@@ -53,7 +53,7 @@ public class Participants {
         return names.toString();
     }
 
-    public String namesAndCards() {
+   /* public String namesAndCards() {
         StringBuilder namesAndCards = new StringBuilder();
 
         participants.stream()
@@ -62,7 +62,7 @@ public class Participants {
         namesAndCards.deleteCharAt(namesAndCards.lastIndexOf("\n"));
 
         return namesAndCards.toString();
-    }
+    }*/
 
     public String namesAndProfits() {
         StringBuilder namesAndRevenues = new StringBuilder();
@@ -188,5 +188,9 @@ public class Participants {
 
     public boolean isDealerBust() {
         return dealer().isBust();
+    }
+
+    public void join(Participant participant) {
+        getParticipants().add(participant);
     }
 }
