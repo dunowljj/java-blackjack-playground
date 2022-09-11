@@ -1,6 +1,5 @@
 package blackjack.model.person;
 
-import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCard;
 import blackjack.model.card.PlayingCards;
 import blackjack.model.state.State;
@@ -13,9 +12,6 @@ public interface Participant {
 
     void bet(BetMoney money);
 
-    StringBuilder allNamesAndCards();
-
-    StringBuilder nameAndCards();
 
     void askHitUntilNo(PlayingCards playingCards);
 
@@ -36,8 +32,6 @@ public interface Participant {
     Name getName();
 
     BetMoney getBetMoney();
-
-    StringBuilder namesAndProfits();
 
     Profit getProfit();
 

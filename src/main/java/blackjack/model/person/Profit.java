@@ -10,4 +10,9 @@ public class Profit {
     public int value() {
         return (int)profit;
     }
+
+    @Override
+    public String toString() {
+        return (int)profit+"";
+    }
 }

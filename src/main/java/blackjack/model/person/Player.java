@@ -25,30 +25,6 @@ public class Player extends AbstractParticipant {
     }
 
     @Override
-    public StringBuilder nameAndCards() {
-        StringBuilder nameAndCard = new StringBuilder();
-
-        nameAndCard.append(getName()).append(MESSAGE_NAME_BETWEEN_CARDS)
-                .append(getState().cards().allCards());
-
-        return nameAndCard;
-    }
-
-    @Override
-    public StringBuilder namesAndProfits() {
-        StringBuilder namesAndRevenues = new StringBuilder();
-
-        namesAndRevenues.append(getName())
-                .append(": ")
-                .append(profit())
-                .append("\n");
-
-        return namesAndRevenues;
-    }
-
-
-
-    @Override
     public boolean isPlayer() {
         return true;
     }

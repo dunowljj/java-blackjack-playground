@@ -1,15 +1,13 @@
 package blackjack.controller;
 
 import blackjack.model.card.PlayingCards;
-import blackjack.model.message.InitialStatusMessages;
-import blackjack.model.message.StatusMessage;
-import blackjack.model.message.StatusMessages;
+import blackjack.model.message.*;
 import blackjack.model.person.Participant;
 import blackjack.model.person.Participants;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-public class BlackjackGame {
+public class BlackjackController {
     public static void run() {
         try {
             tryToRun();
@@ -51,20 +49,26 @@ public class BlackjackGame {
     private static void totalGameAndExit(Participants gamers) {
         gamers.total();
         printStatus(gamers);
-        OutputView.printProfits(gamers.namesAndProfits());
+        printResult(gamers);
         System.exit(0);
     }
+
     private static void printInitialStatus(Participants participants) {
         String message = InitialStatusMessages.from(participants).getMessage();
         OutputView.printMessage(message);
     }
+
     private static void printStatus(Participant participant) {
         String message = StatusMessage.from(participant).getMessage();
         OutputView.printMessage(message);
     }
-
     private static void printStatus(Participants participants) {
         String message = StatusMessages.from(participants).getMessage();
+        OutputView.printMessage(message);
+    }
+
+    private static void printResult(Participants gamers) {
+        String message = ProfitMessages.from(gamers).getMessage();
         OutputView.printMessage(message);
     }
 

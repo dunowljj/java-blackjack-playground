@@ -5,15 +5,10 @@ import blackjack.model.card.PlayingCard;
 import blackjack.model.card.PlayingCards;
 import blackjack.model.state.*;
 import blackjack.view.InputView;
-import blackjack.view.OutputView;
 
 import java.util.List;
 
 public abstract class AbstractParticipant implements Participant{
-    public static final String MESSAGE_CARD_START = "카드: ";
-
-    public static final String MESSAGE_RESULT_START = "- 결과: ";
-
     private final Name name;
     private BetMoney betMoney;
     private Profit profit;
@@ -49,16 +44,6 @@ public abstract class AbstractParticipant implements Participant{
         return;
     }
 
-    @Override
-    public StringBuilder allNamesAndCards() {
-        StringBuilder nameAndCard = new StringBuilder();
-
-        nameAndCard.append(getName()).append(MESSAGE_CARD_START)
-                .append(state.cards().allCards())
-                .append(MESSAGE_RESULT_START).append(state.cards().sumOfScore());
-
-        return nameAndCard;
-    }
 
     @Override
     public void askHitUntilNo(PlayingCards playingCards) {
@@ -72,7 +57,8 @@ public abstract class AbstractParticipant implements Participant{
 
         if (yes) {
             state = state.drawCard(playingCards.nextCard());
-            OutputView.printInfo(nameAndCards().toString());
+//            OutputView.printInfo(nameAndCards().toString());
+            // todo: 컨트롤러에서 해당 내용 구현할 예정. Participants객체와 새로 생성한 메시지 클래스를 활용한다.
         }
 
         if (!yes) {
@@ -145,6 +131,7 @@ public abstract class AbstractParticipant implements Participant{
         return betMoney;
     }
 
+    //todo: 상태안의 수익을 계산해서 저장해야한다. 혹은 바로 반환
     @Override
     public Profit getProfit() {
         return profit;

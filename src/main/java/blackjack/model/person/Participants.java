@@ -53,35 +53,6 @@ public class Participants {
         return names.toString();
     }
 
-   /* public String namesAndCards() {
-        StringBuilder namesAndCards = new StringBuilder();
-
-        participants.stream()
-                .forEach(participant -> namesAndCards.append(participant.nameAndCards()).append("\n"));
-
-        namesAndCards.deleteCharAt(namesAndCards.lastIndexOf("\n"));
-
-        return namesAndCards.toString();
-    }*/
-
-    public String namesAndProfits() {
-        StringBuilder namesAndRevenues = new StringBuilder();
-        participants.stream().
-                forEach(participant -> namesAndRevenues.append(participant.namesAndProfits()));
-        return namesAndRevenues.toString().trim();
-    }
-
-    public String allNamesAndCards() {
-        StringBuilder namesAndCards = new StringBuilder();
-
-        participants.stream()
-                .forEach(participant -> namesAndCards.append(participant.allNamesAndCards()).append("\n"));
-
-        namesAndCards.deleteCharAt(namesAndCards.lastIndexOf("\n"));
-
-        return namesAndCards.toString();
-    }
-
     public void inputBetMoney() {
         participants.stream()
                 .filter(participant -> participant.isPlayer())
@@ -154,13 +125,22 @@ public class Participants {
     }
 
     private void totalProfit() {
+        setAllPlayerProfit();
+
         double sum = participants.stream()
                 .filter(participant -> participant.isPlayer())
-                .map(Participant::profit)
+                .map(Participant::getProfit).map(Profit::value)
                 .reduce(0, (x, y) -> x + y);
 
         dealer().earn(sum);
     }
+
+    private void setAllPlayerProfit() {
+        participants.stream()
+                .filter(participant -> participant.isPlayer())
+                .forEach(participant -> participant.setProfit(participant.profit()));
+    }
+
     public boolean blackjackExist() {
         return participants.stream()
                 .filter(Participant::isBlackjack)

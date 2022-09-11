@@ -90,24 +90,6 @@ public class AbstractParticipantTest {
         assertThat(participant.isFinished()).isTrue();
     }
 
-    @Test
-    void 이름과_모든_카드들과_결과_문자열_반환() {
-        //given
-        String message = "pobi카드: J하트, 9하트, 2하트 - 결과: 21";
-        Cards cards = new Cards();
-        cards.add(new PlayingCard(Suit.HEART, Denomination.JACK));
-        cards.add(new PlayingCard(Suit.HEART, Denomination.NINE));
-        cards.add(new PlayingCard(Suit.HEART, Denomination.TWO));
-        AbstractParticipant participant = new Player(new Name("pobi"), cards);
-
-        //when
-        String info = participant.allNamesAndCards().toString();
-
-        //then
-        assertThat(info).isEqualTo(message);
-    }
-
-
     @Nested
     class 상태 {
         Cards cards;

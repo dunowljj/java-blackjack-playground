@@ -493,53 +493,5 @@ public class ParticipantsTest {
             assertThat(participants.playerNames()).isEqualTo(message);
 
         }
-
-        @Test
-        void 모든_이름들과_카드들_초기_공개내용_문자열_반환() {
-            //given
-            String message = "딜러: 3다이아몬드\n" +
-                    "pobi카드: 2하트, 8스페이드 \n" +
-                    "jason카드: 7클로버, K스페이드 ";
-            //when
-            Participants participants = new Participants();
-            addPlayers(participants, dealer, pobi, jason);
-            pobi.getState().cards().getCards().remove(2);
-
-            //then
-            assertThat(participants.namesAndCards()).isEqualTo(message);
-        }
-
-        @Test
-        void 모든_이름들과_카드들과_결과들_문자열_반환() {
-            //given
-            String message = "딜러카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20\n" +
-                    "pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21\n" +
-                    "jason카드: 7클로버, K스페이드 - 결과: 17";
-
-            //when
-            Participants participants = new Participants();
-            addPlayers(participants, dealer, pobi, jason);
-
-            //then
-            assertThat(participants.allNamesAndCards()).isEqualTo(message);
-        }
-
-        @Test
-        void 모든_이름들과_수익들_문자열_반환() {
-            //given
-            String message = "딜러: 10000\n" +
-                    "pobi: 10000\n" +
-                    "jason: -20000";
-
-            //when
-            Participants participants = new Participants();
-            addPlayers(participants, dealer, pobi, jason);
-            participants.total();
-
-            //then
-            assertThat(participants.namesAndProfits().toString()).isEqualTo(message);
-
-        }
-
     }
 }

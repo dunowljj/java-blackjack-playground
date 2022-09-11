@@ -1,9 +1,9 @@
 package blackjack;
 
-import blackjack.controller.BlackjackGame;
+import blackjack.controller.BlackjackController;
 
 public class GameApplication {
     public static void main(String[] args) {
-        BlackjackGame.run();
+        BlackjackController.run();
     }
 }

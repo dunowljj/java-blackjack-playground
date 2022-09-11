@@ -25,27 +25,6 @@ public class Dealer extends AbstractParticipant{
         setState(state);
     }
 
-    @Override
-    public StringBuilder nameAndCards() {
-        StringBuilder nameAndCard = new StringBuilder();
-
-        nameAndCard.append(getName()).append(": ")
-                .append(getState().cards().firstCard());
-
-        return nameAndCard;
-    }
-
-    @Override
-    public StringBuilder namesAndProfits() {
-        StringBuilder namesAndRevenues = new StringBuilder();
-
-        namesAndRevenues.append(getName())
-                .append(": ")
-                .append(getProfit().value())
-                .append("\n");
-
-        return namesAndRevenues;
-    }
 
     @Override
     public boolean isPlayer() {
