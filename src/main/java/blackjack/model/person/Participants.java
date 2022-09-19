@@ -7,9 +7,7 @@ import blackjack.model.state.State;
 import blackjack.view.InputView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class Participants {
     public static final String ERROR_NULL_INPUT_NAMES = "값이 입력되지 않았습니다.";
@@ -20,20 +18,16 @@ public class Participants {
 
     public Participants() {
     }
-    public Participants(String names, PlayingCards playingCards) {
-        Optional.ofNullable(names).orElseThrow(() -> new IllegalArgumentException(ERROR_NULL_INPUT_NAMES));
 
-        String[] bunchOfName = names.split(INPUT_NAME_DELIMITER);
-
-        distributeInitialCards(playingCards, bunchOfName);
+    public Participants(Names names, PlayingCards playingCards) {
+        distributeInitialCards(playingCards, names);
     }
 
-    private void distributeInitialCards(PlayingCards playingCards, String[] bunchOfName) {
+    private void distributeInitialCards(PlayingCards playingCards, Names names) {
         participants.add(new Dealer(playingCards));
 
-        Arrays.stream(bunchOfName)
-                .forEach((name) -> participants.add(new Player(new Name(name), playingCards)));
-
+        names.getNames().stream()
+                .forEach((name) -> participants.add(new Player(name, playingCards)));
     }
 
     public List<Participant> getParticipants() {

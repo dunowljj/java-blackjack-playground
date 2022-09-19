@@ -16,7 +16,7 @@ public class ParticipantsTest {
     @BeforeEach
     void setUp() {
         bunchOfName = "pobi,jason,toby";
-        participants = new Participants(bunchOfName, new PlayingCards());
+        participants = new Participants(Names.from(bunchOfName), new PlayingCards());
     }
 
     @Nested
@@ -28,7 +28,7 @@ public class ParticipantsTest {
             String[] names = bunchOfName.split(",");
 
             //when
-            Participants participants = new Participants(bunchOfName, new PlayingCards());
+            Participants participants = new Participants(Names.from(bunchOfName), new PlayingCards());
 
             //then
             assertThat(participants.getParticipants())
@@ -37,7 +37,7 @@ public class ParticipantsTest {
 
         @Test
         void 이름뭉치_null입력시_예외() {
-            assertThatThrownBy(() -> new Participants(null, new PlayingCards()))
+            assertThatThrownBy(() -> new Participants(Names.from(null), new PlayingCards()))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("값이 입력되지 않았습니다.");
         }
@@ -487,7 +487,7 @@ public class ParticipantsTest {
             String message = "pobi, jason, toby ";
 
             //when
-            Participants participants = new Participants("pobi,jason,toby", new PlayingCards());
+            Participants participants = new Participants(Names.from(bunchOfName), new PlayingCards());
 
             //then
             assertThat(participants.playerNames()).isEqualTo(message);

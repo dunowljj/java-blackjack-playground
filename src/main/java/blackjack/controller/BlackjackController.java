@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.model.card.PlayingCards;
 import blackjack.model.message.*;
+import blackjack.model.person.Names;
 import blackjack.model.person.Participant;
 import blackjack.model.person.Participants;
 import blackjack.view.InputView;
@@ -21,7 +22,7 @@ public class BlackjackController {
         PlayingCards playingCards = new PlayingCards();
 
         // 초기 배분 2장을 한다는 내용이 드러나도록 메서드를 만드는게 나을까?
-        Participants gamers = new Participants(InputView.inputPlayerNames(), playingCards);
+        Participants gamers = new Participants(getName(), playingCards);
         gamers.inputBetMoney();
 
         OutputView.noticeStartDistribution(gamers.playerNames());
@@ -44,6 +45,15 @@ public class BlackjackController {
         }
 
         totalGameAndExit(gamers);
+    }
+
+    private static Names getName() {
+        try {
+            return Names.from(InputView.inputPlayerNames());
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            return getName();
+        }
     }
 
     private static void totalGameAndExit(Participants gamers) {
