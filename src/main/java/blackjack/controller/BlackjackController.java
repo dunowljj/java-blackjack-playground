@@ -85,15 +85,20 @@ public class BlackjackController {
     }
 
     private static Players bettingAndGetPlayer(Names names) {
+        return new Players(names.value().stream()
+                .map((name) -> new Player(name, getBetMoney(name)))
+                .collect(Collectors.toList()));
+    }
+
+    private static BetMoney getBetMoney(Name name) {
         try {
-            return new Players(names.value().stream()
-                    .map((name) -> new Player(name, InputView.inputBetMoney(name)))
-                    .collect(Collectors.toList()));
+            return InputView.inputBetMoney(name);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
-            return bettingAndGetPlayer(names);
+            return getBetMoney(name);
         }
     }
+
 
     private static Names getNames() {
         try {
