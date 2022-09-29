@@ -13,8 +13,13 @@ public abstract class AbstractParticipant implements Participant{
     private BetMoney betMoney;
     private Profit profit;
     private State state;
-    protected AbstractParticipant(Name name) {
+    public AbstractParticipant(Name name) {
         this.name = name;
+    }
+
+    protected AbstractParticipant(Name name, BetMoney betMoney) {
+        this.name = name;
+        this.betMoney = betMoney;
     }
 
     public AbstractParticipant(Name name, PlayingCards playingCards) {
@@ -53,17 +58,17 @@ public abstract class AbstractParticipant implements Participant{
     }
 
     private void askHit(PlayingCards playingCards) {
-        boolean yes = InputView.askWantHitMore(name);
-
-        if (yes) {
-            state = state.drawCard(playingCards.nextCard());
-//            OutputView.printInfo(nameAndCards().toString());
-            // todo: 컨트롤러에서 해당 내용 구현할 예정. Participants객체와 새로 생성한 메시지 클래스를 활용한다.
-        }
-
-        if (!yes) {
-            state = state.stay();
-        }
+//        boolean yes = InputView.askWantHitMore(name);
+//
+//        if (yes) {
+//            state = state.drawCard(playingCards.nextCard());
+////            OutputView.printInfo(nameAndCards().toString());
+//            // todo: 컨트롤러에서 해당 내용 구현할 예정. Participants객체와 새로 생성한 메시지 클래스를 활용한다.
+//        }
+//
+//        if (!yes) {
+//            state = state.stay();
+//        }
     }
 
     @Override

@@ -16,7 +16,7 @@ public class AbstractParticipantTest {
         Name name = new Name("pobi");
 
         //when
-        AbstractParticipant participant = new Player(name);
+        AbstractParticipant participant = new Player(name, new BetMoney(100)); //todo: 생성자를 어떻게 정리할것인가?
 
         //then
         assertThat(participant.getName()).isEqualTo(name);
@@ -27,7 +27,7 @@ public class AbstractParticipantTest {
         //given
         Name inputName = new Name("pobi");
         BetMoney inputBetMoney = new BetMoney(10000);
-        AbstractParticipant participant = new Player(inputName);
+        AbstractParticipant participant = new Player(inputName, inputBetMoney);
 
         //when
         participant.bet(inputBetMoney);

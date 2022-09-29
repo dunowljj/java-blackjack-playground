@@ -50,6 +50,6 @@ public class NamesTest {
         Names names = Names.from(bunchOfName);
 
         //then
-        assertThat(names.getNames()).containsAll(nameList);
+        assertThat(names.value()).containsAll(nameList);
     }
 }

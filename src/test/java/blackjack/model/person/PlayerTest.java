@@ -1,8 +1,6 @@
 package blackjack.model.person;
 
 import blackjack.model.card.*;
-import blackjack.model.state.Blackjack;
-import blackjack.model.state.Bust;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -15,7 +13,7 @@ public class PlayerTest {
         Name name = new Name("pobi");
 
         //when
-        Player person = new Player(name);
+        Player person = new Player(name, new BetMoney(100)); // todo: 생성자를 어떻게 정리할 것인가?
 
         //then
         assertThat(person.getName()).isEqualTo(name);

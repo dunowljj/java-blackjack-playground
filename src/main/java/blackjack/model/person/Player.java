@@ -8,8 +8,8 @@ public class Player extends AbstractParticipant {
 
     public static final String MESSAGE_NAME_BETWEEN_CARDS = "카드: ";
 
-    public Player(Name name) {
-        super(name);
+    public Player(Name name, BetMoney betMoney) {
+        super(name , betMoney);
     }
 
     public Player(Name name, PlayingCards playingCards) {
@@ -19,6 +19,7 @@ public class Player extends AbstractParticipant {
         super(name, cards);
     }
 
+    // todo: 테스트용 생성자들 정리
     public Player(Name name, State state) {
         super(name);
         setState(state);

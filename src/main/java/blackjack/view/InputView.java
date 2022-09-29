@@ -1,9 +1,7 @@
 package blackjack.view;
 
 import blackjack.model.card.PlayingCards;
-import blackjack.model.person.BetMoney;
-import blackjack.model.person.Name;
-import blackjack.model.person.Participants;
+import blackjack.model.person.*;
 import blackjack.utils.InputUtils;
 
 public class InputView {
@@ -29,8 +27,12 @@ public class InputView {
                .forEach(p -> p.askHitUntilNo(playingCards));
     }
 
-    public static boolean askWantHitMore(Name name) {
-        System.out.println(name + MESSAGE_INPUT_MORE_CARD);
+//    public static boolean askWantHitMore(Name name) {
+//        System.out.println(name + MESSAGE_INPUT_MORE_CARD);
+//        return InputUtils.inputYesOrNo();
+//    }
+
+    public static CardDecision askAddCard(Player player) {
         return InputUtils.inputYesOrNo();
     }
 }

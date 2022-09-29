@@ -25,7 +25,7 @@ public class Names {
                 .collect(Collectors.toList()));
     }
 
-    public List<Name> getNames() {
+    public List<Name> value() {
         return Collections.unmodifiableList(names);
     }
 }

@@ -1,5 +1,7 @@
 package blackjack.utils;
 
+import blackjack.model.person.CardDecision;
+
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -16,17 +18,17 @@ public class InputUtils {
         return Integer.parseInt(scanner.nextLine());
     }
 
-    public static boolean inputYesOrNo() {
+    public static CardDecision inputYesOrNo() {
         String input = scanner.nextLine();
 
         Optional.ofNullable(input).orElseThrow(() -> new IllegalArgumentException(ERROR_INPUT_NULL_YES_OR_NO));
 
-        if (input.equals("y")) {
-            return true;
+        if (input.equalsIgnoreCase("y")) {
+            return CardDecision.YES;
         }
 
-        if (input.equals("n")) {
-            return false;
+        if (input.equalsIgnoreCase("n")) {
+            return CardDecision.NO;
         }
 
         throw new IllegalArgumentException(ERROR_INPUT_FORMAT_YES_OR_NO);

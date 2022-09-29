@@ -26,7 +26,7 @@ public class Participants {
     private void distributeInitialCards(PlayingCards playingCards, Names names) {
         participants.add(new Dealer(playingCards));
 
-        names.getNames().stream()
+        names.value().stream()
                 .forEach((name) -> participants.add(new Player(name, playingCards)));
     }
 
