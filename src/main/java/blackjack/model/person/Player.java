@@ -8,8 +8,8 @@ public class Player extends AbstractParticipant {
 
     public static final String MESSAGE_NAME_BETWEEN_CARDS = "카드: ";
 
-    public Player(Name name, BetMoney betMoney) {
-        super(name , betMoney);
+    public Player(Name name, BetMoney betMoney, PlayingCards playingCards) {
+        super(name , betMoney, playingCards);
     }
 
     public Player(Name name, PlayingCards playingCards) {
@@ -28,6 +28,11 @@ public class Player extends AbstractParticipant {
     @Override
     public boolean isPlayer() {
         return true;
+    }
+
+    @Override
+    public State getState() {
+        return super.getState();
     }
 
     @Override

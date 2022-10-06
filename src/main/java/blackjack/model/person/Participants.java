@@ -1,86 +1,65 @@
 package blackjack.model.person;
 
 import blackjack.model.card.Cards;
-import blackjack.model.card.PlayingCard;
-import blackjack.model.card.PlayingCards;
 import blackjack.model.state.State;
-import blackjack.view.InputView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
-    public static final String ERROR_NULL_INPUT_NAMES = "값이 입력되지 않았습니다.";
-    public static final String INPUT_NAME_DELIMITER = ",";
-    public static final String OUTPUT_NAME_DELIMITER = ", ";
-    public static final int FIRST_INDEX = 0;
     private final List<Participant> participants = new ArrayList<>();
+    private Dealer dealer;
+    private Players players;
 
     public Participants() {
     }
 
-    public Participants(Names names, PlayingCards playingCards) {
-        distributeInitialCards(playingCards, names);
+    public Participants(Dealer dealer, Players players) {
+        this.dealer = dealer;
+        this.players = players;
+
+        participants.addAll(players.list());
+        participants.add(dealer);
     }
 
-    private void distributeInitialCards(PlayingCards playingCards, Names names) {
-        participants.add(new Dealer(playingCards));
+    public Participants(Dealer dealer, Player... player) {
+        this.dealer = dealer;
+        this.players = new Players(player);
 
-        names.value().stream()
-                .forEach((name) -> participants.add(new Player(name, playingCards)));
+        participants.add(dealer);
+        participants.addAll(players.list());
     }
 
     public List<Participant> getParticipants() {
         return participants;
     }
-
-    public String playerNames() {
-        StringBuilder names = new StringBuilder();
-
-        participants.stream()
-                .filter(participant -> participant.isPlayer())
-                .map(Participant::getName).map(Name::value)
-                .forEach((name) -> names.append(name).append(OUTPUT_NAME_DELIMITER));
-
-        names.deleteCharAt(names.lastIndexOf(OUTPUT_NAME_DELIMITER));
-
-        return names.toString();
-    }
-
-    public void inputBetMoney() {
-        participants.stream()
-                .filter(participant -> participant.isPlayer())
-                .forEach(p -> p.bet(InputView.inputBetMoney(p.getName())));
-    }
-
-    // todo :집계 메서드 더 정리해보기
     public void total() {
-        if (dealer().isBust()) {
+        if (dealer.isBust()) {
             setAllWinExceptBust();
             totalProfit();
             return;
         }
 
-        if (dealer().isBlackjack() && somePlayerHasBlackjack()) {
+        if (dealer.isBlackjack() && somePlayerHasBlackjack()) {
             makeBlackjackPeopleTie();
             totalProfit();
             return;
         }
 
-        if (dealer().isBlackjack() && !somePlayerHasBlackjack()) {
+        if (dealer.isBlackjack() && !somePlayerHasBlackjack()) {
             //don't do anything
             totalProfit();
             return;
         }
 
-        if (!dealer().isBlackjack() && somePlayerHasBlackjack()) {
+        if (!dealer.isBlackjack() && somePlayerHasBlackjack()) {
             //don't do anything
             totalProfit();
             return;
         }
 
         // 조기 종료 아닌 경우
-        if (!dealer().isBlackjack() && !somePlayerHasBlackjack()) {
+        if (!dealer.isBlackjack() && !somePlayerHasBlackjack()) {
             setWinner();
             totalProfit();
             return;
@@ -116,6 +95,7 @@ public class Participants {
                 .map(Participant::getState).map(State::cards)
                 .map(Cards::sumOfScore)
                 .mapToInt(x -> x).reduce(Math::max).getAsInt();
+        //todo : Stay가 아무도 없을떄 NoSuchElementException 발생.
     }
 
     private void totalProfit() {
@@ -126,7 +106,7 @@ public class Participants {
                 .map(Participant::getProfit).map(Profit::value)
                 .reduce(0, (x, y) -> x + y);
 
-        dealer().earn(sum);
+        dealer.earn(sum);
     }
 
     private void setAllPlayerProfit() {
@@ -148,23 +128,4 @@ public class Participants {
                 .findAny().isPresent();
     }
 
-    private Dealer dealer() {
-        return (Dealer) participants.get(FIRST_INDEX);
-    }
-
-    public boolean dealerNeedDraw() {
-        return dealer().needMoreCard();
-    }
-
-    public void dealerDrawCard(PlayingCard playingCard) {
-        dealer().drawCard(playingCard);
-    }
-
-    public boolean isDealerBust() {
-        return dealer().isBust();
-    }
-
-    public void join(Participant participant) {
-        getParticipants().add(participant);
-    }
 }

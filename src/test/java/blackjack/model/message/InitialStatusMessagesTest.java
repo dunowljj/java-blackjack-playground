@@ -43,10 +43,7 @@ class InitialStatusMessagesTest {
     @Test
     void 전체_초기_상태메시지_생성() {
         //given
-        Participants participants = new Participants();
-        participants.join(dealer);
-        participants.join(player1);
-        participants.join(player2);
+        Participants participants = new Participants(dealer, player1 ,player2);
 
         //when
         String messages = InitialStatusMessages.from(participants).getMessage();

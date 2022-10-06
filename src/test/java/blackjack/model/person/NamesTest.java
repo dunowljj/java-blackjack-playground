@@ -1,6 +1,5 @@
 package blackjack.model.person;
 
-import blackjack.model.card.PlayingCards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,21 +19,8 @@ public class NamesTest {
     }
 
     @Test
-    void 이름들_입력받아_생성() {
-        //given
-        String[] names = bunchOfName.split(",");
-
-        //when
-        Participants participants = new Participants(Names.from(bunchOfName), new PlayingCards());
-
-        //then
-        assertThat(participants.getParticipants())
-                .map(Participant::getName).contains(new Name(names[0]), new Name(names[1]), new Name(names[2]));
-    }
-
-    @Test
     void 이름들_null입력시_예외() {
-        assertThatThrownBy(() -> new Participants(Names.from(null), new PlayingCards()))
+        assertThatThrownBy(() -> Names.from(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("값이 입력되지 않았습니다.");
     }

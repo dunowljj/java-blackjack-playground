@@ -4,7 +4,6 @@ import blackjack.model.card.Cards;
 import blackjack.model.card.PlayingCard;
 import blackjack.model.card.PlayingCards;
 import blackjack.model.state.*;
-import blackjack.view.InputView;
 
 import java.util.List;
 
@@ -17,22 +16,24 @@ public abstract class AbstractParticipant implements Participant{
         this.name = name;
     }
 
-    protected AbstractParticipant(Name name, BetMoney betMoney) {
+    protected AbstractParticipant(Name name, BetMoney betMoney, PlayingCards playingCards) {
         this.name = name;
         this.betMoney = betMoney;
+        initialDistribution(new Hit(playingCards));
     }
 
     public AbstractParticipant(Name name, PlayingCards playingCards) {
         this.name = name;
-        this.state = new Hit(playingCards);
-        if (state.cards().isBlackjack()) {
-            this.state = new Blackjack(state.cards());
-        }
+        initialDistribution(new Hit(playingCards));
     }
 
     public AbstractParticipant(Name name, Cards cards) {
         this.name = name;
-        this.state = new Hit(cards);
+        initialDistribution(new Hit(cards));
+    }
+
+    private void initialDistribution(Hit playingCards) {
+        this.state = playingCards;
         if (state.cards().isBlackjack()) {
             this.state = new Blackjack(state.cards());
         }
@@ -41,34 +42,6 @@ public abstract class AbstractParticipant implements Participant{
     @Override
     public void drawCard(PlayingCard playingCard) {
         state = state.drawCard(playingCard);
-    }
-
-    @Override
-    public void bet(BetMoney betMoney) {
-        this.betMoney = betMoney;
-        return;
-    }
-
-
-    @Override
-    public void askHitUntilNo(PlayingCards playingCards) {
-        while (!isFinished()) {
-            askHit(playingCards);
-        }
-    }
-
-    private void askHit(PlayingCards playingCards) {
-//        boolean yes = InputView.askWantHitMore(name);
-//
-//        if (yes) {
-//            state = state.drawCard(playingCards.nextCard());
-////            OutputView.printInfo(nameAndCards().toString());
-//            // todo: 컨트롤러에서 해당 내용 구현할 예정. Participants객체와 새로 생성한 메시지 클래스를 활용한다.
-//        }
-//
-//        if (!yes) {
-//            state = state.stay();
-//        }
     }
 
     @Override
@@ -149,6 +122,6 @@ public abstract class AbstractParticipant implements Participant{
 
     @Override
     public List<PlayingCard> getCards() {
-        return state.cards().getCards();
+        return getState().cards().getCards();
     }
 }

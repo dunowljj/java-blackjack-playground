@@ -44,4 +44,7 @@ public class Dealer extends AbstractParticipant{
     public boolean needMoreCard() {
        return getState().cards().sumOfScore() <= DEALER_SCORE_UNDER_BOUND;
     }
+
+    public void stayOrHit() {
+    }
 }

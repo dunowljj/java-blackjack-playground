@@ -1,8 +1,11 @@
 package blackjack.model.card;
 
+import blackjack.view.OutputView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class PlayingCards {
     private final List<PlayingCard> playingCards = new ArrayList<>();
@@ -24,8 +27,21 @@ public class PlayingCards {
             playingCards.add(new PlayingCard(suit, denomination));
         }
     }
-
     public PlayingCard nextCard() {
+        try {
+            return tryToDraw();
+        } catch (NoSuchElementException e) {
+            OutputView.printMessage(e.getMessage());
+            setUpPlayingCards();
+            return tryToDraw();
+        }
+    }
+
+    private PlayingCard tryToDraw() {
+        if (playingCards.isEmpty()) {
+            throw new NoSuchElementException("카드가 모두 소진되었습니다. 새로운 카드뭉치를 가져옵니다.");
+        }
+
         return playingCards.remove(playingCards.size() - 1);
     }
 

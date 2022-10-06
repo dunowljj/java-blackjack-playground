@@ -24,9 +24,7 @@ public class ProfitMessagesTest {
         Player player2 = new Player(new Name("player2"), new Cards());
         player2.setProfit(-5000);
 
-        participants.join(dealer);
-        participants.join(player1);
-        participants.join(player2);
+        participants = new Participants(dealer, player1 ,player2);
     }
 
     @Test

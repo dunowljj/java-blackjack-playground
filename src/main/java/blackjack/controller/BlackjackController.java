@@ -9,62 +9,93 @@ import blackjack.view.OutputView;
 import java.util.stream.Collectors;
 
 public class BlackjackController {
-    public static void run() {
-        try {
-            tryToRun();
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            run();
-        }
+    private final PlayingCards playingCards = new PlayingCards();
+
+    public void run() {
+        Names names = getNames();
+        Dealer dealer = new Dealer(playingCards);
+        Players players = bettingAndGetPlayer(names);
+        Participants participants = new Participants(dealer, players);
+
+        printInitialStatus(participants);
+
+        OutputView.noticeDistribution(names);
+        stayOrHit(dealer, players);
+
+        participants.total();
+        printStatus(participants);
+        printResult(participants);
     }
 
-    private static void tryToRun() {
-        PlayingCards playingCards = new PlayingCards();
-
-        // 초기 배분 2장을 한다는 내용이 드러나도록 메서드를 만드는게 나을까?
-        Participants gamers = new Participants(getNames(), playingCards);
-
-        Dealer dealer = new Dealer(playingCards);
-        Players players = bettingAndGetPlayer(getNames());
-
-//        gamers.inputBetMoney();
-
-
-        OutputView.noticeStartDistribution(gamers.playerNames());
-
+    /*private void proceed(Dealer dealer, Players players, Participants participants) {
         if (gamers.isDealerBust()) {
             totalGameAndExit(gamers);
+
+        if (participants.dealerNeedDraw()) {
+            participants.dealerDrawCard(playingCards.nextCard());
         }
 
-        printInitialStatus(gamers);
-
-//        stayOrHit(players, playingCards);
-//        InputView.askHitMore(gamers, playingCards);
-
-        if (gamers.blackjackExist()) {
-            totalGameAndExit(gamers);
+        if (participants.blackjackExist()) {
+            totalGameAndExit(participants);
         }
+    }*/
 
-        if (gamers.dealerNeedDraw()) {
-            gamers.dealerDrawCard(playingCards.nextCard());
-            OutputView.noticeDealerDrawCard();
-        }
-
-        totalGameAndExit(gamers);
+    private void totalGameAndExit(Participants participants) {
+        participants.total();
+        printStatus(participants);
+        printResult(participants);
+//        System.exit(0);
     }
 
-    private static void stayOrHit(Players players, PlayingCards playingCards) {
+    private Names getNames() {
+        try {
+            return Names.from(InputView.inputPlayerNames());
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            return getNames();
+        }
+    }
+    private Players bettingAndGetPlayer(Names names) {
+        return new Players(names.value().stream()
+                .map((name) -> new Player(name, getBetMoney(name), playingCards))
+                .collect(Collectors.toList()));
+    }
+
+    private BetMoney getBetMoney(Name name) {
+        try {
+            return InputView.inputBetMoney(name);
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            return getBetMoney(name);
+        }
+    }
+
+    private void stayOrHit(Dealer dealer, Players players) {
+        stayOrHit(dealer);
+        stayOrHit(players); //todo: 캡슐화하려고 하면, 메시지객체나 출력객체에 의존해야한다.
+    }
+
+    private void stayOrHit(Dealer dealer) {
+        if (dealer.needMoreCard()) {
+            dealer.drawCard(playingCards.nextCard());
+            OutputView.noticeDealerHitCard();
+        }
+
+    }
+
+    private void stayOrHit(Players players) {
         for (Player player : players.list()) {
-            stayOrHit(player, playingCards);
+            stayOrHit(player);
         }
     }
 
-    private static void stayOrHit(Player player, PlayingCards playingCards) {
+    private void stayOrHit(Player player) {
         CardDecision decision = askDrawMore(player);
 
         if (decision == CardDecision.YES) {
             player.drawCard(playingCards.nextCard());
             printStatus(player);
+            stayOrHit(player);
             return;
         }
 
@@ -75,7 +106,7 @@ public class BlackjackController {
         }
     }
 
-    private static CardDecision askDrawMore(Player player) {
+    private CardDecision askDrawMore(Player player) {
         try {
             return InputView.askAddCard(player);
         } catch (IllegalArgumentException e) {
@@ -84,54 +115,22 @@ public class BlackjackController {
         }
     }
 
-    private static Players bettingAndGetPlayer(Names names) {
-        return new Players(names.value().stream()
-                .map((name) -> new Player(name, getBetMoney(name)))
-                .collect(Collectors.toList()));
-    }
-
-    private static BetMoney getBetMoney(Name name) {
-        try {
-            return InputView.inputBetMoney(name);
-        } catch (IllegalArgumentException e) {
-            OutputView.printMessage(e.getMessage());
-            return getBetMoney(name);
-        }
-    }
-
-
-    private static Names getNames() {
-        try {
-            return Names.from(InputView.inputPlayerNames());
-        } catch (IllegalArgumentException e) {
-            OutputView.printMessage(e.getMessage());
-            return getNames();
-        }
-    }
-    // stream으로 Names기반으로 질문을 하고 받을수는 있다. 근데 예외처리는 어떻게 되는가?
-
-    private static void totalGameAndExit(Participants gamers) {
-        gamers.total();
-        printStatus(gamers);
-        printResult(gamers);
-        System.exit(0);
-    }
-
-    private static void printInitialStatus(Participants participants) {
+    private void printInitialStatus(Participants participants) {
         String message = InitialStatusMessages.from(participants).getMessage();
         OutputView.printMessage(message);
     }
 
-    private static void printStatus(Participant participant) {
+    private void printStatus(Participant participant) {
         String message = StatusMessage.from(participant).getMessage();
         OutputView.printMessage(message);
     }
-    private static void printStatus(Participants participants) {
+
+    private void printStatus(Participants participants) {
         String message = StatusMessages.from(participants).getMessage();
         OutputView.printMessage(message);
     }
 
-    private static void printResult(Participants gamers) {
+    private void printResult(Participants gamers) {
         String message = ProfitMessages.from(gamers).getMessage();
         OutputView.printMessage(message);
     }

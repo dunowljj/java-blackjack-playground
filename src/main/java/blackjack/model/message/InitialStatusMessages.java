@@ -13,7 +13,8 @@ public class InitialStatusMessages {
 
     public static InitialStatusMessages from(Participants participants) {
         String messages = participants.getParticipants().stream()
-                .map(InitialStatusMessage::from).map(InitialStatusMessage::getMessage)
+                .map(InitialStatusMessage::from)
+                .map(InitialStatusMessage::getMessage)
                 .collect(Collectors.joining("\n"));
 
         return new InitialStatusMessages(messages.trim());

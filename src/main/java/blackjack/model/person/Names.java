@@ -28,4 +28,10 @@ public class Names {
     public List<Name> value() {
         return Collections.unmodifiableList(names);
     }
+
+    @Override
+    public String toString() {
+        return names.stream().map(Name::toString)
+                .collect(Collectors.joining(", "));
+    }
 }
